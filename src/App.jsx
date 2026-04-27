@@ -130,29 +130,21 @@ function App() {
       const originalTheme = theme;
       setTheme('light'); 
       
-      // Wait for re-render and CSS transitions
-      await new Promise(r => setTimeout(r, 600));
+      // 強制將容器寬度設為桌機版寬度，確保無論手機如何旋轉，PDF 都是完美的排版
+      const container = document.getElementById('report-container');
+      const originalWidth = container.style.width;
+      const originalMaxWidth = container.style.maxWidth;
+      container.style.width = '1200px';
+      container.style.maxWidth = 'none';
+
+      // 稍微等待讓 Recharts 重新適應 1200px 寬度
+      await new Promise(r => setTimeout(r, 800));
       
       const doc = new jsPDF('p', 'mm', 'a4');
       const pageWidth = 210;
       const pageHeight = 297;
       const margin = 12;
       let currentY = 15;
-
-      const captureElement = async (id, widthMM) => {
-        const el = document.getElementById(id);
-        if (!el) return null;
-        const canvas = await html2canvas(el, { 
-          scale: 3, 
-          backgroundColor: '#ffffff', 
-          useCORS: true,
-          logging: false
-        });
-        const imgData = canvas.toDataURL('image/jpeg', 0.9);
-        const imgProps = doc.getImageProperties(imgData);
-        const heightMM = (imgProps.height * widthMM) / imgProps.width;
-        return { imgData, heightMM };
-      };
 
       const sections = ['pdf-header', 'pdf-chart', 'pdf-tables'];
       
@@ -161,21 +153,13 @@ function App() {
         if (!el) continue;
         
         const canvas = await html2canvas(el, { 
-          scale: 3, 
+          scale: 2.5, 
           backgroundColor: '#ffffff', 
           useCORS: true,
-          logging: false,
-          onclone: (clonedDoc) => {
-            const tableEl = clonedDoc.getElementById('pdf-tables');
-            if (tableEl) {
-              tableEl.style.display = 'grid';
-              tableEl.style.gridTemplateColumns = 'repeat(3, 1fr)';
-              tableEl.style.width = '100%';
-            }
-          }
+          logging: false
         });
         
-        const imgData = canvas.toDataURL('image/jpeg', 0.9);
+        const imgData = canvas.toDataURL('image/jpeg', 0.8);
         const imgProps = doc.getImageProperties(imgData);
         const imgWidth = pageWidth - margin * 2;
         const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
@@ -189,6 +173,10 @@ function App() {
         currentY += imgHeight + 8;
       }
 
+      // 恢復原始樣式
+      container.style.width = originalWidth;
+      container.style.maxWidth = originalMaxWidth;
+      
       setTheme(originalTheme);
       setIsExporting(false);
       doc.save(`Heliox_Mission_${maxDepth}ft.pdf`);
@@ -209,6 +197,12 @@ function App() {
 
   return (
       <div id="report-container" className="mx-auto space-y-4 p-4" style={{ maxWidth: '1700px' }}>
+        <div className="lg:hidden p-3 bg-orange-500/10 border border-orange-500/20 rounded-2xl flex items-center justify-center gap-3 mb-2 no-print">
+          <Repeat className="animate-pulse text-orange-500" size={16} />
+          <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">
+            {lang === 'zh' ? '建議旋轉手機使用橫式瀏覽' : 'Please rotate to landscape for best experience'}
+          </p>
+        </div>
         <header id="pdf-header" className="flex flex-col lg:flex-row items-stretch lg:items-center p-6 gap-6 rounded-[2.5rem] border" style={{ backgroundColor: t.panel, borderColor: t.border, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
             <img src={dsodLogo} alt="DSOD Logo" className="w-14 h-14 object-contain" />
