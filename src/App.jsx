@@ -311,7 +311,25 @@ function App() {
           </section>
           <section className="p-6 rounded-[2.5rem] border shadow-lg flex flex-col" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><FlaskConical size={14} style={{ color: '#f59e0b' }} /> {msg?.logistics}</h2>
-             <div className="p-4 rounded-3xl border mb-4 flex justify-between items-end" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', borderColor: 'rgba(245, 158, 11, 0.2)' }}><div><p className="text-lg font-black" style={{ color: t.textPrimary }}>{selectedCyl?.name}</p><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.model}</p></div><div className="text-right flex flex-col items-end"><div className="flex items-center gap-1"><input type="number" className="bg-transparent border-none outline-none font-mono text-sm font-bold w-12 text-right" style={{ color: '#d97706' }} value={cylinderPSI} onChange={(e)=>setCylinderPSI(Number(e.target.value))} /> <span className="text-[10px] font-bold" style={{ color: '#d97706' }}>PSI</span> <span className="text-[10px] opacity-30">/</span> <span className="font-mono text-sm font-bold" style={{ color: '#d97706' }}>{selectedCyl?.vol} CF</span></div><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.workPress}</p></div></div>
+             <div className={`p-4 rounded-3xl border ${isExporting ? 'mb-2' : 'mb-4'} flex justify-between items-end`} style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', borderColor: 'rgba(245, 158, 11, 0.2)' }}>
+                <div>
+                  <p className="text-lg font-black" style={{ color: t.textPrimary }}>{selectedCyl?.name}</p>
+                  <p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.model}</p>
+                </div>
+                <div className="text-right flex flex-col items-end pb-1">
+                  <div className="flex items-center gap-1 mb-0.5">
+                    {isExporting ? (
+                      <span className="font-mono text-base font-black" style={{ color: '#d97706' }}>{cylinderPSI}</span>
+                    ) : (
+                      <input type="number" className="bg-transparent border-none outline-none font-mono text-sm font-bold w-12 text-right" style={{ color: '#d97706' }} value={cylinderPSI} onChange={(e)=>setCylinderPSI(Number(e.target.value))} />
+                    )}
+                    <span className="text-[10px] font-bold" style={{ color: '#d97706' }}>PSI</span>
+                    <span className="text-[10px] opacity-30">/</span>
+                    <span className="font-mono text-sm font-bold" style={{ color: '#d97706' }}>{selectedCyl?.vol} CF</span>
+                  </div>
+                  <p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.workPress}</p>
+                </div>
+              </div>
              <div className={`grid grid-cols-2 ${isExporting ? 'gap-1 mb-2' : 'gap-3 mb-6'}`}>
                 <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5" style={{ color: t.textSecondary }}>{msg?.runs}</label>
                   {isExporting ? (
