@@ -89,14 +89,12 @@ function App() {
     else setAscentGasSCF(calcAscentGas(maxDepth, 0, divers));
   }, [stops, divers, maxDepth, o2Periods, decoMode]);
 
-  const { profileData, totalDuration, chamberSteps, gradStops } = useMemo(() => {
+    const { profileData, totalDuration, chamberSteps, gradStops } = useMemo(() => {
     const res = generateProfileData(maxDepth, bottomTime, stops, o2Periods, decoMode);
     const steps = decoMode === 'SURD' ? expandChamberSteps(o2Periods) : [];
     const duration = (res && res.data && res.data.length > 0) ? res.data[res.data.length - 1].time : 1;
     const gStops = [];
-    let lastGas = 'BOTTOM';
     
-    gStops.push({ offset: '0%', color: GAS_COLORS.BOTTOM });
     if (res && res.data && res.data.length > 1) {
       for (let i = 1; i < res.data.length; i++) {
         const prev = res.data[i - 1];
