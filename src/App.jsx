@@ -150,7 +150,7 @@ function App() {
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgProps = pdf.getImageProperties(imgData);
       
-      const margin = 5; // 5mm margin
+      const margin = 2; // 2mm margin (Extreme edge-to-edge)
       const targetWidth = pdfWidth - (margin * 2);
       
       let finalWidth = targetWidth;
@@ -192,7 +192,7 @@ function App() {
             <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
             <div><h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>{msg?.title}</h1><p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p></div>
           </div>
-          <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className={`flex-1 grid ${isExporting ? 'grid-cols-4 gap-2' : 'grid-cols-2 md:grid-cols-4 gap-4'}`}>
              <div className="p-3 px-4 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
                 <label className="block text-[8px] font-black mb-1 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.maxDepth}</label>
                 <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>

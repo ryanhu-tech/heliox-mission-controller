@@ -55,13 +55,21 @@ body {
 }
 
 .printing section {
-  padding: 10px !important;
-  margin-bottom: 10px !important;
+  padding: 8px !important; /* 極限壓縮 */
+  margin-bottom: 8px !important;
 }
 
 .printing header {
-  padding: 20px !important;
-  margin-bottom: 15px !important;
+  padding: 15px !important;
+  margin-bottom: 10px !important;
+}
+
+.printing header select, .printing header input {
+  font-size: 14px !important; /* 縮小字體確保 4 欄擠在同一行 */
+}
+
+.printing header label {
+  font-size: 7px !important;
 }
 
 .printing * {
