@@ -243,7 +243,7 @@ function App() {
              <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                   {msg?.maxDepth}
-                  <Edit2 size={8} className="opacity-20" />
+                  <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                 </label>
                 <div className="border-b border-white/20">
                   <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
@@ -254,7 +254,7 @@ function App() {
              <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                   {msg?.bottomTime}
-                  <Edit2 size={8} className="opacity-20" />
+                  <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                 </label>
                 <div className="border-b border-white/20">
                   <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
@@ -293,7 +293,7 @@ function App() {
                 <div className="w-full">
                   <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                     {msg?.divers}
-                    <Edit2 size={8} className="opacity-20" />
+                    <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                   </label>
                   <div className="border-b border-white/20">
                     <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-full focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
@@ -429,7 +429,7 @@ function App() {
                       <input type="number" className="bg-transparent border-none outline-none font-mono text-sm font-bold w-12 text-right focus:text-white transition-colors" style={{ color: '#d97706' }} value={cylinderPSI} onChange={(e)=>setCylinderPSI(Number(e.target.value))} />
                     )}
                     <span className="text-[10px] font-bold" style={{ color: '#d97706' }}>PSI</span>
-                    <Edit2 size={8} className="opacity-20 ml-1" style={{ color: '#d97706' }} />
+                    <Edit2 size={10} className="opacity-60 ml-1" style={{ color: '#f97316' }} />
                   </div>
                   <p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.workPress}</p>
                 </div>
@@ -438,7 +438,7 @@ function App() {
                 <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border group hover:border-[#f97316]/50 transition-all cursor-pointer`} style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
                   <label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5 flex justify-between items-center" style={{ color: t.textSecondary }}>
                     {msg?.runs}
-                    <Edit2 size={8} className="opacity-20" />
+                    <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                   </label>
                   <div className="border-b border-white/20">
                     {isExporting ? (
@@ -451,7 +451,7 @@ function App() {
                 <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border group hover:border-[#f97316]/50 transition-all cursor-pointer`} style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
                   <label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5 flex justify-between items-center" style={{ color: t.textSecondary }}>
                     {msg?.cylinder}
-                    <Edit2 size={8} className="opacity-20" />
+                    <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                   </label>
                   <div className="border-b border-white/20">
                     {isExporting ? (
