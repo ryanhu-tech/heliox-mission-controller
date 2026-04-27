@@ -227,9 +227,9 @@ function App() {
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
             <img src={dsodLogo} alt="DSOD Logo" className="w-14 h-14 object-contain" />
             <div>
-              <h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
+              <h1 className="text-[18px] font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
                 <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/Dive%20Manual%20Rev%206%20with%20Chg%20A.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors">
-                  美海軍潛水手冊
+                  引用美海軍潛水教範V7
                 </a>
               </h1>
               <p className="text-[8px] font-bold tracking-tight mt-1 opacity-70" style={{ color: t.textSecondary }}>
