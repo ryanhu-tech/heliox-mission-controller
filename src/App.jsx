@@ -149,28 +149,39 @@ function App() {
         return { imgData, heightMM };
       };
 
-      // 1. Header
-      const header = await captureElement('pdf-header', pageWidth - margin * 2);
-      if (header) {
-        doc.addImage(header.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, header.heightMM);
-        currentY += header.heightMM + 8;
-      }
+      const sections = ['pdf-header', 'pdf-chart', 'pdf-tables'];
+      
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        
+        const canvas = await html2canvas(el, { 
+          scale: 3, 
+          backgroundColor: '#ffffff', 
+          useCORS: true,
+          logging: false,
+          onclone: (clonedDoc) => {
+            const tableEl = clonedDoc.getElementById('pdf-tables');
+            if (tableEl) {
+              tableEl.style.display = 'grid';
+              tableEl.style.gridTemplateColumns = 'repeat(3, 1fr)';
+              tableEl.style.width = '100%';
+            }
+          }
+        });
+        
+        const imgData = canvas.toDataURL('image/jpeg', 0.9);
+        const imgProps = doc.getImageProperties(imgData);
+        const imgWidth = pageWidth - margin * 2;
+        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
 
-      // 2. Chart
-      const chart = await captureElement('pdf-chart', pageWidth - margin * 2);
-      if (chart) {
-        doc.addImage(chart.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, chart.heightMM);
-        currentY += chart.heightMM + 8;
-      }
-
-      // 3. Tables (Now fully expanded)
-      const tables = await captureElement('pdf-tables', pageWidth - margin * 2);
-      if (tables) {
-        if (currentY + tables.heightMM > pageHeight - margin) {
+        if (currentY + imgHeight > pageHeight - margin) {
           doc.addPage();
           currentY = margin;
         }
-        doc.addImage(tables.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, tables.heightMM);
+
+        doc.addImage(imgData, 'JPEG', margin, currentY, imgWidth, imgHeight);
+        currentY += imgHeight + 8;
       }
 
       setTheme(originalTheme);
@@ -261,7 +272,19 @@ function App() {
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
              <div className={`space-y-2 pr-2 custom-scroll-container ${isExporting ? '' : 'max-h-[450px] overflow-y-auto'}`}>
-                {stops && stops.length > 0 ? stops.map(stop => (<div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="font-mono text-sm font-black" style={{ color: stop.depth <= 30 ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span><div className="flex items-center gap-2"><span className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>{stop.time}</span><span className="text-[8px] font-black uppercase opacity-50" style={{ color: t.textSecondary }}>Min</span></div></div>)) : <div className="text-center py-10 opacity-30 text-[10px] uppercase font-black" style={{ color: t.textSecondary }}>{msg?.noDeco}</div>}
+                {stops && stops.length > 0 ? stops.map(stop => {
+                  const gas = getGasType(stop.depth);
+                  return (
+                    <div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                      <span className="font-mono text-sm font-black" style={{ color: stop.depth <= 30 ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span>
+                      <span className="text-[7px] font-black uppercase tracking-widest opacity-60 px-2 py-0.5 rounded-md border" style={{ color: GAS_COLORS[gas], borderColor: `${GAS_COLORS[gas]}44`, backgroundColor: `${GAS_COLORS[gas]}11` }}>{getGasName(gas)}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>{stop.time}</span>
+                        <span className="text-[8px] font-black uppercase opacity-50" style={{ color: t.textSecondary }}>Min</span>
+                      </div>
+                    </div>
+                  );
+                }) : <div className="text-center py-10 opacity-30 text-[10px] uppercase font-black" style={{ color: t.textSecondary }}>{msg?.noDeco}</div>}
              </div>
           </section>
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
