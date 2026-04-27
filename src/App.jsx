@@ -262,8 +262,11 @@ function App() {
                   </select>
                 </div>
              </div>
-             <div className="p-1 rounded-xl border flex flex-col gap-1" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
-                <label className="block text-[6px] font-black uppercase tracking-[0.2em] text-center opacity-40 mb-0.5" style={{ color: t.textSecondary }}>{lang === 'zh' ? '減壓模式' : 'DECO MODE'}</label>
+             <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+                <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
+                  {lang === 'zh' ? '減壓模式' : 'DECO MODE'}
+                  <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                </label>
                 <div className="flex gap-1">
                   <button 
                     onClick={()=>setDecoMode('SURD')} 
