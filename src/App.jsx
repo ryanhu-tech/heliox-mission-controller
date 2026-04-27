@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import dsodLogo from './assets/dsod_logo.png';
 import decoTable from './data/deco_table.json';
 import { 
   calcBottomGas, 
@@ -208,10 +209,20 @@ function App() {
 
   return (
       <div id="report-container" className="mx-auto space-y-4 p-4" style={{ maxWidth: '1700px' }}>
-        <header id="pdf-header" className="flex flex-col lg:flex-row items-stretch lg:items-center p-6 gap-6 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+        <header id="pdf-header" className="flex flex-col lg:flex-row items-stretch lg:items-center p-6 gap-6 rounded-[2.5rem] border" style={{ backgroundColor: t.panel, borderColor: t.border, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
-            <div className="w-12 h-12 bg-[#f97316] rounded-xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
-            <div><h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>{msg?.title}</h1><p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p></div>
+            <img src={dsodLogo} alt="DSOD Logo" className="w-14 h-14 object-contain" />
+            <div>
+              <h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
+                <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/Dive%20Manual%20Rev%206%20with%20Chg%20A.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors">
+                  美海軍潛水手冊
+                </a>
+              </h1>
+              <p className="text-[8px] font-bold tracking-tight mt-1 opacity-70" style={{ color: t.textSecondary }}>
+                Design By R.O.C. Naval U.O.U. DSOD<br/>
+                中華民國海軍水下作業大隊深海組設計
+              </p>
+            </div>
           </div>
           
           <div className="flex-1 grid grid-cols-4 gap-4">
