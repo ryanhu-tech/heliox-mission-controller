@@ -15,7 +15,7 @@ export const CONSTANTS = {
   AIR_BREAK_MINS: 5,
 };
 
-const getATA = (depth) => (depth + 33) / 33;
+export const getATA = (depth) => (depth + 33) / 33;
 
 export const getGasType = (depth) => {
   if (depth > 90) return 'BOTTOM';
