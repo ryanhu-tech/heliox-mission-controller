@@ -97,23 +97,19 @@ function App() {
     let lastGas = 'BOTTOM';
     
     gStops.push({ offset: '0%', color: GAS_COLORS.BOTTOM });
-    if (res && res.data) {
-      for (let i = 0; i < res.data.length; i++) {
-        const d = res.data[i];
-        const offset = Math.min(100, (d.time / duration) * 100);
-        const currentGas = d.gas || 'BOTTOM';
-        const isGradientEnd = res.switches?.find(sw => sw.time === d.time && sw.type === 'gradient_end');
-        const isGradientStart = res.switches?.find(sw => sw.time === d.time && sw.type === 'gradient_start');
+    if (res && res.data && res.data.length > 1) {
+      for (let i = 1; i < res.data.length; i++) {
+        const prev = res.data[i - 1];
+        const curr = res.data[i];
+        const startOffset = Math.min(100, (prev.time / duration) * 100);
+        const endOffset = Math.min(100, (curr.time / duration) * 100);
+        
+        const isGradientSegment = curr.phase === 'Ventilation' || curr.phase === 'Chamber Descent';
+        const startColor = GAS_COLORS[isGradientSegment ? prev.gas : curr.gas];
+        const endColor = GAS_COLORS[curr.gas];
 
-        if (isGradientStart) gStops.push({ offset: `${offset}%`, color: GAS_COLORS[isGradientStart.from] });
-        else if (isGradientEnd) gStops.push({ offset: `${offset}%`, color: GAS_COLORS[isGradientEnd.to] });
-        else {
-          if (currentGas !== lastGas) {
-            gStops.push({ offset: `${offset}%`, color: GAS_COLORS[lastGas] });
-            gStops.push({ offset: `${Math.min(100, offset + 0.001)}%`, color: GAS_COLORS[currentGas] });
-          } else gStops.push({ offset: `${offset}%`, color: GAS_COLORS[currentGas] });
-        }
-        lastGas = currentGas;
+        gStops.push({ offset: `${startOffset}%`, color: startColor });
+        gStops.push({ offset: `${endOffset}%`, color: endColor });
       }
     }
     return { profileData: res.data || [], totalDuration: duration, chamberSteps: steps, gradStops: gStops };
