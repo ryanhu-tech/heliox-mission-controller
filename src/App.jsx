@@ -150,7 +150,7 @@ function App() {
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgProps = pdf.getImageProperties(imgData);
       
-      const margin = 2; // 2mm margin (Extreme edge-to-edge)
+      const margin = 0.1; // 0.1mm margin (Absolute maximum)
       const targetWidth = pdfWidth - (margin * 2);
       
       let finalWidth = targetWidth;
@@ -185,34 +185,57 @@ function App() {
   const oxygenCylCount = calcCylinderCount(((decoGasTotals?.oxygen || 0) * runs), availableSCFPerCyl);
 
   return (
-    <div className={`min-h-screen ${isExporting ? '' : 'transition-colors duration-500'} p-4 md:p-8 font-sans`} style={{ backgroundColor: t.bg, color: t.textPrimary }}>
-      <div id="report-container" className={`mx-auto space-y-6 ${isExporting ? 'printing' : 'p-4'}`} style={{ width: isExporting ? '794px' : 'auto', maxWidth: isExporting ? '794px' : '1700px' }}>
-        <header className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 p-6 lg:px-8 lg:py-5 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-          <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
-            <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
-            <div><h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>{msg?.title}</h1><p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p></div>
+      <div id="report-container" className={`mx-auto space-y-4 ${isExporting ? 'printing' : 'p-4'}`} style={{ width: isExporting ? '794px' : 'auto', maxWidth: isExporting ? '794px' : '1700px' }}>
+        <header className={`flex ${isExporting ? 'flex-row items-center justify-between p-2' : 'flex-col lg:flex-row items-stretch lg:items-center p-6 gap-6'} rounded-[2.5rem] border shadow-2xl backdrop-blur-xl`} style={{ backgroundColor: t.panel, borderColor: t.border }}>
+          <div className={`flex items-center ${isExporting ? 'gap-2 shrink-0 border-r pr-2' : 'gap-5 shrink-0 border-r pr-8'}`} style={{ borderColor: t.border }}>
+            <div className={`${isExporting ? 'w-7 h-7' : 'w-12 h-12'} bg-[#f97316] rounded-xl flex items-center justify-center shadow-lg`}><Waves style={{ color: '#ffffff' }} size={isExporting ? 16 : 28} /></div>
+            <div><h1 className={`${isExporting ? 'text-[11px]' : 'text-xl'} font-black uppercase tracking-tighter leading-none`} style={{ color: t.textPrimary }}>{msg?.title}</h1>{!isExporting && <p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p>}</div>
           </div>
-          <div className={`flex-1 grid ${isExporting ? 'grid-cols-4 gap-2' : 'grid-cols-2 md:grid-cols-4 gap-4'}`}>
-             <div className="p-3 px-4 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.maxDepth}</label>
-                <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
-                  {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
-                </select>
+          
+          <div className={`flex-1 grid grid-cols-4 ${isExporting ? 'gap-1' : 'gap-4'}`}>
+             <div className={`${isExporting ? 'p-1' : 'p-3 px-4'} rounded-xl border`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.maxDepth}</label>
+                {isExporting ? (
+                  <div className="font-mono text-[10px] font-black leading-none" style={{ color: t.textPrimary }}>{maxDepth} fsw</div>
+                ) : (
+                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
+                    {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
+                  </select>
+                )}
              </div>
-             <div className="p-3 px-4 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-[#64748b]">{msg?.bottomTime}</label>
-                <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
-                  {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
-                </select>
+             <div className={`${isExporting ? 'p-1' : 'p-3 px-4'} rounded-xl border`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.bottomTime}</label>
+                {isExporting ? (
+                  <div className="font-mono text-[10px] font-black leading-none" style={{ color: t.textPrimary }}>{bottomTime} min</div>
+                ) : (
+                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
+                    {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
+                  </select>
+                )}
              </div>
-             <div className="p-2 rounded-2xl border flex items-center" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <button onClick={()=>setDecoMode('SURD')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', color: decoMode === 'SURD' ? '#fff' : '#64748b' }}>SURD O2</button>
-                <button onClick={()=>setDecoMode('WATER')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', color: decoMode === 'WATER' ? '#fff' : '#64748b' }}>IN-WATER</button>
+             <div className={`${isExporting ? 'p-0.5' : 'p-2'} rounded-xl border flex items-center`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                {isExporting ? (
+                  <div className="flex-1 text-center text-[9px] font-black" style={{ color: '#f97316' }}>{decoMode === 'SURD' ? 'SURD O2' : 'IN-WATER'}</div>
+                ) : (
+                  <>
+                    <button onClick={()=>setDecoMode('SURD')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', color: decoMode === 'SURD' ? '#fff' : '#64748b' }}>SURD O2</button>
+                    <button onClick={()=>setDecoMode('WATER')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', color: decoMode === 'WATER' ? '#fff' : '#64748b' }}>IN-WATER</button>
+                  </>
+                )}
              </div>
-             <div className="p-3 px-4 rounded-2xl border flex items-center justify-between" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <div><label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-[#64748b]">{msg?.divers}</label><input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} /></div><Users size={20} style={{ color: '#64748b' }} />
+             <div className={`${isExporting ? 'p-1' : 'p-3 px-4'} rounded-xl border flex items-center justify-between`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                <div>
+                  <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.divers}</label>
+                  {isExporting ? (
+                    <div className="font-mono text-[10px] font-black leading-none" style={{ color: t.textPrimary }}>{divers}</div>
+                  ) : (
+                    <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
+                  )}
+                </div>
+                {!isExporting && <Users size={20} style={{ color: '#64748b' }} />}
              </div>
           </div>
+
           <div className={`${isExporting ? 'hidden' : 'flex'} items-center gap-2`}>
              <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2" style={{ color: '#f97316' }} />{lang === 'en' ? '中文' : 'EN'}</button>
              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-12 h-12 rounded-2xl flex items-center justify-center border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}>{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}</button>
@@ -264,9 +287,21 @@ function App() {
           <section className="p-6 rounded-[2.5rem] border shadow-lg flex flex-col" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><FlaskConical size={14} style={{ color: '#f59e0b' }} /> {msg?.logistics}</h2>
              <div className="p-4 rounded-3xl border mb-4 flex justify-between items-end" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', borderColor: 'rgba(245, 158, 11, 0.2)' }}><div><p className="text-lg font-black" style={{ color: t.textPrimary }}>{selectedCyl?.name}</p><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.model}</p></div><div className="text-right"><p className="font-mono text-sm font-bold" style={{ color: '#d97706' }}>{selectedCyl?.psi} PSI / {selectedCyl?.vol} CF</p><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.workPress}</p></div></div>
-             <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="p-4 rounded-3xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-1" style={{ color: t.textSecondary }}>{msg?.runs}</label><input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-full" style={{ color: t.textPrimary }} value={runs} onChange={(e)=>setRuns(Math.max(1, Number(e.target.value)))} /></div>
-                <div className="p-4 rounded-3xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-1" style={{ color: t.textSecondary }}>{msg?.cylinder}</label><select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none" style={{ color: '#f97316' }} value={selectedCyl?.id} onChange={handleCylChange}>{CYLINDER_PRESETS.map(c => <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name}</option>)}</select></div>
+             <div className={`grid grid-cols-2 ${isExporting ? 'gap-1 mb-2' : 'gap-3 mb-6'}`}>
+                <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5" style={{ color: t.textSecondary }}>{msg?.runs}</label>
+                  {isExporting ? (
+                    <div className="font-mono text-sm font-black" style={{ color: t.textPrimary }}>{runs}</div>
+                  ) : (
+                    <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-full" style={{ color: t.textPrimary }} value={runs} onChange={(e)=>setRuns(Math.max(1, Number(e.target.value)))} />
+                  )}
+                </div>
+                <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5" style={{ color: t.textSecondary }}>{msg?.cylinder}</label>
+                  {isExporting ? (
+                    <div className="font-mono text-[10px] font-black leading-tight" style={{ color: '#f97316' }}>{selectedCyl?.name}</div>
+                  ) : (
+                    <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none" style={{ color: '#f97316' }} value={selectedCyl?.id} onChange={handleCylChange}>{CYLINDER_PRESETS.map(c => <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name}</option>)}</select>
+                  )}
+                </div>
              </div>
              <div className="space-y-3 flex-1">
                 {[

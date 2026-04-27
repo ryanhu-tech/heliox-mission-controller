@@ -55,21 +55,32 @@ body {
 }
 
 .printing section {
-  padding: 8px !important; /* 極限壓縮 */
-  margin-bottom: 8px !important;
+  padding: 5px !important; /* 極限壓縮 */
+  margin-bottom: 5px !important;
+  border-radius: 1rem !important;
 }
 
 .printing header {
-  padding: 15px !important;
-  margin-bottom: 10px !important;
+  padding: 8px !important;
+  margin-bottom: 5px !important;
+  border-radius: 1.5rem !important;
 }
 
-.printing header select, .printing header input {
-  font-size: 14px !important; /* 縮小字體確保 4 欄擠在同一行 */
+.printing header select, .printing header input, .printing header .font-mono {
+  font-size: 11px !important; /* 縮小字體確保全區域單行 */
+}
+
+.printing header h1 {
+  font-size: 13px !important;
 }
 
 .printing header label {
-  font-size: 7px !important;
+  font-size: 6px !important;
+}
+
+.printing * {
+  box-shadow: none !important;
+  text-shadow: none !important;
 }
 
 .printing * {
