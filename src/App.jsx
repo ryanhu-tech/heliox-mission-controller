@@ -4,7 +4,7 @@ import {
 } from 'recharts';
 import { 
   Activity, Waves, FlaskConical, Target, Clock, AlertTriangle, 
-  Info, Wind, Anchor, Users, ChevronDown, FileText, Download, Repeat, Sun, Moon, Database, Languages
+  Info, Wind, Anchor, Users, ChevronDown, FileText, Download, Repeat, Sun, Moon, Database, Languages, ExternalLink
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -228,8 +228,8 @@ function App() {
             <img src={dsodLogo} alt="DSOD Logo" className="w-14 h-14 object-contain" />
             <div>
               <h1 className="text-[18px] font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
-                <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/Dive%20Manual%20Rev%206%20with%20Chg%20A.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors">
-                  引用美海軍潛水教範V7
+                <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/US%20Navy%20Diving%20Manual%20Rev7.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors flex items-center">
+                  出處:美海軍潛水教範V7 <ExternalLink size={14} className="ml-1 opacity-70" />
                 </a>
               </h1>
               <p className="text-[8px] font-bold tracking-tight mt-1 opacity-70" style={{ color: t.textSecondary }}>
