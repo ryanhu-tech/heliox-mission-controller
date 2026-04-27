@@ -50,8 +50,18 @@ body {
   color: #000000 !important;
   width: 794px !important;
   max-width: 794px !important;
-  padding: 30px !important;
+  padding: 0 !important; /* 徹底移除外層邊距 */
   margin: 0 !important;
+}
+
+.printing section {
+  padding: 10px 0 !important; /* 讓內容（特別是 Profile）貼近左右邊緣 */
+  margin-bottom: 10px !important;
+}
+
+.printing header {
+  padding: 20px !important;
+  margin-bottom: 20px !important;
 }
 
 .printing * {

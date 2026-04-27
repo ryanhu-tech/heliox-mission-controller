@@ -159,11 +159,11 @@ function App() {
         finalWidth = (imgProps.width * finalHeight) / imgProps.height;
       }
 
-      // Center the content on the page
-      const xOffset = (pdfWidth - finalWidth) / 2;
+      // Force edge-to-edge width (xOffset = 0)
+      const xOffset = 0;
       const yOffset = (pdfHeight - finalHeight) / 2;
 
-      pdf.addImage(imgData, 'JPEG', xOffset, yOffset, finalWidth, finalHeight);
+      pdf.addImage(imgData, 'JPEG', xOffset, yOffset, pdfWidth, finalHeight);
       
       pdf.save(`Heliox_Mission_${maxDepth}ft.pdf`);
     } catch (err) {
@@ -185,7 +185,7 @@ function App() {
 
   return (
     <div className={`min-h-screen ${isExporting ? '' : 'transition-colors duration-500'} p-4 md:p-8 font-sans`} style={{ backgroundColor: t.bg, color: t.textPrimary }}>
-      <div id="report-container" className={`mx-auto space-y-6 ${isExporting ? 'printing p-6' : 'p-4'}`} style={{ width: isExporting ? '794px' : 'auto', maxWidth: isExporting ? '794px' : '1700px' }}>
+      <div id="report-container" className={`mx-auto space-y-6 ${isExporting ? 'printing' : 'p-4'}`} style={{ width: isExporting ? '794px' : 'auto', maxWidth: isExporting ? '794px' : '1700px' }}>
         <header className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 p-6 lg:px-8 lg:py-5 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
             <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
