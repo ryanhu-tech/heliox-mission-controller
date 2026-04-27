@@ -150,20 +150,21 @@ function App() {
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgProps = pdf.getImageProperties(imgData);
       
-      let finalWidth = pdfWidth;
-      let finalHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      const margin = 10; // 1cm margin
+      const targetWidth = pdfWidth - (margin * 2);
+      
+      let finalWidth = targetWidth;
+      let finalHeight = (imgProps.height * targetWidth) / imgProps.width;
 
-      // If content is too tall to fit one page width-wise, scale it down to fit height
-      if (finalHeight > pdfHeight) {
-        finalHeight = pdfHeight;
+      if (finalHeight > (pdfHeight - margin * 2)) {
+        finalHeight = pdfHeight - (margin * 2);
         finalWidth = (imgProps.width * finalHeight) / imgProps.height;
       }
 
-      // Force edge-to-edge width (xOffset = 0)
-      const xOffset = 0;
+      const xOffset = (pdfWidth - finalWidth) / 2;
       const yOffset = (pdfHeight - finalHeight) / 2;
 
-      pdf.addImage(imgData, 'JPEG', xOffset, yOffset, pdfWidth, finalHeight);
+      pdf.addImage(imgData, 'JPEG', xOffset, yOffset, finalWidth, finalHeight);
       
       pdf.save(`Heliox_Mission_${maxDepth}ft.pdf`);
     } catch (err) {
@@ -220,7 +221,16 @@ function App() {
         </header>
 
         <section className="p-8 rounded-[3rem] border shadow-2xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-          <div className="flex items-center justify-between mb-8"><h2 className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-2" style={{ color: '#64748b' }}><Activity size={14} style={{ color: '#f97316' }} /> {msg?.profile}</h2><div className="flex gap-4 p-2 px-4 rounded-full border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>{Object.entries(GAS_COLORS).map(([k,v]) => (<div key={k} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest" style={{ color: '#64748b' }}><span className="w-2 h-2 rounded-full" style={{backgroundColor:v}}></span>{getGasName(k)}</div>))}</div></div>
+          <div className="flex items-center justify-between mb-8 gap-4">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-2 shrink-0" style={{ color: '#64748b' }}><Activity size={14} style={{ color: '#f97316' }} /> {msg?.profile}</h2>
+            <div className="flex flex-nowrap gap-3 p-2 px-3 rounded-full border overflow-hidden shrink-0" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+              {Object.entries(GAS_COLORS).map(([k,v]) => (
+                <div key={k} className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest whitespace-nowrap" style={{ color: '#64748b' }}>
+                  <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{backgroundColor:v}}></span>{getGasName(k)}
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="w-full h-[450px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={profileData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
