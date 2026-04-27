@@ -140,7 +140,7 @@ function App() {
         useCORS: true, 
         logging: false,
         backgroundColor: '#ffffff',
-        windowWidth: 1280 // Optimized width for landscape A4
+        windowWidth: 1400 
       });
       
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
@@ -185,7 +185,7 @@ function App() {
 
   return (
     <div className={`min-h-screen ${isExporting ? '' : 'transition-colors duration-500'} p-4 md:p-8 font-sans`} style={{ backgroundColor: t.bg, color: t.textPrimary }}>
-      <div id="report-container" className="max-w-[1700px] mx-auto space-y-6 p-4">
+      <div id="report-container" className="mx-auto space-y-6 p-4" style={{ width: isExporting ? '1350px' : 'auto', maxWidth: isExporting ? '1350px' : '1700px' }}>
         <header className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 p-6 lg:px-8 lg:py-5 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
             <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
@@ -235,7 +235,7 @@ function App() {
           </div>
         </section>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 pb-20">
+        <div className="grid grid-cols-3 gap-6 pb-20">
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
              <div className="space-y-2 max-h-[450px] overflow-y-auto pr-2 custom-scroll-container">
