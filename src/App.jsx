@@ -150,7 +150,7 @@ function App() {
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgProps = pdf.getImageProperties(imgData);
       
-      const margin = 10; // 1cm margin
+      const margin = 5; // 5mm margin
       const targetWidth = pdfWidth - (margin * 2);
       
       let finalWidth = targetWidth;
@@ -213,7 +213,7 @@ function App() {
                 <div><label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-[#64748b]">{msg?.divers}</label><input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} /></div><Users size={20} style={{ color: '#64748b' }} />
              </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className={`${isExporting ? 'hidden' : 'flex'} items-center gap-2`}>
              <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2" style={{ color: '#f97316' }} />{lang === 'en' ? '中文' : 'EN'}</button>
              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-12 h-12 rounded-2xl flex items-center justify-center border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}>{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}</button>
              <button onClick={handleExportPDF} disabled={isExporting} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#ffffff' : '#0f172a', color: theme === 'dark' ? '#000000' : '#ffffff' }}>{isExporting ? <Clock className="animate-spin" size={16} /> : <Download size={16} />}{isExporting ? msg?.generating : msg?.export}</button>
