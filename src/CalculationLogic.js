@@ -126,6 +126,13 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
   function handleWaterO2(totalTime, depth, data, startTime, formatter) {
     let t = startTime;
     let rem = totalTime;
+    
+    // Special Rule: If at 20fsw and total time is 35 mins or less, omit air break.
+    if (depth === 20 && totalTime <= 35) {
+       data.push({ time: t + totalTime, depth, phase: 'Deco Stop', gas: 'O2', timeStr: formatter(t + totalTime), duration: totalTime });
+       return;
+    }
+
     while (rem > 0) {
        let o2T = Math.min(rem, 30);
        data.push({ time: t + o2T, depth, phase: 'Deco Stop', gas: 'O2', timeStr: formatter(t + o2T), duration: o2T });
@@ -142,7 +149,7 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
     const finalT = lastDepth / CONSTANTS.ASCENT_RATE;
     if (finalT > 0) {
       currentTime += finalT;
-      data.push({ time: currentTime, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime), duration: finalT });
+      data.push({ time: currentTime, depth: 0, phase: 'Surface', gas: 'O2', timeStr: formatTime(currentTime), duration: finalT });
     }
   } else {
     // SurD O2 specific
@@ -158,7 +165,7 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
     
     // Chamber Descent
     currentTime += 0.5;
-    data.push({ time: currentTime, depth: 50, phase: 'Chamber Descent', gas: 'O2', timeStr: formatTime(currentTime), duration: 0.5 });
+    data.push({ time: currentTime, depth: 50, phase: 'Chamber Descent', gas: 'AIR', timeStr: formatTime(currentTime), duration: 0.5 });
 
     for (let i = 1; i <= o2Periods; i++) {
       data.push({ time: currentTime + 30, depth: 50, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+30), duration: 30, pIndex: i });

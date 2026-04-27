@@ -89,10 +89,14 @@ function App() {
     else setAscentGasSCF(calcAscentGas(maxDepth, 0, divers));
   }, [stops, divers, maxDepth, o2Periods, decoMode]);
 
-    const { profileData, totalDuration, chamberSteps, gradStops } = useMemo(() => {
+    const { profileData, totalDuration, chamberSteps, gradStops, yTicks } = useMemo(() => {
     const res = generateProfileData(maxDepth, bottomTime, stops, o2Periods, decoMode);
     const steps = decoMode === 'SURD' ? expandChamberSteps(o2Periods) : [];
     const duration = (res && res.data && res.data.length > 0) ? res.data[res.data.length - 1].time : 1;
+    
+    const stopDepths = stops.map(s => s.depth);
+    const allTicks = Array.from(new Set([0, ...stopDepths, maxDepth])).sort((a, b) => a - b);
+
     const gStops = [];
     gStops.push({ offset: '0%', color: '#f97316' });
 
@@ -111,7 +115,7 @@ function App() {
         gStops.push({ offset: `${endOffset}%`, color: endColor });
       }
     }
-    return { profileData: res.data || [], totalDuration: duration, chamberSteps: steps, gradStops: gStops };
+    return { profileData: res.data || [], totalDuration: duration, chamberSteps: steps, gradStops: gStops, yTicks: allTicks };
   }, [maxDepth, bottomTime, stops, o2Periods, decoMode]);
 
   const handleCylChange = (e) => {
@@ -254,13 +258,13 @@ function App() {
               ))}
             </div>
           </div>
-          <div className="w-full h-[450px]">
+          <div className="w-full h-[675px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={profileData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                 <defs><linearGradient id="gasGradient" x1="0" y1="0" x2="1" y2="0">{gradStops?.map((s, i) => <stop key={i} offset={s.offset} stopColor={s.color} stopOpacity={0.4} />)}</linearGradient></defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={t.grid} vertical={false} opacity={0.5} />
                 <XAxis dataKey="time" type="number" domain={[0, totalDuration]} tickFormatter={(v)=>`${Math.floor(v)}:${Math.round((v%1)*60).toString().padStart(2,'0')}`} stroke={t.textSecondary} fontSize={11} />
-                <YAxis reversed domain={[0, maxDepth + 10]} ticks={[0,20,30,40,50,90,maxDepth]} stroke={t.textSecondary} fontSize={11} tickFormatter={(v)=>`${v}'`} />
+                <YAxis reversed domain={[0, maxDepth + 10]} ticks={yTicks} interval={0} stroke={t.textSecondary} fontSize={11} tickFormatter={(v)=>`${v}'`} />
                 <Tooltip content={({ active, payload }) => { if (active && payload?.[0]) { const d = payload[0].payload; const m = Math.floor(d.duration), s = Math.round((d.duration % 1) * 60); return (<div className="bg-[#020617] border border-[#1e293b] p-4 rounded-2xl shadow-2xl text-xs space-y-2"><p className="text-[10px] font-black text-[#f97316] uppercase tracking-widest border-b border-[#1e293b] pb-1">{getPhaseName(d.phase)} {d.pIndex ? `P${d.pIndex}` : ''}</p><div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.depth}</span><span className="text-white font-mono font-black">{d.depth} fsw</span></div><div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.clock}</span><span className="text-white font-mono font-black">{d.timeStr}</span></div>{d.duration > 0 && <div className="flex justify-between gap-8"><span className="text-[#0ea5e9] font-bold">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black">{m}m {s}s</span></div>}<div className="flex justify-between gap-8 pt-1 border-t border-[#1e293b]"><span className="text-[#64748b] font-bold">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black">{getGasName(d.gas)}</span></div></div>); } return null; }} />
                 <Area type="linear" dataKey="depth" stroke={theme === 'dark' ? '#ffffff' : '#000000'} strokeWidth={2} fill="url(#gasGradient)" isAnimationActive={false} />
               </AreaChart>
