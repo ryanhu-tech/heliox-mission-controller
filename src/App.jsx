@@ -140,11 +140,11 @@ function App() {
         useCORS: true, 
         logging: false,
         backgroundColor: '#ffffff',
-        windowWidth: 1123 // Exact A4 Landscape pixel width at 96 DPI
+        windowWidth: 794 
       });
       
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      const pdf = new jsPDF('l', 'mm', 'a4'); // Landscape for better fit
+      const pdf = new jsPDF('p', 'mm', 'a4'); 
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
@@ -185,7 +185,7 @@ function App() {
 
   return (
     <div className={`min-h-screen ${isExporting ? '' : 'transition-colors duration-500'} p-4 md:p-8 font-sans`} style={{ backgroundColor: t.bg, color: t.textPrimary }}>
-      <div id="report-container" className={`mx-auto space-y-6 ${isExporting ? 'printing p-10' : 'p-4'}`} style={{ width: isExporting ? '1123px' : 'auto', maxWidth: isExporting ? '1123px' : '1700px' }}>
+      <div id="report-container" className={`mx-auto space-y-6 ${isExporting ? 'printing p-6' : 'p-4'}`} style={{ width: isExporting ? '794px' : 'auto', maxWidth: isExporting ? '794px' : '1700px' }}>
         <header className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 p-6 lg:px-8 lg:py-5 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
             <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
