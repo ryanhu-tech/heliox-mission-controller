@@ -8,7 +8,9 @@ export const CONSTANTS = {
   DESCENT_RATE: 75,
   VENT_TIME_MINS: 3.0,
   V_ASCENT_SURD: 40,
-  DIVER_CONSUMPTION_ACFM: 1.4,
+  BOTTOM_CONSUMPTION_ACFM: 1.4,
+  DECO_CONSUMPTION_ACFM: 0.75,
+  VENT_CONSUMPTION_ACFM: 8,
   O2_PERIOD_MINS: 30,
   AIR_BREAK_MINS: 5,
 };
@@ -21,12 +23,12 @@ export const getGasType = (depth) => {
   return 'O2';
 };
 
-export const calcBottomGas = (depth, time, divers) => Math.round(divers * time * 1.4 * getATA(depth));
+export const calcBottomGas = (depth, time, divers) => Math.ceil(divers * time * CONSTANTS.BOTTOM_CONSUMPTION_ACFM * getATA(depth));
 
 export const calcAscentGas = (startDepth, endDepth, divers) => {
   const avgDepth = (startDepth + endDepth) / 2;
   const ascentTime = (startDepth - endDepth) / CONSTANTS.ASCENT_RATE;
-  return Math.round(divers * ascentTime * 1.4 * getATA(avgDepth));
+  return Math.ceil(divers * ascentTime * CONSTANTS.DECO_CONSUMPTION_ACFM * getATA(avgDepth));
 };
 
 export const calcTotalDecoGas = (stops, divers, o2Periods, mode) => {
@@ -35,27 +37,42 @@ export const calcTotalDecoGas = (stops, divers, o2Periods, mode) => {
   stops.forEach(stop => {
     const ata = getATA(stop.depth);
     if (stop.depth >= 90) {
-      bottomMix += divers * stop.time * 1.4 * ata;
+      bottomMix += divers * stop.time * CONSTANTS.DECO_CONSUMPTION_ACFM * ata;
     } else if (stop.depth > 30) {
-      decoMix += divers * stop.time * 1.4 * ata;
+      decoMix += divers * stop.time * CONSTANTS.DECO_CONSUMPTION_ACFM * ata;
     } else if (mode === 'WATER') {
       const totalTime = stop.time;
       const numBreaks = Math.floor(totalTime / 35);
       const airTime = numBreaks * 5;
       const o2Time = totalTime - airTime;
-      oxygen += divers * o2Time * 1.4 * ata;
-      air += divers * airTime * 1.4 * ata;
+      oxygen += divers * o2Time * CONSTANTS.DECO_CONSUMPTION_ACFM * ata;
+      air += divers * airTime * CONSTANTS.DECO_CONSUMPTION_ACFM * ata;
     }
   });
 
-  if (stops.some(s => s.depth === 90)) decoMix += divers * 3 * 8 * getATA(90);
-  if (mode === 'WATER' && stops.some(s => s.depth === 30)) oxygen += divers * 3 * 8 * getATA(30);
-  else if (mode === 'SURD') oxygen += divers * o2Periods * 30 * 1.4 * getATA(50);
+  if (stops.some(s => s.depth === 90)) {
+    bottomMix += divers * 3 * CONSTANTS.VENT_CONSUMPTION_ACFM * getATA(90);
+  }
+  
+  if (mode === 'WATER' && stops.some(s => s.depth === 30)) {
+    oxygen += divers * 3 * CONSTANTS.VENT_CONSUMPTION_ACFM * getATA(30);
+  } else if (mode === 'SURD') {
+    // SurD O2 Periods: All at 0.75 ACFM as they are resting in chamber
+    oxygen += divers * o2Periods * 30 * CONSTANTS.DECO_CONSUMPTION_ACFM * getATA(40); // Avg depth is roughly 40
+  }
 
-  return { bottomMix: Math.round(bottomMix), decoMix: Math.round(decoMix), oxygen: Math.round(oxygen), air: Math.round(air) };
+  return { 
+    bottomMix: Math.ceil(bottomMix), 
+    decoMix: Math.ceil(decoMix), 
+    oxygen: Math.ceil(oxygen), 
+    air: Math.ceil(air) 
+  };
 };
 
-export const getCylinderAvailableSCF = (psi, vol, res) => Math.floor((psi - res) * (vol / 14.7));
+export const getCylinderAvailableSCF = (psi, vol, res) => {
+  const va = (psi - res) * (vol / 14.7);
+  return Math.floor(va * 100) / 100;
+};
 export const calcCylinderCount = (total, avail) => avail > 0 ? Math.ceil(total / avail) : 0;
 
 export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode) => {
@@ -238,19 +255,18 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
 
 export const expandChamberSteps = (o2Periods) => {
   const steps = [];
-  let currentDepth = 50;
   for (let i = 1; i <= o2Periods; i++) {
-    // Determine the depth for this period
-    if (i === 1) currentDepth = 40;
-    else if (i >= 5) currentDepth = 30;
-    else currentDepth = 40;
-
-    steps.push({ phase: 'O2 Period', depth: currentDepth, time: 30, gas: 'O2', pIndex: i });
+    if (i === 1) {
+      steps.push({ phase: 'O2 Period', depth: 50, time: 15, gas: 'O2', pIndex: 1 });
+      steps.push({ phase: 'O2 Period', depth: 40, time: 15, gas: 'O2', pIndex: 1 });
+    } else {
+      const currentDepth = i >= 5 ? 30 : 40;
+      steps.push({ phase: 'O2 Period', depth: currentDepth, time: 30, gas: 'O2', pIndex: i });
+    }
 
     if (i < o2Periods) {
       const nextDepth = (i + 1) >= 5 ? 30 : 40;
       steps.push({ phase: 'Air Break', depth: nextDepth, time: 5, gas: 'AIR' });
-      currentDepth = nextDepth;
     }
   }
   return steps;
