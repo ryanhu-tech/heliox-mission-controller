@@ -39,11 +39,36 @@ body {
 
 /* 強制報表容器內的所有色彩屬性避開 oklch */
 #report-container, #report-container * {
-  /* 移除過渡動畫，防止擷取時屬性處於中間狀態 */
   transition: none !important;
   animation: none !important;
-  /* 強制繼承 HEX 變數 */
   border-color: currentColor;
+}
+
+/* A4 打印優化樣式 */
+.printing {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  width: 1123px !important;
+  max-width: 1123px !important;
+  padding: 40px !important;
+  margin: 0 !important;
+}
+
+.printing * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-radius: 4px !important;
+}
+
+.printing header, .printing section {
+  border: 1px solid #e2e8f0 !important;
+  background-color: #f8fafc !important;
+}
+
+.printing select, .printing input {
+  border: none !important;
+  background: transparent !important;
+  color: #000000 !important;
 }
 
 .custom-scroll-container::-webkit-scrollbar {
