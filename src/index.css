@@ -1,5 +1,55 @@
 @import "tailwindcss";
 
+/* 徹底根除 oklch：將 Tailwind 4 的核心變數全部強制改為 HEX */
+:root {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+  
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+  
+  --color-sky-400: #38bdf8;
+  --color-sky-500: #0ea5e9;
+  
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+}
+
 body {
-  @apply bg-slate-900 text-slate-100;
+  background-color: #0f172a;
+  color: #f1f5f9;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
+/* 強制報表容器內的所有色彩屬性避開 oklch */
+#report-container, #report-container * {
+  /* 移除過渡動畫，防止擷取時屬性處於中間狀態 */
+  transition: none !important;
+  animation: none !important;
+  /* 強制繼承 HEX 變數 */
+  border-color: currentColor;
+}
+
+.custom-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scroll-container::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
 }

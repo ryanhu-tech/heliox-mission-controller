@@ -183,16 +183,16 @@ function App() {
   const oxygenCylCount = calcCylinderCount(((decoGasTotals?.oxygen || 0) * runs), availableSCFPerCyl);
 
   return (
-    <div className="min-h-screen transition-colors duration-500 p-4 md:p-8 font-sans" style={{ backgroundColor: t.bg, color: t.textPrimary }}>
+    <div className={`min-h-screen ${isExporting ? '' : 'transition-colors duration-500'} p-4 md:p-8 font-sans`} style={{ backgroundColor: t.bg, color: t.textPrimary }}>
       <div id="report-container" className="max-w-[1700px] mx-auto space-y-6 p-4">
         <header className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 p-6 lg:px-8 lg:py-5 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
-            <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves className="text-white" size={28} /></div>
+            <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
             <div><h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>{msg?.title}</h1><p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p></div>
           </div>
           <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
              <div className="p-3 px-4 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-[#64748b]">{msg?.maxDepth}</label>
+                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.maxDepth}</label>
                 <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
                   {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
                 </select>
