@@ -94,7 +94,8 @@ function App() {
     const steps = decoMode === 'SURD' ? expandChamberSteps(o2Periods) : [];
     const duration = (res && res.data && res.data.length > 0) ? res.data[res.data.length - 1].time : 1;
     const gStops = [];
-    
+    gStops.push({ offset: '0%', color: '#f97316' });
+
     if (res && res.data && res.data.length > 1) {
       for (let i = 1; i < res.data.length; i++) {
         const prev = res.data[i - 1];
@@ -124,8 +125,7 @@ function App() {
     setIsExporting(true);
     setTheme('light'); 
     
-    // Wait for theme transition and chart re-rendering
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
     const element = document.getElementById('report-container');
     if (!element) {
@@ -139,7 +139,8 @@ function App() {
         scale: 2, 
         useCORS: true, 
         logging: false,
-        backgroundColor: '#ffffff' 
+        backgroundColor: '#ffffff',
+        windowWidth: 1600
       });
       
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
@@ -153,11 +154,9 @@ function App() {
       let heightLeft = imgHeight;
       let position = 0;
 
-      // Add first page
       pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
       heightLeft -= pdfHeight;
 
-      // Multi-page handling
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
@@ -168,7 +167,7 @@ function App() {
       pdf.save(`Heliox_Mission_${maxDepth}ft.pdf`);
     } catch (err) {
       console.error('PDF Export Error:', err);
-      alert('PDF 導出失敗。');
+      alert(`PDF 導出失敗: ${err.message}`);
     } finally {
       setTheme(originalTheme);
       setIsExporting(false);
@@ -188,48 +187,48 @@ function App() {
       <div id="report-container" className="max-w-[1700px] mx-auto space-y-6 p-4">
         <header className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6 p-6 lg:px-8 lg:py-5 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
-            <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg"><Waves className="text-white" size={28} /></div>
-            <div><h1 className="text-xl font-black uppercase tracking-tighter leading-none">{msg?.title}</h1><p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p></div>
+            <div className="w-12 h-12 bg-[#f97316] rounded-2xl flex items-center justify-center shadow-lg"><Waves className="text-white" size={28} /></div>
+            <div><h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>{msg?.title}</h1><p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p></div>
           </div>
           <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-4">
              <div className="p-3 px-4 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-slate-500">{msg?.maxDepth}</label>
+                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-[#64748b]">{msg?.maxDepth}</label>
                 <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
                   {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
                 </select>
              </div>
              <div className="p-3 px-4 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-slate-500">{msg?.bottomTime}</label>
+                <label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-[#64748b]">{msg?.bottomTime}</label>
                 <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
                   {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
                 </select>
              </div>
              <div className="p-2 rounded-2xl border flex items-center" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <button onClick={()=>setDecoMode('SURD')} className={`flex-1 py-3 rounded-xl text-[10px] font-black transition-all ${decoMode === 'SURD' ? 'bg-orange-500 text-white shadow-lg' : ''}`}>SURD O2</button>
-                <button onClick={()=>setDecoMode('WATER')} className={`flex-1 py-3 rounded-xl text-[10px] font-black transition-all ${decoMode === 'WATER' ? 'bg-green-600 text-white shadow-lg' : ''}`}>IN-WATER</button>
+                <button onClick={()=>setDecoMode('SURD')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', color: decoMode === 'SURD' ? '#fff' : '#64748b' }}>SURD O2</button>
+                <button onClick={()=>setDecoMode('WATER')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', color: decoMode === 'WATER' ? '#fff' : '#64748b' }}>IN-WATER</button>
              </div>
              <div className="p-3 px-4 rounded-2xl border flex items-center justify-between" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <div><label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-slate-500">{msg?.divers}</label><input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} /></div><Users size={20} className="text-slate-500" />
+                <div><label className="block text-[8px] font-black mb-1 uppercase tracking-widest text-[#64748b]">{msg?.divers}</label><input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} /></div><Users size={20} style={{ color: '#64748b' }} />
              </div>
           </div>
           <div className="flex items-center gap-2">
-             <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2 text-orange-500" />{lang === 'en' ? '中文' : 'EN'}</button>
+             <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2" style={{ color: '#f97316' }} />{lang === 'en' ? '中文' : 'EN'}</button>
              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-12 h-12 rounded-2xl flex items-center justify-center border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}>{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}</button>
-             <button onClick={handleExportPDF} disabled={isExporting} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#fff' : '#0f172a', color: theme === 'dark' ? '#000' : '#fff' }}>{isExporting ? <Clock className="animate-spin" size={16} /> : <Download size={16} />}{isExporting ? msg?.generating : msg?.export}</button>
+             <button onClick={handleExportPDF} disabled={isExporting} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#ffffff' : '#0f172a', color: theme === 'dark' ? '#000000' : '#ffffff' }}>{isExporting ? <Clock className="animate-spin" size={16} /> : <Download size={16} />}{isExporting ? msg?.generating : msg?.export}</button>
           </div>
         </header>
 
         <section className="p-8 rounded-[3rem] border shadow-2xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-          <div className="flex items-center justify-between mb-8"><h2 className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-2 text-slate-500"><Activity size={14} className="text-orange-500" /> {msg?.profile}</h2><div className="flex gap-4 p-2 px-4 rounded-full border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>{Object.entries(GAS_COLORS).map(([k,v]) => (<div key={k} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500"><span className="w-2 h-2 rounded-full" style={{backgroundColor:v}}></span>{getGasName(k)}</div>))}</div></div>
+          <div className="flex items-center justify-between mb-8"><h2 className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-2" style={{ color: '#64748b' }}><Activity size={14} style={{ color: '#f97316' }} /> {msg?.profile}</h2><div className="flex gap-4 p-2 px-4 rounded-full border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>{Object.entries(GAS_COLORS).map(([k,v]) => (<div key={k} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest" style={{ color: '#64748b' }}><span className="w-2 h-2 rounded-full" style={{backgroundColor:v}}></span>{getGasName(k)}</div>))}</div></div>
           <div className="w-full h-[450px]">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={profileData}>
+              <AreaChart data={profileData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                 <defs><linearGradient id="gasGradient" x1="0" y1="0" x2="1" y2="0">{gradStops?.map((s, i) => <stop key={i} offset={s.offset} stopColor={s.color} stopOpacity={0.4} />)}</linearGradient></defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={t.grid} vertical={false} opacity={0.5} />
                 <XAxis dataKey="time" type="number" domain={[0, totalDuration]} tickFormatter={(v)=>`${Math.floor(v)}:${Math.round((v%1)*60).toString().padStart(2,'0')}`} stroke={t.textSecondary} fontSize={11} />
                 <YAxis reversed domain={[0, maxDepth + 10]} ticks={[0,20,30,40,50,90,maxDepth]} stroke={t.textSecondary} fontSize={11} tickFormatter={(v)=>`${v}'`} />
-                <Tooltip content={({ active, payload }) => { if (active && payload?.[0]) { const d = payload[0].payload; const m = Math.floor(d.duration), s = Math.round((d.duration % 1) * 60); return (<div className="bg-slate-950 border border-slate-700 p-4 rounded-2xl shadow-2xl text-xs space-y-2"><p className="text-[10px] font-black text-orange-500 uppercase tracking-widest border-b border-slate-800 pb-1">{getPhaseName(d.phase)} {d.pIndex ? `P${d.pIndex}` : ''}</p><div className="flex justify-between gap-8"><span className="text-slate-500 font-bold">{msg?.depth}</span><span className="text-white font-mono font-black">{d.depth} fsw</span></div><div className="flex justify-between gap-8"><span className="text-slate-500 font-bold">{msg?.clock}</span><span className="text-white font-mono font-black">{d.timeStr}</span></div>{d.duration > 0 && <div className="flex justify-between gap-8"><span className="text-sky-500 font-bold">{msg?.segmentTime}</span><span className="text-sky-400 font-mono font-black">{m}m {s}s</span></div>}<div className="flex justify-between gap-8 pt-1 border-t border-slate-800"><span className="text-slate-500 font-bold">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black">{getGasName(d.gas)}</span></div></div>); } return null; }} />
-                <Area type="linear" dataKey="depth" stroke={theme === 'dark' ? '#fff' : '#000'} strokeWidth={2} fill="url(#gasGradient)" isAnimationActive={false} />
+                <Tooltip content={({ active, payload }) => { if (active && payload?.[0]) { const d = payload[0].payload; const m = Math.floor(d.duration), s = Math.round((d.duration % 1) * 60); return (<div className="bg-[#020617] border border-[#1e293b] p-4 rounded-2xl shadow-2xl text-xs space-y-2"><p className="text-[10px] font-black text-[#f97316] uppercase tracking-widest border-b border-[#1e293b] pb-1">{getPhaseName(d.phase)} {d.pIndex ? `P${d.pIndex}` : ''}</p><div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.depth}</span><span className="text-white font-mono font-black">{d.depth} fsw</span></div><div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.clock}</span><span className="text-white font-mono font-black">{d.timeStr}</span></div>{d.duration > 0 && <div className="flex justify-between gap-8"><span className="text-[#0ea5e9] font-bold">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black">{m}m {s}s</span></div>}<div className="flex justify-between gap-8 pt-1 border-t border-[#1e293b]"><span className="text-[#64748b] font-bold">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black">{getGasName(d.gas)}</span></div></div>); } return null; }} />
+                <Area type="linear" dataKey="depth" stroke={theme === 'dark' ? '#ffffff' : '#000000'} strokeWidth={2} fill="url(#gasGradient)" isAnimationActive={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -237,36 +236,36 @@ function App() {
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 pb-20">
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6 text-slate-500"><Anchor size={14} className="text-sky-500" /> {msg?.waterDeco}</h2>
+             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
              <div className="space-y-2 max-h-[450px] overflow-y-auto pr-2 custom-scroll-container">
-                {stops && stops.length > 0 ? stops.map(stop => (<div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="font-mono text-sm font-black" style={{ color: stop.depth <= 30 ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span><div className="flex items-center gap-2"><span className="font-mono text-lg font-black">{stop.time}</span><span className="text-[8px] font-black uppercase opacity-50">Min</span></div></div>)) : <div className="text-center py-10 opacity-30 text-[10px] uppercase font-black">{msg?.noDeco}</div>}
+                {stops && stops.length > 0 ? stops.map(stop => (<div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="font-mono text-sm font-black" style={{ color: stop.depth <= 30 ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span><div className="flex items-center gap-2"><span className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>{stop.time}</span><span className="text-[8px] font-black uppercase opacity-50" style={{ color: t.textSecondary }}>Min</span></div></div>)) : <div className="text-center py-10 opacity-30 text-[10px] uppercase font-black" style={{ color: t.textSecondary }}>{msg?.noDeco}</div>}
              </div>
           </section>
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6 text-slate-500"><Wind size={14} className="text-green-500" /> {decoMode === 'SURD' ? msg?.chamber : msg?.protocol}</h2>
+             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Wind size={14} style={{ color: '#22c55e' }} /> {decoMode === 'SURD' ? msg?.chamber : msg?.protocol}</h2>
              <div className="space-y-2 custom-scroll-container">
                 {decoMode === 'SURD' ? expandChamberSteps(o2Periods).map((step, idx) => {
                   let pIdx = 0; if(step.phase === 'O2 Period') pIdx = expandChamberSteps(o2Periods).slice(0, idx+1).filter(s=>s.phase === 'O2 Period').length;
-                  return (<div key={idx} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="text-[8px] font-black uppercase" style={{ color: step.gas === 'O2' ? GAS_COLORS.O2 : t.textSecondary }}>{lang === 'zh' ? (step.gas === 'O2' ? `氧氣週期 P${pIdx}` : '空氣呼吸期') : step.phase}</span><span className="font-mono text-sm font-black">{step.time}m</span></div>);
-                }) : <div className="p-5 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><p className="text-xs leading-relaxed opacity-70">{msg?.airNote}</p></div>}
+                  return (<div key={idx} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="text-[8px] font-black uppercase" style={{ color: step.gas === 'O2' ? GAS_COLORS.O2 : t.textSecondary }}>{lang === 'zh' ? (step.gas === 'O2' ? `氧氣週期 P${pIdx}` : '空氣呼吸期') : step.phase}</span><span className="font-mono text-sm font-black" style={{ color: t.textPrimary }}>{step.time}m</span></div>);
+                }) : <div className="p-5 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><p className="text-xs leading-relaxed opacity-70" style={{ color: t.textPrimary }}>{msg?.airNote}</p></div>}
              </div>
           </section>
           <section className="p-6 rounded-[2.5rem] border shadow-lg flex flex-col" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6 text-slate-500"><FlaskConical size={14} className="text-amber-500" /> {msg?.logistics}</h2>
-             <div className="bg-amber-500/10 p-4 rounded-3xl border border-amber-500/20 mb-4 flex justify-between items-end"><div><p className="text-lg font-black">{selectedCyl?.name}</p><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter">{msg?.model}</p></div><div className="text-right"><p className="font-mono text-sm font-bold text-amber-600">{selectedCyl?.psi} PSI / {selectedCyl?.vol} CF</p><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter">{msg?.workPress}</p></div></div>
+             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><FlaskConical size={14} style={{ color: '#f59e0b' }} /> {msg?.logistics}</h2>
+             <div className="p-4 rounded-3xl border mb-4 flex justify-between items-end" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', borderColor: 'rgba(245, 158, 11, 0.2)' }}><div><p className="text-lg font-black" style={{ color: t.textPrimary }}>{selectedCyl?.name}</p><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.model}</p></div><div className="text-right"><p className="font-mono text-sm font-bold" style={{ color: '#d97706' }}>{selectedCyl?.psi} PSI / {selectedCyl?.vol} CF</p><p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.workPress}</p></div></div>
              <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="p-4 rounded-3xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-1">{msg?.runs}</label><input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-full" style={{ color: t.textPrimary }} value={runs} onChange={(e)=>setRuns(Math.max(1, Number(e.target.value)))} /></div>
-                <div className="p-4 rounded-3xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-1">{msg?.cylinder}</label><select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none" style={{ color: GAS_COLORS.BOTTOM }} value={selectedCyl?.id} onChange={handleCylChange}>{CYLINDER_PRESETS.map(c => <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name}</option>)}</select></div>
+                <div className="p-4 rounded-3xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-1" style={{ color: t.textSecondary }}>{msg?.runs}</label><input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-full" style={{ color: t.textPrimary }} value={runs} onChange={(e)=>setRuns(Math.max(1, Number(e.target.value)))} /></div>
+                <div className="p-4 rounded-3xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-1" style={{ color: t.textSecondary }}>{msg?.cylinder}</label><select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none" style={{ color: '#f97316' }} value={selectedCyl?.id} onChange={handleCylChange}>{CYLINDER_PRESETS.map(c => <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name}</option>)}</select></div>
              </div>
              <div className="space-y-3 flex-1">
                 {[
-                  { label: msg?.bottomMix, val: Math.round(bottomGasSCF + ascentGasSCF + (decoGasTotals?.bottomMix || 0)) * runs, count: bottomCylCount, color: GAS_COLORS.BOTTOM },
-                  { label: msg?.decoMix, val: (decoGasTotals?.decoMix || 0) * runs, count: decoCylCount, color: GAS_COLORS['5050'] },
-                  { label: msg?.oxygen, val: (decoGasTotals?.oxygen || 0) * runs, count: oxygenCylCount, color: GAS_COLORS.O2 }
+                  { label: msg?.bottomMix, val: Math.round(bottomGasSCF + ascentGasSCF + (decoGasTotals?.bottomMix || 0)) * runs, count: bottomCylCount, color: '#f97316' },
+                  { label: msg?.decoMix, val: (decoGasTotals?.decoMix || 0) * runs, count: decoCylCount, color: '#eab308' },
+                  { label: msg?.oxygen, val: (decoGasTotals?.oxygen || 0) * runs, count: oxygenCylCount, color: '#22c55e' }
                 ].map(item => (
                   <div key={item.label} className="p-4 rounded-2xl border flex items-center justify-between" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                    <div><p className="text-[8px] font-black uppercase opacity-50 tracking-widest">{item.label}</p><p className="text-lg font-mono font-black">{item.val} SCF</p></div>
-                    <div className="text-right"><span className="text-3xl font-mono font-black" style={{ color: item.color }}>{item.count}</span><span className="text-[8px] font-black uppercase opacity-50 ml-1">{msg?.cyls}</span></div>
+                    <div><p className="text-[8px] font-black uppercase opacity-50 tracking-widest" style={{ color: t.textSecondary }}>{item.label}</p><p className="text-lg font-mono font-black" style={{ color: t.textPrimary }}>{item.val} SCF</p></div>
+                    <div className="text-right"><span className="text-3xl font-mono font-black" style={{ color: item.color }}>{item.count}</span><span className="text-[8px] font-black uppercase opacity-50 ml-1" style={{ color: t.textSecondary }}>{msg?.cyls}</span></div>
                   </div>
                 ))}
              </div>
