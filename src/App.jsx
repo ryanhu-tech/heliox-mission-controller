@@ -6,7 +6,7 @@ import {
   Activity, Waves, FlaskConical, Target, Clock, AlertTriangle, 
   Info, Wind, Anchor, Users, ChevronDown, FileText, Download, Repeat, Sun, Moon, Database, Languages
 } from 'lucide-react';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import decoTable from './data/deco_table.json';
 import { 
@@ -96,7 +96,7 @@ function App() {
     const gStops = [];
     gStops.push({ offset: '0%', color: '#f97316' });
 
-    if (res && res.data && res.data.length > 1) {
+    if (res && res.data && res.data.length > 1 && duration > 0) {
       for (let i = 1; i < res.data.length; i++) {
         const prev = res.data[i - 1];
         const curr = res.data[i];
@@ -104,8 +104,8 @@ function App() {
         const endOffset = Math.min(100, (curr.time / duration) * 100);
         
         const isGradientSegment = curr.phase === 'Ventilation' || curr.phase === 'Chamber Descent';
-        const startColor = GAS_COLORS[isGradientSegment ? prev.gas : curr.gas];
-        const endColor = GAS_COLORS[curr.gas];
+        const startColor = GAS_COLORS[isGradientSegment ? prev.gas : curr.gas] || GAS_COLORS.BOTTOM;
+        const endColor = GAS_COLORS[curr.gas] || GAS_COLORS.BOTTOM;
 
         gStops.push({ offset: `${startOffset}%`, color: startColor });
         gStops.push({ offset: `${endOffset}%`, color: endColor });
@@ -120,59 +120,60 @@ function App() {
   };
 
   const handleExportPDF = async () => {
-    if (isExporting) return;
-    const originalTheme = theme;
-    setIsExporting(true);
-    setTheme('light'); 
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    const element = document.getElementById('report-container');
-    if (!element) {
-      setIsExporting(false);
-      setTheme(originalTheme);
-      return;
-    }
-
     try {
-      const canvas = await html2canvas(element, { 
-        scale: 2, 
-        useCORS: true, 
-        logging: false,
-        backgroundColor: '#ffffff',
-        windowWidth: 794 
-      });
+      const originalTheme = theme;
+      setTheme('light'); 
       
-      const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      const pdf = new jsPDF('p', 'mm', 'a4'); 
+      // Wait for re-render
+      await new Promise(r => setTimeout(r, 500));
       
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgProps = pdf.getImageProperties(imgData);
-      
-      const margin = 0.1; // 0.1mm margin (Absolute maximum)
-      const targetWidth = pdfWidth - (margin * 2);
-      
-      let finalWidth = targetWidth;
-      let finalHeight = (imgProps.height * targetWidth) / imgProps.width;
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const margin = 10;
+      let currentY = 15;
 
-      if (finalHeight > (pdfHeight - margin * 2)) {
-        finalHeight = pdfHeight - (margin * 2);
-        finalWidth = (imgProps.width * finalHeight) / imgProps.height;
+      // Helper function to capture element with high resolution
+      const captureElement = async (id, widthMM) => {
+        const el = document.getElementById(id);
+        if (!el) return null;
+        const canvas = await html2canvas(el, { scale: 3, backgroundColor: '#ffffff', useCORS: true });
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const imgProps = doc.getImageProperties(imgData);
+        const heightMM = (imgProps.height * widthMM) / imgProps.width;
+        return { imgData, heightMM };
+      };
+
+      // 1. Header (programmatic capture)
+      const header = await captureElement('pdf-header', pageWidth - margin * 2);
+      if (header) {
+        doc.addImage(header.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, header.heightMM);
+        currentY += header.heightMM + 5;
       }
 
-      const xOffset = (pdfWidth - finalWidth) / 2;
-      const yOffset = (pdfHeight - finalHeight) / 2;
+      // 2. Chart
+      const chart = await captureElement('pdf-chart', pageWidth - margin * 2);
+      if (chart) {
+        doc.addImage(chart.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, chart.heightMM);
+        currentY += chart.heightMM + 5;
+      }
 
-      pdf.addImage(imgData, 'JPEG', xOffset, yOffset, finalWidth, finalHeight);
-      
-      pdf.save(`Heliox_Mission_${maxDepth}ft.pdf`);
+      // 3. Grid (Tables)
+      const tables = await captureElement('pdf-tables', pageWidth - margin * 2);
+      if (tables) {
+        // If it fits on the same page, add it. Otherwise, add a new page.
+        if (currentY + tables.heightMM > pageHeight - margin) {
+          doc.addPage();
+          currentY = margin;
+        }
+        doc.addImage(tables.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, tables.heightMM);
+      }
+
+      setTheme(originalTheme);
+      doc.save(`Heliox_Mission_${maxDepth}ft_${bottomTime}min.pdf`);
     } catch (err) {
       console.error('PDF Export Error:', err);
       alert(`PDF 導出失敗: ${err.message}`);
-    } finally {
-      setTheme(originalTheme);
-      setIsExporting(false);
     }
   };
 
@@ -185,65 +186,47 @@ function App() {
   const oxygenCylCount = calcCylinderCount(((decoGasTotals?.oxygen || 0) * runs), availableSCFPerCyl);
 
   return (
-      <div id="report-container" className={`mx-auto space-y-4 ${isExporting ? 'printing' : 'p-4'}`} style={{ width: isExporting ? '794px' : 'auto', maxWidth: isExporting ? '794px' : '1700px' }}>
-        <header className={`flex ${isExporting ? 'flex-row items-center justify-between p-2' : 'flex-col lg:flex-row items-stretch lg:items-center p-6 gap-6'} rounded-[2.5rem] border shadow-2xl backdrop-blur-xl`} style={{ backgroundColor: t.panel, borderColor: t.border }}>
-          <div className={`flex items-center ${isExporting ? 'gap-2 shrink-0 border-r pr-2' : 'gap-5 shrink-0 border-r pr-8'}`} style={{ borderColor: t.border }}>
-            <div className={`${isExporting ? 'w-7 h-7' : 'w-12 h-12'} bg-[#f97316] rounded-xl flex items-center justify-center shadow-lg`}><Waves style={{ color: '#ffffff' }} size={isExporting ? 16 : 28} /></div>
-            <div><h1 className={`${isExporting ? 'text-[11px]' : 'text-xl'} font-black uppercase tracking-tighter leading-none`} style={{ color: t.textPrimary }}>{msg?.title}</h1>{!isExporting && <p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p>}</div>
+      <div id="report-container" className="mx-auto space-y-4 p-4" style={{ maxWidth: '1700px' }}>
+        <header id="pdf-header" className="flex flex-col lg:flex-row items-stretch lg:items-center p-6 gap-6 rounded-[2.5rem] border shadow-2xl backdrop-blur-xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+          <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
+            <div className="w-12 h-12 bg-[#f97316] rounded-xl flex items-center justify-center shadow-lg"><Waves style={{ color: '#ffffff' }} size={28} /></div>
+            <div><h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>{msg?.title}</h1><p className="text-[10px] font-bold tracking-[0.2em] mt-1" style={{ color: t.textSecondary }}>{msg?.subtitle}</p></div>
           </div>
           
-          <div className={`flex-1 grid grid-cols-4 ${isExporting ? 'gap-1' : 'gap-4'}`}>
-             <div className={`${isExporting ? 'p-1' : 'p-3 px-4'} rounded-xl border`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+          <div className="flex-1 grid grid-cols-4 gap-4">
+             <div className="p-3 px-4 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.maxDepth}</label>
-                {isExporting ? (
-                  <div className="font-mono text-[10px] font-black leading-none" style={{ color: t.textPrimary }}>{maxDepth} fsw</div>
-                ) : (
-                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
-                    {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
-                  </select>
-                )}
+                <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
+                  {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
+                </select>
              </div>
-             <div className={`${isExporting ? 'p-1' : 'p-3 px-4'} rounded-xl border`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+             <div className="p-3 px-4 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.bottomTime}</label>
-                {isExporting ? (
-                  <div className="font-mono text-[10px] font-black leading-none" style={{ color: t.textPrimary }}>{bottomTime} min</div>
-                ) : (
-                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
-                    {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
-                  </select>
-                )}
+                <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
+                  {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
+                </select>
              </div>
-             <div className={`${isExporting ? 'p-0.5' : 'p-2'} rounded-xl border flex items-center`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                {isExporting ? (
-                  <div className="flex-1 text-center text-[9px] font-black" style={{ color: '#f97316' }}>{decoMode === 'SURD' ? 'SURD O2' : 'IN-WATER'}</div>
-                ) : (
-                  <>
-                    <button onClick={()=>setDecoMode('SURD')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', color: decoMode === 'SURD' ? '#fff' : '#64748b' }}>SURD O2</button>
-                    <button onClick={()=>setDecoMode('WATER')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', color: decoMode === 'WATER' ? '#fff' : '#64748b' }}>IN-WATER</button>
-                  </>
-                )}
+             <div className="p-2 rounded-xl border flex items-center" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                <button onClick={()=>setDecoMode('SURD')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', color: decoMode === 'SURD' ? '#fff' : '#64748b' }}>SURD O2</button>
+                <button onClick={()=>setDecoMode('WATER')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', color: decoMode === 'WATER' ? '#fff' : '#64748b' }}>IN-WATER</button>
              </div>
-             <div className={`${isExporting ? 'p-1' : 'p-3 px-4'} rounded-xl border flex items-center justify-between`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+             <div className="p-3 px-4 rounded-xl border flex items-center justify-between" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
                 <div>
                   <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest" style={{ color: '#64748b' }}>{msg?.divers}</label>
-                  {isExporting ? (
-                    <div className="font-mono text-[10px] font-black leading-none" style={{ color: t.textPrimary }}>{divers}</div>
-                  ) : (
-                    <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
-                  )}
+                  <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
                 </div>
-                {!isExporting && <Users size={20} style={{ color: '#64748b' }} />}
+                <Users size={20} style={{ color: '#64748b' }} />
              </div>
           </div>
 
-          <div className={`${isExporting ? 'hidden' : 'flex'} items-center gap-2`}>
+          <div className="no-print flex items-center gap-2">
              <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2" style={{ color: '#f97316' }} />{lang === 'en' ? '中文' : 'EN'}</button>
              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-12 h-12 rounded-2xl flex items-center justify-center border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}>{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}</button>
-             <button onClick={handleExportPDF} disabled={isExporting} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#ffffff' : '#0f172a', color: theme === 'dark' ? '#000000' : '#ffffff' }}>{isExporting ? <Clock className="animate-spin" size={16} /> : <Download size={16} />}{isExporting ? msg?.generating : msg?.export}</button>
+             <button onClick={handleExportPDF} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#ffffff' : '#0f172a', color: theme === 'dark' ? '#000000' : '#ffffff' }}><Download size={16} />{msg?.export}</button>
           </div>
         </header>
 
-        <section className="p-8 rounded-[3rem] border shadow-2xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+        <section id="pdf-chart" className="p-8 rounded-[3rem] border shadow-2xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center justify-between mb-8 gap-4">
             <h2 className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-2 shrink-0" style={{ color: '#64748b' }}><Activity size={14} style={{ color: '#f97316' }} /> {msg?.profile}</h2>
             <div className="flex flex-nowrap gap-3 p-2 px-3 rounded-full border overflow-hidden shrink-0" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
@@ -268,7 +251,7 @@ function App() {
           </div>
         </section>
 
-        <div className="grid grid-cols-3 gap-6 pb-20">
+        <div id="pdf-tables" className="grid grid-cols-3 gap-6 pb-20">
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
              <div className="space-y-2 max-h-[450px] overflow-y-auto pr-2 custom-scroll-container">

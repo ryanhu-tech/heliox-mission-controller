@@ -76,12 +76,12 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
   data.push({ time: currentTime, depth: maxDepth, phase: 'Bottom', gas: 'BOTTOM', timeStr: formatTime(currentTime), duration: bottomTime });
 
   let lastDepth = maxDepth;
-  if (stops.length > 0) {
-    const firstStop = stops[0];
-    const travelT = (lastDepth - firstStop.depth) / CONSTANTS.ASCENT_RATE;
+  const firstStopDepth = stops.length > 0 ? stops[0].depth : 0;
+  const travelT = (lastDepth - firstStopDepth) / CONSTANTS.ASCENT_RATE;
+  if (travelT > 0) {
     currentTime += travelT;
-    data.push({ time: currentTime, depth: firstStop.depth, phase: 'Ascent to 1st Stop', gas: 'BOTTOM', timeStr: formatTime(currentTime), duration: travelT });
-    lastDepth = firstStop.depth;
+    data.push({ time: currentTime, depth: firstStopDepth, phase: 'Ascent to 1st Stop', gas: 'BOTTOM', timeStr: formatTime(currentTime), duration: travelT });
+    lastDepth = firstStopDepth;
   }
 
   stops.forEach((stop, idx) => {
@@ -89,33 +89,36 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
     const prevGas = idx === 0 ? 'BOTTOM' : getGasType(stops[idx-1].depth);
 
     if (currentGasBase !== prevGas && (stop.depth === 90 || stop.depth === 30)) {
-       switches.push({ time: currentTime, from: prevGas, to: currentGasBase, type: 'gradient_start' });
+       // Ventilation phase
        currentTime += 3; 
-       switches.push({ time: currentTime, from: prevGas, to: currentGasBase, type: 'gradient_end' });
        data.push({ time: currentTime, depth: stop.depth, phase: 'Ventilation', gas: currentGasBase, timeStr: formatTime(currentTime), duration: 3 });
        
        let remainingTime = stop.time - 3;
-       if (stop.depth <= 30 && mode === 'WATER') {
-          handleWaterO2(remainingTime, stop.depth, data, currentTime, formatTime);
-          currentTime += remainingTime;
-       } else {
-          currentTime += remainingTime;
-          data.push({ time: currentTime, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime), duration: remainingTime });
+       if (remainingTime > 0) {
+         if (stop.depth <= 30 && mode === 'WATER') {
+            handleWaterO2(remainingTime, stop.depth, data, currentTime, formatTime);
+            currentTime += remainingTime;
+         } else {
+            currentTime += remainingTime;
+            data.push({ time: currentTime, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime), duration: remainingTime });
+         }
        }
     } else {
-       const travelT = idx === 0 ? 0 : (stops[idx-1].depth - stop.depth) / CONSTANTS.ASCENT_RATE;
-       if (travelT > 0) {
-          data.push({ time: currentTime + travelT, depth: stop.depth, phase: 'Travel', gas: currentGasBase, timeStr: formatTime(currentTime + travelT), duration: travelT });
+       const travelStepT = idx === 0 ? 0 : (stops[idx-1].depth - stop.depth) / CONSTANTS.ASCENT_RATE;
+       if (travelStepT > 0) {
+          currentTime += travelStepT;
+          data.push({ time: currentTime, depth: stop.depth, phase: 'Travel', gas: currentGasBase, timeStr: formatTime(currentTime), duration: travelStepT });
        }
-       currentTime += travelT;
-       let stopDuration = stop.time - travelT;
        
-       if (stop.depth <= 30 && mode === 'WATER') {
-          handleWaterO2(stopDuration, stop.depth, data, currentTime, formatTime);
-       } else {
-          data.push({ time: currentTime + stopDuration, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime + stopDuration), duration: stopDuration });
+       let stopDuration = idx === 0 ? stop.time : stop.time - travelStepT;
+       if (stopDuration > 0) {
+         if (stop.depth <= 30 && mode === 'WATER') {
+            handleWaterO2(stopDuration, stop.depth, data, currentTime, formatTime);
+         } else {
+            data.push({ time: currentTime + stopDuration, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime + stopDuration), duration: stopDuration });
+         }
+         currentTime += stopDuration;
        }
-       currentTime += stopDuration;
     }
     lastDepth = stop.depth;
   });
@@ -137,17 +140,24 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
 
   if (mode === 'WATER') {
     const finalT = lastDepth / CONSTANTS.ASCENT_RATE;
-    currentTime += finalT;
-    data.push({ time: currentTime, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime), duration: finalT });
+    if (finalT > 0) {
+      currentTime += finalT;
+      data.push({ time: currentTime, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime), duration: finalT });
+    }
   } else {
+    // SurD O2 specific
     const travelToSurf = lastDepth / 40;
-    currentTime += travelToSurf;
-    data.push({ time: currentTime, depth: 0, phase: 'Surfacing', gas: '5050', timeStr: formatTime(currentTime), duration: travelToSurf });
+    if (travelToSurf > 0) {
+      currentTime += travelToSurf;
+      data.push({ time: currentTime, depth: 0, phase: 'Surfacing', gas: '5050', timeStr: formatTime(currentTime), duration: travelToSurf });
+    }
+    
+    // SI Window
     data.push({ time: currentTime + 3.5, depth: 0, phase: 'Surface Interval', gas: 'AIR', timeStr: formatTime(currentTime+3.5), duration: 3.5 });
     currentTime += 3.5;
-    switches.push({ time: currentTime, from: 'AIR', to: 'O2', type: 'gradient_start' });
+    
+    // Chamber Descent
     currentTime += 0.5;
-    switches.push({ time: currentTime, from: 'AIR', to: 'O2', type: 'gradient_end' });
     data.push({ time: currentTime, depth: 50, phase: 'Chamber Descent', gas: 'O2', timeStr: formatTime(currentTime), duration: 0.5 });
 
     for (let i = 1; i <= o2Periods; i++) {
@@ -161,7 +171,7 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
     data.push({ time: currentTime + 2, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime+2), duration: 2 });
   }
 
-  return { data, switches };
+  return { data, switches: [] };
 };
 
 export const expandChamberSteps = (o2Periods) => {
