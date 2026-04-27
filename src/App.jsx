@@ -489,6 +489,23 @@ function App() {
              </div>
           </section>
         </div>
+
+        <footer className="mt-12 pt-8 border-t opacity-40 text-[9px] leading-relaxed" style={{ borderColor: t.border, color: t.textSecondary }}>
+          <div className="grid grid-cols-2 gap-12">
+            <div>
+              <p className="font-black mb-2 uppercase tracking-widest" style={{ color: t.textPrimary }}>Disclaimer / 免責聲明</p>
+              <p>本工具僅供學術討論與教學演示使用，嚴禁直接用於實際潛水計畫之制定。潛水具備高度危險性，請務必遵循專業機構之訓練與官方教範。開發者不對因使用本軟體而導致的任何事故承擔法律責任。</p>
+            </div>
+            <div>
+              <p className="font-black mb-2 uppercase tracking-widest" style={{ color: t.textPrimary }}>English Disclaimer</p>
+              <p>This tool is for educational and simulation purposes ONLY. DO NOT use it for actual dive planning. Scuba diving is a high-risk activity; always follow certified training and official manuals. The developers are not liable for any injuries or damages resulting from the use of this software.</p>
+            </div>
+          </div>
+          <div className="mt-8 flex justify-between items-center opacity-60">
+            <p>© 2026 Heliox Diving Mission Controller V1.0.0</p>
+            <p>Based on U.S. Navy Diving Manual Rev 7</p>
+          </div>
+        </footer>
       </div>
   );
 }
