@@ -1,0 +1,645 @@
+ 12-4 U.S. Navy Diving Manual — Volume 3
+12-3 MIXED GAS DIVING EQUIPMENT / SYSTEMS
+Mixed gas diving requires a predetermined supply of breathing gases and carbon 
+dioxide absorbent material. Operations must be planned thoroughly to determine 
+usage requirements in order to effectively obtain required supplies in port or at sea 
+prior to the start of the mission. Logistic requirements may include planning for 
+on-site resupply of mixed gases and other supplies and for relief of diving teams.
+12-3.1 Gas Mixtures. Four gas mixtures are required to dive the surface-supplied mixed 
+gas tables over their full range:
+n Bottom Mixture - The bottom mixture may vary from 90% helium 10% oxygen 
+to 60% helium 40% oxygen depending on the diver’s depth. The allowable 
+range of bottom mixtures for each depth is shown in Table 12-4.
+n 50% Helium 50% Oxygen - This mixture is used from 90 fsw to 40 fsw during 
+decompression. Oxygen concentration in the mixture may range from 49 to 51 
+percent.
+n 100% Oxygen - Oxygen is used at the 30-fsw and 20-fsw water stops during 
+inwater decompression and at 50, 40 and 30 fsw in the chamber during surface 
+decompression.
+n Air - Air is used as an emergency backup gas throughout the dive and to provide 
+air breaks during oxygen breathing.
+Instruments used to measure oxygen content in helium-oxygen mixtures shall be 
+accurate to 0.5 percent.
+12-3.2 Flyaway Dive System (FADS) III Mixed Gas System (FMGS). The FADS III Mixed 
+Gas System (FMGS) is a portable, self contained, surface supplied diver life 
+support system designed to support mixed gas dive missions to 300 fsw (Figure 
+12-2 and Figure 12-3). The FMGS consists of five gas rack assemblies:
+n One (1) Air Supply Rack Assembly (ASRA)
+n One (1) Oxygen Supply Rack Assembly (OSRA)
+n Three (3) Helium-Oxygen Supply Rack Assemblies (HOSRA)
+Compressed air is provided by a 5000 psi air compressor assembly, which includes 
+an air purification system. The FMGS also includes a mixed gas control console 
+assembly (MGCCA) and two gas booster pump assemblies to charge the OSRA 
+and HOSRA. Set-up and operating procedures for the FMGS are found in the 
+Operating and Maintenance Technical Manual for Fly Away Dive System (FADS) 
+III Mixed Gas System, S9592-B2-OMI-010.
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-7
+Table 12‑2.  Pneumofathometer Correction Factors.
+Pneumofathometer  
+Depth Reading Correction Factor
+0-100 fsw +1 fsw
+101-200 fsw +2 fsw
+201-300 fsw +4 fsw
+301-400 fsw +7 fsw
+Example: The diver’s pneumofathometer reads 250 fsw. In the depth range of 
+201-300 fsw, the pneumofathometer underestimates the diver’s depth by 4 fsw. To 
+determine a diver’s depth, add 4 fsw to the pneumofathometer reading giving the 
+diver’s depth as 254 fsw.
+Bottom time is measured as the time from leaving the surface to leaving the bottom, 
+rounded up to the next whole minute, except as noted in 
+paragraph 12-4.5. Enter 
+the table at the exact or next greater bottom time.
+12-4.3 Travel Rates and Stop Times. The descent rate is not critical, but in general should 
+not exceed 75 fsw/min. The ascent rate from the bottom to the first decompression 
+stop, between decompression stops, and from the last decompression stop to the 
+surface is 30 fsw/min. Minor variations in the rate of ascent between 20 and 40 
+fsw/min are acceptable. For surface decompression, the ascent rate from the 40 
+fsw water stop to the surface is 40 fsw/min.
+The time at the first decompression stop begins when the diver arrives at the stop 
+and ends when he leaves the stop. For all subsequent stops, the stop time begins 
+when the diver leaves the previous stop and ends when he leaves the stop. In other 
+words, ascent time between stops is included in the subsequent stop time. The 
+single exception is the first oxygen stop at 30 fsw. The 30-fsw oxygen stop begins 
+when the divers are confirmed to be on oxygen at 30 fsw and ends when the divers 
+leave 30 fsw. The ascent time from the 30- to the 20-fsw oxygen stop is included in 
+the 20-fsw oxygen stop time.
+12-4.4 Decompression Breathing Gases. Decompress on bottom mixture to 90 fsw, then 
+shift the diver to a 50% helium 50% oxygen mixture. Upon arrival at the 30 fsw 
+stop, shift the diver to 100% oxygen. 
+For all dives, surface decompression may be used after completing the 40 fsw 
+water stop as described in 
+paragraph 12-4.11. During surface decompression, the 
+diver surfaces while breathing 50% helium 50% oxygen.
+12-4.5 Special Procedures for Descent with Less than 16 Percent Oxygen. To prevent 
+hypoxia, a special descent procedure is required when the bottom mixture contains 
+less than 16% oxygen:
+1. Place the diver on air on the surface.
+ 12-8 U.S. Navy Diving Manual — Volume 3
+2. Make the appropriate predive checks.
+3. Have the diver descend to 20 fsw.
+4. At 20 fsw, shift the diver to the bottom mix and ventilate the diver for 20 
+seconds.
+5. Confirm the diver is on bottom mix, then perform a final leak check. The diver 
+is allowed 5 minutes to descend to 20 fsw, shift to the bottom mixture and per-
+form equipment checks. 
+6. Have the diver begin descent. 
+7. Start bottom time.
+n If the diver spends 5 minutes or less performing above procedures, 
+bottom time starts when the diver leaves 20 fsw.
+n If the diver spends more than 5 minutes performing above procedures, 
+bottom time starts at the 5 minute mark.
+8. If it is necessary to bring the diver back to the surface from 20 fsw to correct a 
+problem:
+n Shift the diver from the bottom mixture back to air. 
+n Ventilate the diver.
+n Confirm the diver is on air.
+n Have the diver begin ascent.
+n When the diver reenters the water, the 5 minute  grace period begins 
+again. No adjustment of bottom time is required for the previous 
+exposure at 20 fsw.
+12-4.6 Aborting Dive During Descent. Inability to equalize the ears or sinuses may force 
+the dive to be aborted during descent.
+1. If it is necessary to bring the diver back to the surface from depths of 100 fsw 
+and shallower:
+n Ensure the diver is in a no-decompression status.
+n If the bottom mixture is 16% oxygen or greater, ascend directly to the 
+sur face at 30 fsw/min.
+n If the bottom mixture is less than 16% oxygen, ascend to 20 fsw at 
+30 fsw/min.
+n Shift the diver from the bottom mixture back to air. 
+n Ventilate the diver.
+n Confirm the diver is on air.
+n Complete ascent to the surface on air.
+n If desired, another dive may be performed following a dive aborted 100 
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-9
+fsw and shallower. Add the bottom time of all the dives to the bottom 
+time of the new dive and use the deepest depth when calculating a table 
+and schedule for the new dive.
+2. If it is necessary to abort a dive deeper than 100 fsw:
+n Follow the normal decompression schedule to the surface.
+n Repetitive diving is not allowed following a dive aborted deeper than 
+100 fsw.
+12-4.7 Procedures for Shifting to 50 Percent Helium/50 Percent Oxygen at 90 fsw. All 
+dives except no-decompression dives require a shift from bottom mixture to 50% 
+helium 50% oxygen at 90 fsw during decompression. Follow these steps:
+1. Shift the console to 50% helium 50% oxygen when the diver reaches 90 fsw.
+2. If there is a decompression stop at 90 fsw, ventilate each diver for 20 seconds 
+at 90 fsw.
+3. Confirm the divers are on 50% helium 50% oxygen.
+4. If there is no decompression stop at 90 fsw, delay ventilation until arrival at the 
+next shallower stop.
+Gas shift time is included in the stop time.
+12-4.8 Procedures for Shifting to 100 Percent Oxygen at 30 fsw. All in-water 
+decompression dives require a shift to 100 percent oxygen at the 30-fsw stop. 
+Upon arrival at the stop, ventilate each diver with oxygen following these steps:
+1. Shift the console to 100% oxygen when the diver reaches 30 fsw.
+2. Ventilate each diver for 20 seconds. 
+3. Verify the diver’s voice change.
+Time at the 30-fsw stop begins when the divers are confirmed to be on oxygen.
+12-4.9 Air Breaks at 30 and 20 fsw. At the 30-fsw and 20-fsw water stops, the diver 
+breathes oxygen for 30-minute periods separated by 5-minute air breaks. The 
+air breaks do not count toward required decompression time. When an air break 
+is required, shift the console to air for 5 minutes then back to 100% oxygen. 
+Ventilation of the divers is not required. For purposes of timing air breaks, begin 
+clocking oxygen time when all divers are confirmed on oxygen. If the total oxygen 
+stop time is 35 minutes or less, an air break is not required at 30 minutes. If the 
+final oxygen period is 35 minutes or less, a final air break at the 30-minute mark is 
+not required. In either case, surface the diver on 100% oxygen upon completion of 
+the oxygen time.
+Example
+ 12-10 U.S. Navy Diving Manual — Volume 3
+1. Divers are decompressing in the water on a 220 fsw for 20 minute decompression 
+schedule. The schedule calls for 23 minutes on oxygen at 30 fsw and 41 minutes 
+on oxygen at 20 fsw. 
+2. Divers start their 23 minute 30 fsw stop time when confirmed to be on oxygen 
+at 30 fsw.
+3. After 23 minute on oxygen at 30 fsw, divers travel to 20 fsw to complete their 
+41 minute 20 fsw stop. The 20 second travel time from 30 to 20 fsw on oxygen 
+is included in the 41 minute stop time.
+4. Seven minutes from the time the divers left their 30 fsw stop, the console is 
+shifted to air. This is due to the divers having completed a total of 30 minutes 
+on oxygen. No ventilation of the divers is required.
+5. After five minutes on air, the console is shifted back to oxygen. No 
+ventilation is required. The five-minute period is considered dead time from 
+the decompression standpoint. A total of 34 minutes on oxygen remain to be 
+completed at 20 fsw.
+6. Since the remaining oxygen time is less than 35 minutes, the divers breathe 
+oxygen for the last 34 minutes prior to ascent to the surface without taking an 
+additional air break. Divers remain on oxygen for ascent to the surface.
+12-4.10 Ascent from the 20-fsw Water Stop. For normal in-water decompression, the diver 
+surfaces from 20 fsw on oxygen. Ascent rate is 30 fsw/min.
+12-4.11 Surface Decompression on Oxygen (SurDO2). Surface decompression on oxygen 
+is preferred over in-water decompression on oxygen for routine operations. 
+SurDO2  procedures improve the diver’s comfort and safety. A diver is eligible for 
+surface decompression when he has completed the 40-fsw water stop. To initiate 
+surface decompression:
+ WARNING The interval from leaving 40-fsw in the water to arriving at 50-fsw in the 
+chamber cannot exceed 5 minutes without incurring a penalty. (See 
+paragraph 12-5.14)
+1. Bring the diver to the surface at 40 fsw/min and undress him. 
+2. Place the diver in the recompression chamber. Use of an inside tender when 
+two divers undergo surface decompression is at the discretion of the Dive 
+Supervisor. If an inside tender is not used, both divers will carefully monitor 
+each other in addition to being closely observed by topside personnel.
+3. Compress the diver on air to 50 fsw at a maximum compression rate of 100 
+fsw/min. The surface interval is the elapsed time from the time the diver leaves 
+the 40-fsw water stop to the time the diver arrives at 50 fsw in the chamber. A 
+normal surface interval should not exceed 5 minutes.
+4. Upon arrival at 50 fsw, place the diver on 100 percent oxygen by mask. The 
+mask will be strapped on both divers to ensure a good oxygen seal. 
+5. In the chamber, have the divers breathe oxygen for 30-minute periods separated 
+by 5-minute air breaks. The number of oxygen periods required is indicated 
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-11
+in Table 12-3. The first period consists of 15 minutes on oxygen at 50 fsw 
+followed by 15 minutes on oxygen at 40 fsw. Periods 2, 3, and 4 are spent at 40 
+fsw. Periods 5, 6, 7 and 8 are spent at 30 fsw. Ascent from 50 to 40 and from 
+40 to 30 fsw is at 30 fsw/min. Ascent time is included in the oxygen/air time. 
+Ascent from 40 to 30 fsw, if required, should take place during the air break.
+6. When the last oxygen breathing period has been completed, return the diver to 
+breathing chamber air.
+7. Ascend to the surface at a rate of 30 fsw/min.
+The diving supervisor can initiate surface decompression at any point during in-
+water oxygen decompression at 30 or 20 fsw, if desired. Surface decompression 
+may become desirable if sea conditions are deteriorating, the diver feels ill, or some 
+other contingency arises. Once in the chamber, the diver should receive the full 
+number of chamber oxygen periods prescribed by the tables. Unlike in air diving, 
+no credit is allowed for time already spent on oxygen in the water.
+12-4.12 Variation in Rate of Ascent. The rate of ascent to the first stop and between 
+subsequent stops is 30 fsw/minute. Minor variations in the rate of travel between 
+20 and 40 fsw/minute are acceptable.
+12-4.12.1 Early Arrival at the First Stop. If the divers arrive early at the first stop:
+1. Begin timing the first stop when the required travel time has been completed.
+2. If the first stop requires a gas shift, initiate the gas shift and ventilation upon 
+arrival at the stop, but begin the stop time only when the required travel time 
+has been completed. 
+12-4.12.2 Delays in Arriving at the First Stop. 
+1. Delay less than 1 minute. Delays in arrival at the first stop of less than 1 minute 
+may be ignored. 
+2. Delay greater than 1 minute. Round up the delay time to the next whole minute 
+and add it to the bottom time. Recompute the decompression schedule. If no 
+change in schedule is required, continue on the planned decompression. If a 
+change in schedule is required and the new schedule calls for a decompression 
+stop deeper than the diver’s current depth, perform any missed deeper stops at 
+the diver’s current depth. Do not go deeper.
+Example: If the delay time to arrival at the first stop is 3 minutes and 25 seconds, 
+round up to the next whole minute and add 4 minutes to the bottom time. Recheck the 
+decom pression table to see if the decompression stop depths or times have changed.
+12-4.12.3 Delays in Leaving a Stop or Arrival at the Next Stop. 
+n	Delays Deeper than 90 fsw.
+1. Delays less than 1 minute may be ignored.
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-13
+1. Decompress the diver using the 120-minute schedule for the deepest depth 
+attained. 
+2. Shift to 100 percent oxygen at 40 fsw. 
+3. Surface the diver after completing 30 minutes on oxygen at 40 fsw. Oxygen 
+time at 40 fsw starts when divers are confirmed on oxygen.
+4. Compress the diver to 60 fsw in the chamber as fast as possible not to exceed 
+100 fsw/min.
+5. Treat the diver on an extended Treatment Table 6. Extend Treatment Table 6 for 
+two oxygen breathing periods at 60 fsw (20 minutes on oxygen, then 5 minutes 
+on air, then 20 minutes on oxygen) and two oxygen breathing periods at 30 fsw 
+(60 minutes on oxygen, then 15 minutes on air, then 60 minutes on oxygen).
+12-5.2 Loss of Helium-Oxygen Supply on the Bottom. Follow this procedure if the 
+umbilical helium-oxygen supply is lost on the bottom: 
+1. Shift the diver to the emergency gas system (EGS). 
+2. Abort the dive. 
+3. Remain on the EGS until arrival at 90 fsw. 
+4. At 90 fsw, shift the diver to 50% helium 50% oxygen and complete the decom-
+pression as planned.
+5. If the EGS becomes exhausted before 90 fsw is reached, shift the diver to air, 
+complete decompression to 90 fsw, shift the diver to 50% helium 50% oxygen, 
+and continue the decompression as planned. 
+12-5.3 Loss of 50 Percent Oxygen Supply During In-Water Decompression. If the diver 
+cannot be shifted to 50% helium 50% oxygen at 90 fsw or the  50%  helium 50% 
+oxygen supply is lost during decompression: 
+1. Shift the diver to air and continue the decompression as planned while trying to 
+correct the problem. 
+2. Shift the diver to 50% helium 50% oxygen once the problem is corrected. Time 
+spent on air counts toward decompression. 
+3. If the problem cannot be corrected:
+n Continue the planned decompression on air.
+n Shift the diver from air to oxygen upon arrival at the 50-fsw stop.
+n Breathe oxygen at 50 and 40 fsw for the decompression times indicated 
+in Table 12-4, but not to exceed 16 minutes at 50 fsw. Oxygen time at 
+50 fsw starts when divers are confirmed on oxygen. If the 50-fsw stop 
+exceeds 16 minutes, travel divers to 40 fsw and add remaining 50-fsw 
+stop time to the 40-fsw stop time on oxygen.
+ 12-14 U.S. Navy Diving Manual — Volume 3
+n Surface decompress per paragraph 12-4.11 following completion of the 
+40-fsw stop.
+12-5.4 Loss of Oxygen Supply During In-Water Decompression. If the diver cannot be 
+shifted to oxygen at 30 fsw or the oxygen supply is lost during the 30- or 20-fsw 
+water stops: 
+1. Switch back to 50% helium 50% oxygen. If a switch to 50% helium 50% oxy-
+gen is not possible, switch the diver to air.
+2. If the problem can be quickly remedied, reventilate the diver with oxygen and 
+resume the schedule at the point of interruption. Consider any time on helium-
+oxygen or air as dead time.
+3. If the problem cannot be remedied, initiate surface decompression. Ignore any 
+time already spent on oxygen at 30 or 20 fsw. The five minute surface interval 
+requirement for surface decompression begins upon leaving the 30- or 20-fsw 
+stop.
+4. If the problem cannot be remedied and surface decompression is not feasible, 
+complete the decompression on 50% helium 50% oxygen or air. For 50% 
+helium 50% oxygen, double the remaining oxygen time at each water stop. For 
+air, triple the remaining oxygen time.
+Example: A diver loses oxygen 15 minutes into the 30-fsw water stop and is switched 
+back to the 50% helium 50% oxygen decompression mixture. The problem cannot 
+be corrected. The divers original schedule called for 32 minutes of oxygen at 30 
+fsw and 58 minutes of oxygen at 20 fsw.
+Seventeen minutes of oxygen time (32 - 15) remain at 30 fsw. Fifty-eight minutes 
+remain at 20 fsw. The diver should spend an additional 34 minutes (17 x 2) at 30 
+fsw on the 50/50 mixture, followed by 116 minutes (58 x 2) at 20 fsw. Surface the 
+diver upon completion of the 20-fsw stop.
+Example: A diver loses oxygen 10 minutes into the 30-fsw water stop and is 
+switched to air. The problem cannot be corrected. The diver’s original schedule 
+called for 28 minutes of oxygen at 30 fsw and 50 minutes of oxygen at 20 fsw.
+Eighteen minutes of oxygen time (28 - 10) remain at 30 fsw. Fifty minutes remain 
+at 20 fsw. The diver should spend an additional 54 minutes (18 x 3) at 30 fsw 
+on air followed by 150 minutes (50 x 3) on air at 20 fsw. Surface the diver upon 
+completion of the 20-fsw stop.
+12-5.5 Loss of Oxygen Supply in the Chamber During Surface Decompression. If the 
+oxygen supply in the chamber is lost during surface decompression, have the diver 
+breathe chamber air. 
+n	Temporary Loss. Return the diver to oxygen breathing. Consider any time on 
+air as dead time. 
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-15
+n	Permanent Loss. Multiply the remaining oxygen time by three to obtain the 
+equivalent chamber decompression time on air. If 50% helium 50% oxygen is 
+available, multiply the remaining oxygen time by two to obtain the equivalent 
+chamber decompression time on 50/50. If the loss occurred at 50 or 40 fsw, 
+allocate 10% of the equivalent air or helium-oxygen time to the 40-fsw stop, 
+20% to the 30-fsw stop, and 70% to the 20-fsw stop. If the diver is at 50 fsw, 
+ascend to 40 fsw to begin the stop time. If the loss occurred at 30 fsw, allocate 
+30% of the equivalent air or helium-oxygen time to the 30-fsw stop and 70% 
+to the 20-fsw stop. Round the stop times to the nearest whole minute. Surface 
+upon completion of the 20-fsw stop.
+Example: The oxygen supply to the chamber is lost 10 minutes into the first 
+30-minute period on oxygen. Helium-oxygen is not available. The original surface 
+decom pression schedule called for three 30-min oxygen breathing periods (total of 
+90 minutes of oxygen). The diver is at 50 fsw.
+The remaining oxygen time is 80 minutes (90-10). The equivalent chamber 
+decompression time on air is 240 minutes (3 x 80). The 240 minutes of air stop 
+time should be allocated as follows: Twenty-four minutes at 40 fsw (240 x 0.1), 48 
+minutes at 30 fsw (240 x 0.2), and 168 minutes at 20 fsw (240 x 0.7). As addressed 
+above, the diver should ascend from 50 to 40 fsw and begin the 24 minute stop time 
+at 40 fsw. 
+12-5.6 Decompression Gas Supply Contamination. If the decompression gas supply be-
+comes contaminated with the bottom mixture, 50/50 mix, air, or oxygen:
+1. Find the source of the contamination and correct the problem. Probable sources 
+include: 
+n An improper valve line-up on the console. This can be verified by 
+checking oxygen percentage on console oxygen analyzer.
+n Accidental opening of the emergency gas supply (EGS) valve.
+2. When the problem is corrected:
+n Ventilate each diver for 20 seconds and confirm divers are on decompres-
+sion gas.
+n Continue decompression as planned. Do not lengthen stop times to com-
+pensate for the time spent correcting the problem.
+12-5.7 CNS Oxygen Toxicity Symptoms (Nonconvulsive) at the 90-60 fsw Water Stops. 
+CNS oxygen toxicity symptoms are unlikely but possible while the diver is 
+breathing 50% helium 50% oxygen in the water at depths 60 fsw and deeper. If 
+symptoms of oxygen toxicity do appear, take the following actions:
+1. Bring the divers up 10 feet and shift to air to reduce the partial pressure of oxy-
+gen. Shift the console as the divers are traveling. 
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-17
+8. If it is not possible to verify that the affected diver is breathing, leave the unaf-
+fected diver at the stop to complete decompression, and surface the affected 
+diver and the standby diver at 30 fsw/min. Shift the unaffected diver back to 
+his 50/50 mixture for completion of decompression. The standby diver should 
+maintain an open airway on the stricken diver during ascent. On the surface the 
+affected diver should receive any necessary airway support and be imme diately 
+recompressed and treated for arterial gas embolism and missed decompression 
+in accordance with Figure17-1.
+12-5.9 CNS Toxicity Symptoms (Nonconvulsive) at 50- and 40-fsw Water Stops. It is 
+very unlikely that a diver will develop symptoms of CNS oxygen toxicity while 
+breathing 50% helium 50% oxygen at the 50- and 40-fsw water stops. Symp  toms 
+are much more likely if the diver is breathing 100% oxygen in accordance with 
+paragraph 12-5.3. If the diver does experience symptoms of CNS oxygen toxicity 
+at 50 or 40 fsw while breathing either 50% helium 50% oxygen or 100% oxygen, 
+take the following actions:
+1. Bring the divers up 10 feet and shift to air to reduce the partial pressure of oxy-
+gen. Shift the console as the divers are traveling to the shallower stop.
+2. Ventilate both divers upon arrival at the shallower stop. Ventilate the stricken 
+diver first.
+3. Remain on air at the shallower depth for double the missed time from 50- 
+and 40-fsw water stops, then surface decompress the diver in accordance with 
+paragraph 12-4.11. If the diver was on 100% oxygen in accordance with 
+para-
+graph 12-5.3, triple the missed time from the 50- and 40-fsw water stops, then 
+surface decompress.
+Example: A diver on 50% helium 50% oxygen experiences an oxygen symp -
+tom five minutes into his 10 min stop at 50 fsw. He immediately ascends to 
+40 fsw and begins breathing air. The decompression schedule calls for a 10 
+min stop at 40 fsw. The diver missed 5 min of helium-oxygen at 50 fsw and 
+will miss 10 min more at 40 fsw by virtue of the fact that he is on air. The total 
+missed helium-oxygen time is 15 min. The diver should remain at 40 fsw for 
+30 min, then surface decompress.
+Example: A diver on 100% oxygen experiences an oxygen symptom five min-
+utes into his 10 min stop at 40 fsw. He immediately ascends to 30 fsw and 
+begins breathing air. The missed oxygen time at 40 fsw is 5 min. The diver 
+should remain on air at 30 fsw for 15 min, then surface decompress.
+4. If surface decompression is not feasible, continue decompression in the water 
+on either air or oxygen depending on the diver’s condition:
+n	To continue on oxygen, ascend to 30 fsw (or remain at 30 fsw if already 
+there). Take a 10 min period on air (Time on air does not count toward 
+decompression). Then shift the diver to oxygen and complete decompression 
+in the water according to the schedule.
+ 12-18 U.S. Navy Diving Manual — Volume 3
+n	To continue on air, ascend to 30 fsw (or remain at 30 fsw if already there). 
+Compute the remaining 30- and 20-fsw air stop times by tripling the oxygen 
+time given in the original schedule. Surface upon completion of the 20-fsw 
+stop.
+n	Alternatively, the diver may complete the 30-fsw stop on air by tripling the 
+oxygen stop time, then switch to oxygen upon arrival at 20 fsw. Remain at 
+20 fsw for the oxygen time indicated in the original schedule. Surface upon 
+completion of the 20-fsw stop. 
+12-5.10 Oxygen Convulsion at the 50-40 fsw Water Stop. If oxygen symptoms progress 
+to an oxygen convulsion despite the measures described above or if a convulsion 
+occurs suddenly without warning at 50 or 40 fsw, take the following actions:
+1. Shift both divers to air if this action has not already been taken. Have the unaf-
+fected diver ventilate himself then ventilate the stricken diver.
+2. Follow the guidance given in paragraph 12-5.8 for stabilizing the stricken diver 
+and determining whether he is breathing. If the diver is breathing, hold him at 
+his current depth until he is stable, then take one of the following actions:
+n	If the diver missed helium-oxygen or oxygen decompression time at 50 fsw, 
+hold the diver at depth until the total elapsed time on air is at least double 
+the missed time on helium-oxygen, then surface decompress following the 
+steps in paragraph 12-4.11. If the diver was on 100% oxygen in accordance 
+with paragraph 12-5.3, remain at depth until the total elapsed time on air 
+is at least triple the missed time on oxygen, then surface decompress. In 
+either case, add the 40-fsw water stop time to the 50-fsw chamber oxygen 
+stop time.
+n	If the diver did not miss any helium-oxygen or oxygen decompression time 
+at 50 fsw, surface decompress following the steps in paragraph 12-4.11. 
+Add any missed oxygen or helium-oxygen time at 40 fsw to the 50-fsw 
+chamber oxygen stop time.
+3. If surface decompression is not feasible, complete decompression in the water 
+on air. Compute the remaining stop times on air by doubling the remaining 
+helium-oxygen time, or tripling the remaining oxygen time at each stop. 
+4. If the diver is not breathing, surface the diver at 30 fsw/min while maintaining 
+an open airway. Treat the diver for arterial gas embolism (Figure 17-1).
+12-5.11 CNS Oxygen Toxicity Symptoms (Nonconvulsive) at 30- and 20-fsw Water Stops.  
+If the diver develops symptoms of CNS toxicity at the 30- or 20-fsw water stops, 
+take the following action:
+1. If a recompression chamber is available on the dive station, initiate surface 
+decompression. Shift the console to air during travel to the surface. Once in 
+the chamber, take the full number of chamber oxygen periods prescribed by 
+the tables. Unlike in air diving, no credit is allowed for time already spent on 
+oxygen in the water.
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-19
+2. If a recompression chamber is not available on the dive station and the event 
+occurs at 30 fsw, bring the divers up 10 fsw and shift to air to reduce the partial 
+pressure of oxygen. Shift the console as the divers are traveling to 20 fsw. 
+Ventilate both divers with air upon arrival at 20 fsw. Ventilate the affected diver 
+first. Complete the decompression on air in the water at 20 fsw. Compute the 
+required air time at 20 fsw by tripling the sum of the missed oxygen time at 30 
+and 20 fsw. 
+3. If a recompression chamber is not available on the dive station and the event 
+occurs at 20 fsw, shift the console to air, ventilate both divers, affected diver 
+first, and complete the decompression in the water at 20 fsw on air. Compute 
+the required air time at 20 fsw by tripling the missed oxygen time at 20 fsw.
+12-5.12 Oxygen Convulsion at the 30- and 20-fsw Water Stop. If symptoms progress 
+to an oxygen convulsion despite the above measures, a serious emergency has 
+developed and the following actions must be taken.
+1. Shift both divers to air and follow the guidance given in paragraph 12-5.8 for 
+stabilizing the diver and determining whether he is breathing.
+2. If the diver is breathing, hold him at depth until he is stable, then surface 
+decompress. 
+3. If surface decompression is not feasible, ventilate both divers with air and 
+complete decompression in the water on air. Compute the remaining stop times 
+on air by tripling the remaining oxygen time at each stop. See paragraph 12-5.4 
+for example.
+4. If the diver is not breathing, surface the diver at 30 fsw/min while maintaining 
+an open airway and treat the diver for arterial gas embolism (Figure 18-1).
+12-5.13 Oxygen Toxicity Symptoms in the Chamber. At the first sign of CNS oxygen 
+toxicity, the patient should be removed from oxygen and allowed to breathe 
+chamber air. Fifteen minutes after all symptoms have completely subsided, resume 
+oxygen breathing at the point of interruption. If symptoms of CNS oxygen toxicity 
+develop again or if the first symptom is a convulsion, take the following action:
+1. Remove the mask. 
+2. After all symptoms have completely subsided, decompress 10 feet at a rate of 
+1 fsw/min. For a convulsion, begin travel when the patient is fully relaxed and  
+breathing normally. 
+3. Resume oxygen breathing at the shallower depth at the point of interruption.
+4. If another oxygen symptom occurs, complete decompression on chamber air. 
+Follow the guidance given in 
+paragraph 12-5.5 for permanent loss of chamber 
+oxygen supply to compute the air decompression schedule.
+12-5.14 Surface Interval Greater than 5 Minutes. If the time from leaving 40 fsw in the 
+water to the time of arrival at 50 fsw in the chamber during surface decompression 
+exceeds 5 minutes, take the following action:
+ 12-20 U.S. Navy Diving Manual — Volume 3
+1. If the surface interval is less than or equal to 7 minutes, add one-half oxygen 
+period to the total number of chamber periods required by increasing the time 
+on oxygen at 50 fsw from 15 to 30 minutes. Ascend to 40 fsw during the 
+subsequent air break. The 15-min penalty is considered a part of the normal 
+surface decompression procedure, not an emergency procedure.
+2. If the surface interval is greater than 7 minutes, continue compression to a depth 
+of 60 fsw. Treat the divers on Treatment Table 5 if the original schedule required 
+2 or fewer oxygen periods in the chamber. Treat the divers on Treatment Table 
+6 if the original schedule required 3 or more oxygen periods in the chamber.
+3.  On rare occasions a diver may be unable to reach 50 fsw in the chamber due 
+to difficulty equalizing middle ear pressure. In this situation, an alternative 
+procedure for surface decompression on oxygen may be used:
+n	Begin oxygen breathing at the initially attained depth - presumed to be 
+less than 20 fsw. 
+n	If surface decompression was initiated while the diver was decompressing 
+on oxygen in the water at 20 fsw, attempt to gradually compress the 
+diver to 20 fsw.
+n	If surface decompression was initiated from deeper than 20 fsw, attempt 
+to gradually compress the diver to 30 fsw.
+n	In either case, double the number of chamber oxygen periods indicated 
+in the table and take these periods at the deepest depth the diver is able 
+to attain. Oxygen time starts when the diver initially goes on oxygen.
+n	Interrupt oxygen breathing every 60 minutes with a 15-min air break.  
+The air break does not count toward the total oxygen time. 
+n	Surface the diver at 30 fsw/min upon completion of the oxygen breathing 
+periods and carefully observe the diver for the onset of decompression 
+sickness. 
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-21
+This “safe way out” procedure is not intended to be used in place of normal surface 
+decompression procedures.  Divers that experienced ear difficulty on descent in the 
+water column may not be good candidates for surface decompression.
+12-5.15 Asymptomatic Omitted Decompression. Certain emergencies may interrupt or 
+prevent required decompression. Unex  pected surfacing, exhausted gas supply 
+and bodily injury are examples of such emergencies. Table 12-3 shows the initial 
+management steps to be taken when the diver has an uncontrolled ascent.
+Table 12‑3.  Management of Asymptomatic Omitted Decompression.
+Deepest 
+Decompression 
+Stop Omitted
+Decompression
+Status
+Surface 
+Interval  
+(Note 1)
+ACTION
+None No-D Any Observe on surface for one hour
+20 or 30 fsw Stops Required
+Less than 1 min
+Return to depth of stop. Increase stop 
+time by 1 min. Resume decompression 
+according to original schedule
+1–7 min Use Surface Decompression Procedure 
+(Note 2)
+Greater than 
+7 min
+Treatment Table 5 if 2 or fewer SurDO2 
+periods
+Treatment Table 6 if 3 or more SurDO2 
+periods
+40 or 50 fsw Stops Required Any Treatment Table 6
+Deeper than 50 fsw
+Stops Required: 
+Less than 60 min 
+missed
+Any Treatment Table 6A
+Stops Required: 
+More than 60 min 
+missed
+Any
+Compress to depth of dive not to 
+exceed 225 fsw. Use Treatment Table 8
+For saturation systems: Compress to 
+depth of dive. Saturate two hours. Use 
+saturation decompression without an 
+initial upward excursion
+Notes:
+1. Surface interval is the time from leaving the stop to arriving at depth in the chamber.
+2.  Using a recompression chamber is strongly preferred over in-water recompression for returning a 
+diver to pressure. Compress to depth as fast as possible not to exceed 100 fsw/min. 
+3.  For surface intervals greater than 5 minutes but less than or equal to 7 minutes, increase the oxygen 
+time at 50 fsw from 15 to 30 minutes.
+12-5.15.1 Omitted Decompression Stop Deeper Than 50 fsw. An omitted decompression 
+stop deeper than 50 fsw when more than 60 minutes of decompression are missed 
+is an extreme emergency. The diver shall be returned as rapidly as possible to 
+the full depth of the dive or the deepest depth of which the chamber is capable, 
+whichever is shallower. 
+12-5.15.1.1 For Nonsaturation Systems. For nonsaturation systems, the diver shall be rapidly 
+compressed on air to the depth of the dive or to 225 feet, whichever is shallower. 
+ 12-24 U.S. Navy Diving Manual — Volume 3
+8. Once the diver is on the stage, observe again briefly for the return of 
+consciousness. 
+n	If consciousness returns, allow a period for stabilization, then begin 
+decompression. 
+n	If consciousness does not return, bring the diver to the first decompres-
+sion stop at a rate of 30 fsw/min (or to the surface if the diver is in a no-
+decompression status).
+9. At the first decompression stop:
+n	If consciousness returns, decompress the diver on the standard decom-
+pression schedule using surface decompression. 
+n	If the diver remains unconscious but is breathing, decompress on the stan-
+dard decompression schedule using surface decompression.
+n	If the diver remains unconscious and breathing cannot be detected in spite 
+of repeated attempts to position the head and open the airway, an extreme 
+emergency exists. One must weigh the risk of catastrophic, even fatal, 
+decompression sickness if the diver is brought to the surface, versus the risk 
+of asphyxiation if the diver remains in the water. As a general rule, if there 
+is any doubt about the diver’s breathing status, assume he is breathing and 
+continue normal decompression in the water. If it is abso lutely certain that the 
+diver is not breathing, leave the unaffected diver at his first decompression 
+stop to complete decompression and surface the affected diver at 30 fsw/
+minute, deploying the standby diver as required. Recompress the diver 
+immediately and treat for omitted decompression according to 
+Table 12-3.
+12-5.19 Decompression Sickness in the Water. Decompression sickness may develop in 
+the water during surface-supplied diving. This possibility is one of the principal 
+reasons for limiting dives to 300 fsw and allowing exceptional exposures only 
+under emergency circumstances. The symp  toms of decompression sickness may 
+be joint pain or more serious manifestations such as numbness, loss of muscular 
+function, or vertigo.
+Management of decompression sickness in the water will be difficult under the 
+best of circumstances. Only general guidance can be presented here. Management 
+decisions must be made on site taking into account all known factors. The advice of 
+a Diving Medical Officer shall be obtained at the earliest possible moment.
+12-5.19.1 Decompression Sickness Deeper than 30 fsw. If symptoms of decompression 
+sickness occur deeper than 30 fsw, recompress the diver 10 fsw. The diver may 
+remain on 50% helium 50% oxygen during recom  pression from 90 to 100 fsw. 
+Remain at the deeper stop for 1.5 times the stop time called for in the decompression 
+table. If no stop time is indicated in the table, use the next shallower stop time 
+to make the calculation. If symptoms resolve or stabi  lize at an acceptable level, 
+decompress the diver to the 40-fsw water stop by multiplying each intervening 
+stop time by 1.5 or more as needed to control the symptoms. Shift to 50% helium 
+CHAPTER 12 — Surface-Supplied Mixed Gas Diving   12-25
+50% oxygen at 90 fsw if the diver is not already on this mixture. Shift to 100 
+percent oxygen at 40 fsw and complete a 30 minute stop, then surface decompress 
+and treat on Treatment Table 6. If during this scenario, symptoms worsen to the 
+point that it is no longer practical for the diver to remain in the water, surface the 
+diver and follow the guidelines for treatment of decompression sickness outlined 
+in Chapter 17.
+12-5.19.2 Decompression Sickness at 30 fsw and Shallower. If symptoms of decompression 
+sickness occur at 30 fsw or shallower, remain on oxygen and recompress the 
+diver 10 fsw. Remain at the deeper stop for 30 minutes. If symptoms resolve, 
+surface decompress the diver at the end of the 30 minute period and treat on 
+Treatment Table 6. If symptoms do not resolve, but stabilize at an acceptable level, 
+decompress the diver to the surface on oxygen by multiplying each intervening 
+stop time by 1.5 or more as needed to control symp  toms. Treat on Treatment 
+Table 6 upon reaching the surface. If during this scenario symptoms worsen to the 
+point that it is no longer practical for the diver to remain in the water, surface the 
+diver and follow guidelines for treatment of decompression sickness outlined in 
+Chapter 17.
+12-5.20 Decompression Sickness During the Surface Interval. If symptoms of Type 
+I decompression sickness occur during travel from 40 fsw to the surface during 
+surface decompression or during the surface undress phase, compress the diver to 
+50 fsw following normal surface decompression procedures. Delay neurological 
+exam until the diver reaches the 50-fsw stop and is on oxygen. If Type I symptoms 
+resolve during the 15-minute 50-fsw stop, the surface interval was 5 minutes or 
+less, and no neurological signs are found, increase the oxygen time at 50 fsw from 
+15 to 30 minutes, then continue normal decompression for the schedule of the 
+dive. Ascend from 50 to 40 fsw during the subsequent air break.
+If Type I symptoms do not resolve during the 15-minute 50-fsw stop or symptoms 
+resolve but the surface interval was greater than 5 minutes, compress the diver to 
+60 fsw on oxygen. Treat the diver on Treatment Table 5 if the original schedule 
+required 2 or fewer oxygen periods in the chamber. Treat the diver on Treatment 
+Table 6 if the original schedule required 3 or more oxygen periods in the chamber. 
+Treatment table time starts upon arrival at 60 fsw. Follow the guidelines for 
+treatment of decompression sickness given in Chapter 17. 
+If symptoms of Type II decompression sickness occur during travel from 40 fsw 
+to the surface, during the surface undress phase, or the neurological examination 
+at 50 fsw is abnormal, compress the diver to 60 fsw on oxygen. Treat the diver on 
+Treatment Table 6. Treatment table time starts upon arrival at 60 fsw. Follow the 
+guidelines for treatment of decompression sickness given in Chapter 17.
+If DCS symptoms appear while the diver is undergoing decompression at 50, 40 
+or 30 fsw in the chamber, treat the symptoms as a recurrence in accordance with 
+Figure 17-3.
