@@ -140,29 +140,30 @@ function App() {
         useCORS: true, 
         logging: false,
         backgroundColor: '#ffffff',
-        windowWidth: 1600
+        windowWidth: 1280 // Optimized width for landscape A4
       });
       
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdf = new jsPDF('l', 'mm', 'a4'); // Landscape for better fit
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgProps = pdf.getImageProperties(imgData);
-      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
       
-      let heightLeft = imgHeight;
-      let position = 0;
+      let finalWidth = pdfWidth;
+      let finalHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-      pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
-      heightLeft -= pdfHeight;
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
-        heightLeft -= pdfHeight;
+      // If content is too tall to fit one page width-wise, scale it down to fit height
+      if (finalHeight > pdfHeight) {
+        finalHeight = pdfHeight;
+        finalWidth = (imgProps.width * finalHeight) / imgProps.height;
       }
+
+      // Center the content on the page
+      const xOffset = (pdfWidth - finalWidth) / 2;
+      const yOffset = (pdfHeight - finalHeight) / 2;
+
+      pdf.addImage(imgData, 'JPEG', xOffset, yOffset, finalWidth, finalHeight);
       
       pdf.save(`Heliox_Mission_${maxDepth}ft.pdf`);
     } catch (err) {
