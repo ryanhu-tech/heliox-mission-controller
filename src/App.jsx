@@ -166,7 +166,7 @@ function App() {
       const margin = 12;
       let currentY = 15;
 
-      const sections = ['pdf-header', 'pdf-chart', 'pdf-tables'];
+      const sections = ['pdf-header', 'pdf-chart', 'pdf-tables', 'pdf-footer'];
       
       for (const id of sections) {
         const el = document.getElementById(id);
@@ -490,7 +490,7 @@ function App() {
           </section>
         </div>
 
-        <footer className="mt-12 pt-8 border-t opacity-40 text-[9px] leading-relaxed" style={{ borderColor: t.border, color: t.textSecondary }}>
+        <footer id="pdf-footer" className={`mt-12 pt-8 border-t leading-relaxed ${isExporting ? 'opacity-80' : 'opacity-40'} text-[9px]`} style={{ borderColor: t.border, color: t.textSecondary }}>
           <div className="grid grid-cols-2 gap-12">
             <div>
               <p className="font-black mb-2 uppercase tracking-widest" style={{ color: t.textPrimary }}>Disclaimer / 免責聲明</p>
