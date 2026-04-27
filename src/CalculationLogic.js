@@ -183,19 +183,54 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
     data.push({ time: currentTime + 3.5, depth: 0, phase: 'Surface Interval', gas: 'AIR', timeStr: formatTime(currentTime+3.5), duration: 3.5 });
     currentTime += 3.5;
     
-    // Chamber Descent
+    const getChamberDepth = (pIndex) => {
+      if (pIndex <= 4) return 50;
+      if (pIndex <= 8) return 40;
+      return 30;
+    };
+
+    let chamberDepth = 50;
     currentTime += 0.5;
     data.push({ time: currentTime, depth: 50, phase: 'Chamber Descent', gas: 'AIR', timeStr: formatTime(currentTime), duration: 0.5 });
 
     for (let i = 1; i <= o2Periods; i++) {
-      data.push({ time: currentTime + 30, depth: 50, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+30), duration: 30, pIndex: i });
-      currentTime += 30;
+      if (i === 1) {
+        // Special P1 Rule: 15m at 50ft, then move to 40ft for remaining 15m
+        data.push({ time: currentTime + 15, depth: 50, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+15), duration: 15, pIndex: 1 });
+        currentTime += 15;
+        
+        const moveT = 40 / 60;
+        const stayT = 15 - moveT;
+        currentTime += moveT;
+        data.push({ time: currentTime, depth: 40, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime), duration: moveT, pIndex: 1 });
+        currentTime += stayT;
+        data.push({ time: currentTime, depth: 40, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime), duration: stayT, pIndex: 1 });
+        chamberDepth = 40;
+      } else {
+        // Normal P2+ Period
+        data.push({ time: currentTime + 30, depth: chamberDepth, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+30), duration: 30, pIndex: i });
+        currentTime += 30;
+      }
+
       if (i < o2Periods) {
-        data.push({ time: currentTime + 5, depth: 50, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime+5), duration: 5 });
-        currentTime += 5;
+        const nextDepth = (i + 1) >= 5 ? 30 : 40; // P5+ is 30, P2-4 is 40
+        if (nextDepth !== chamberDepth) {
+          // Ascent covered by 5-min Air Break (P4 -> P5)
+          const moveT = 40 / 60;
+          const stayT = 5 - moveT;
+          currentTime += moveT;
+          data.push({ time: currentTime, depth: nextDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime), duration: moveT });
+          currentTime += stayT;
+          data.push({ time: currentTime, depth: nextDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime), duration: stayT });
+          chamberDepth = nextDepth;
+        } else {
+          data.push({ time: currentTime + 5, depth: chamberDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime+5), duration: 5 });
+          currentTime += 5;
+        }
       }
     }
-    data.push({ time: currentTime + 2, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime+2), duration: 2 });
+    const finalAscentT = chamberDepth / 30;
+    data.push({ time: currentTime + finalAscentT, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime + finalAscentT), duration: finalAscentT });
   }
 
   return { data, switches: [] };
@@ -203,9 +238,20 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
 
 export const expandChamberSteps = (o2Periods) => {
   const steps = [];
+  let currentDepth = 50;
   for (let i = 1; i <= o2Periods; i++) {
-    steps.push({ phase: 'O2 Period', depth: 50, time: 30, gas: 'O2' });
-    if (i < o2Periods) steps.push({ phase: 'Air Break', depth: 50, time: 5, gas: 'AIR' });
+    // Determine the depth for this period
+    if (i === 1) currentDepth = 40;
+    else if (i >= 5) currentDepth = 30;
+    else currentDepth = 40;
+
+    steps.push({ phase: 'O2 Period', depth: currentDepth, time: 30, gas: 'O2', pIndex: i });
+
+    if (i < o2Periods) {
+      const nextDepth = (i + 1) >= 5 ? 30 : 40;
+      steps.push({ phase: 'Air Break', depth: nextDepth, time: 5, gas: 'AIR' });
+      currentDepth = nextDepth;
+    }
   }
   return steps;
 };
