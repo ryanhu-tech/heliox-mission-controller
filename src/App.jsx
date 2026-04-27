@@ -120,18 +120,59 @@ function App() {
 
   const handleExportPDF = async () => {
     if (isExporting) return;
-    setIsExporting(true); setTheme('light'); 
-    setTimeout(async () => {
-      const element = document.getElementById('report-container');
-      try {
-        const canvas = await html2canvas(element, { scale: 1.5, useCORS: true, backgroundColor: THEMES.light.bg });
-        const pdf = new jsPDF('l', 'mm', 'a4');
-        const imgWidth = pdf.internal.pageSize.getWidth();
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.9), 'JPEG', 0, 0, imgWidth, imgHeight > pdf.internal.pageSize.getHeight() ? pdf.internal.pageSize.getHeight() : imgHeight);
-        pdf.save(`Heliox_Mission_${maxDepth}ft.pdf`);
-      } catch (err) { alert('PDF Failed'); } finally { setTheme('dark'); setIsExporting(false); }
-    }, 1000);
+    const originalTheme = theme;
+    setIsExporting(true);
+    setTheme('light'); 
+    
+    // Wait for theme transition and chart re-rendering
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const element = document.getElementById('report-container');
+    if (!element) {
+      setIsExporting(false);
+      setTheme(originalTheme);
+      return;
+    }
+
+    try {
+      const canvas = await html2canvas(element, { 
+        scale: 2, 
+        useCORS: true, 
+        logging: false,
+        backgroundColor: '#ffffff' 
+      });
+      
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgProps = pdf.getImageProperties(imgData);
+      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+      heightLeft -= pdfHeight;
+
+      // Multi-page handling
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+        heightLeft -= pdfHeight;
+      }
+      
+      pdf.save(`Heliox_Mission_${maxDepth}ft.pdf`);
+    } catch (err) {
+      console.error('PDF Export Error:', err);
+      alert('PDF 導出失敗。');
+    } finally {
+      setTheme(originalTheme);
+      setIsExporting(false);
+    }
   };
 
   const getGasName = (k) => lang === 'zh' ? {BOTTOM:'海底混合氣','5050':'50/50 混合氣',O2:'100% 純氧',AIR:'空氣'}[k] || k : k;
