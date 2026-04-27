@@ -228,7 +228,7 @@ function App() {
             <img src={dsodLogo} alt="DSOD Logo" className="w-14 h-14 object-contain" />
             <div>
               <h1 className="text-[18px] font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
-                <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/US%20Navy%20Diving%20Manual%20Rev7.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors flex items-center">
+                <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/Dive%20Manual%20Rev%207%20Change%20A.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors flex items-center">
                   出處:美海軍潛水教範V7 <ExternalLink size={14} className="ml-1 opacity-70" />
                 </a>
               </h1>
