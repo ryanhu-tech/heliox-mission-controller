@@ -312,7 +312,7 @@ function App() {
           </div>
         </section>
 
-        <div id="pdf-tables" className="grid grid-cols-3 gap-6 pb-20">
+        <div id="pdf-tables" className={`grid ${isExporting ? 'grid-cols-3' : 'grid-cols-1 lg:grid-cols-3'} gap-6 pb-20`}>
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
              <div className={`space-y-2 pr-2 custom-scroll-container ${isExporting ? '' : 'max-h-[450px] overflow-y-auto'}`}>
