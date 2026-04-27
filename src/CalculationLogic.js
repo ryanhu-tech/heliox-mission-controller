@@ -84,20 +84,23 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
     lastDepth = firstStopDepth;
   }
 
+  let o2Acc = 0; 
+
   stops.forEach((stop, idx) => {
     const currentGasBase = getGasType(stop.depth);
     const prevGas = idx === 0 ? 'BOTTOM' : getGasType(stops[idx-1].depth);
 
     if (currentGasBase !== prevGas && (stop.depth === 90 || stop.depth === 30)) {
-       // Ventilation phase
        currentTime += 3; 
-       data.push({ time: currentTime, depth: stop.depth, phase: 'Ventilation', gas: currentGasBase, timeStr: formatTime(currentTime), duration: 3 });
+       const ventGas = (stop.depth === 30 && mode === 'WATER') ? prevGas : currentGasBase;
+       data.push({ time: currentTime, depth: stop.depth, phase: 'Ventilation', gas: ventGas, timeStr: formatTime(currentTime), duration: 3 });
        
-       let remainingTime = stop.time - 3;
+       let remainingTime = stop.depth === 90 ? stop.time - 3 : stop.time;
        if (remainingTime > 0) {
          if (stop.depth <= 30 && mode === 'WATER') {
-            handleWaterO2(remainingTime, stop.depth, data, currentTime, formatTime);
-            currentTime += remainingTime;
+            const res = handleWaterO2(remainingTime, stop.depth, data, currentTime, formatTime, o2Acc);
+            currentTime = res.endTime;
+            o2Acc = res.newO2Acc;
          } else {
             currentTime += remainingTime;
             data.push({ time: currentTime, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime), duration: remainingTime });
@@ -107,42 +110,59 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
        const travelStepT = idx === 0 ? 0 : (stops[idx-1].depth - stop.depth) / CONSTANTS.ASCENT_RATE;
        if (travelStepT > 0) {
           currentTime += travelStepT;
+          if (stop.depth <= 30 && mode === 'WATER') o2Acc += travelStepT;
           data.push({ time: currentTime, depth: stop.depth, phase: 'Travel', gas: currentGasBase, timeStr: formatTime(currentTime), duration: travelStepT });
        }
        
        let stopDuration = idx === 0 ? stop.time : stop.time - travelStepT;
        if (stopDuration > 0) {
          if (stop.depth <= 30 && mode === 'WATER') {
-            handleWaterO2(stopDuration, stop.depth, data, currentTime, formatTime);
+            const res = handleWaterO2(stopDuration, stop.depth, data, currentTime, formatTime, o2Acc);
+            currentTime = res.endTime;
+            o2Acc = res.newO2Acc;
          } else {
             data.push({ time: currentTime + stopDuration, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime + stopDuration), duration: stopDuration });
+            currentTime += stopDuration;
          }
-         currentTime += stopDuration;
        }
     }
     lastDepth = stop.depth;
   });
 
-  function handleWaterO2(totalTime, depth, data, startTime, formatter) {
+  function handleWaterO2(totalTime, depth, data, startTime, formatter, currentO2) {
     let t = startTime;
-    let rem = totalTime;
+    let remDeco = totalTime;
+    let o2Timer = currentO2;
     
-    // Special Rule: If at 20fsw and total time is 35 mins or less, omit air break.
     if (depth === 20 && totalTime <= 35) {
        data.push({ time: t + totalTime, depth, phase: 'Deco Stop', gas: 'O2', timeStr: formatter(t + totalTime), duration: totalTime });
-       return;
+       return { endTime: t + totalTime, newO2Acc: o2Timer + totalTime };
     }
 
-    while (rem > 0) {
-       let o2T = Math.min(rem, 30);
-       data.push({ time: t + o2T, depth, phase: 'Deco Stop', gas: 'O2', timeStr: formatter(t + o2T), duration: o2T });
-       t += o2T; rem -= o2T;
-       if (rem > 0) {
-          let airT = Math.min(rem, 5);
-          data.push({ time: t + airT, depth, phase: 'Air Break', gas: 'AIR', timeStr: formatter(t + airT), duration: airT });
-          t += airT; rem -= airT;
+    while (remDeco > 0) {
+       let timeToNextBreak = 30 - o2Timer;
+       
+       if (timeToNextBreak <= 0.001) {
+          data.push({ time: t + 5, depth, phase: 'Air Break', gas: 'AIR', timeStr: formatter(t + 5), duration: 5 });
+          t += 5;
+          o2Timer = 0;
+          timeToNextBreak = 30;
+       }
+
+       let o2Chunk = Math.min(remDeco, timeToNextBreak);
+       data.push({ time: t + o2Chunk, depth, phase: 'Deco Stop', gas: 'O2', timeStr: formatter(t + o2Chunk), duration: o2Chunk });
+       
+       t += o2Chunk;
+       remDeco -= o2Chunk; // 只有這裡扣除減壓時間
+       o2Timer += o2Chunk;
+
+       if (o2Timer >= 29.99 && remDeco > 0) {
+          data.push({ time: t + 5, depth, phase: 'Air Break', gas: 'AIR', timeStr: formatter(t + 5), duration: 5 });
+          t += 5;
+          o2Timer = 0;
        }
     }
+    return { endTime: t, newO2Acc: o2Timer };
   }
 
   if (mode === 'WATER') {
