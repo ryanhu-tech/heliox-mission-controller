@@ -270,7 +270,42 @@ function App() {
                 <CartesianGrid strokeDasharray="3 3" stroke={t.grid} vertical={false} opacity={0.5} />
                 <XAxis dataKey="time" type="number" domain={[0, totalDuration]} tickFormatter={(v)=>`${Math.floor(v)}:${Math.round((v%1)*60).toString().padStart(2,'0')}`} stroke={t.textSecondary} fontSize={11} />
                 <YAxis reversed domain={[0, maxDepth + 10]} ticks={yTicks} interval={0} stroke={t.textSecondary} fontSize={11} tickFormatter={(v)=>`${v}'`} />
-                <Tooltip content={({ active, payload }) => { if (active && payload?.[0]) { const d = payload[0].payload; const m = Math.floor(d.duration), s = Math.round((d.duration % 1) * 60); let pStr = ""; if(d.pIndex) pStr = d.pIndex === 1 ? "P0.5" : `P${d.pIndex - 1}`; return (<div className="bg-[#020617] border border-[#1e293b] p-4 rounded-2xl shadow-2xl text-xs space-y-2"><p className="text-[10px] font-black text-[#f97316] uppercase tracking-widest border-b border-[#1e293b] pb-1">{getPhaseName(d.phase)} {pStr}</p><div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.depth}</span><span className="text-white font-mono font-black">{d.depth} fsw</span></div><div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.clock}</span><span className="text-white font-mono font-black">{d.timeStr}</span></div>{d.duration > 0 && <div className="flex justify-between gap-8"><span className="text-[#0ea5e9] font-bold">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black">{m}m {s}s</span></div>}{d.segmentGasSCF > 0 && <div className="flex justify-between gap-8 pt-1 border-t border-dashed border-[#1e293b]"><span className="text-[#f59e0b] font-bold">{lang === 'zh' ? '區段消耗' : 'Seg. Gas'}</span><span className="text-[#fbbf24] font-mono font-black">{Math.ceil(d.segmentGasSCF)} SCF</span></div>}<div className="flex justify-between gap-8 pt-1 border-t border-[#1e293b]"><span className="text-[#64748b] font-bold">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black">{getGasName(d.gas)}</span></div></div>); } return null; }} />
+                <Tooltip 
+                  content={({ active, payload }) => { 
+                    if (active && payload?.[0]) { 
+                      const d = payload[0].payload; 
+                      const m = Math.floor(d.duration), s = Math.round((d.duration % 1) * 60); 
+                      let pStr = ""; 
+                      if(d.pIndex) pStr = d.pIndex === 1 ? "P0.5" : `P${d.pIndex - 1}`; 
+                      
+                      return (
+                        <div className="lg:relative fixed inset-0 flex items-center justify-center pointer-events-none z-[9999] p-4">
+                          {/* 手機版遮罩背景 */}
+                          <div className="lg:hidden absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
+                          
+                          <div className="bg-[#020617] border border-[#1e293b] p-6 rounded-[2rem] shadow-2xl text-sm space-y-3 pointer-events-auto relative w-full max-w-[280px] lg:max-w-none lg:w-auto">
+                            <p className="text-[11px] font-black text-[#f97316] uppercase tracking-[0.2em] border-b border-[#1e293b] pb-2 flex justify-between items-center">
+                              <span>{getPhaseName(d.phase)} {pStr}</span>
+                              <Activity size={12} className="opacity-50" />
+                            </p>
+                            
+                            <div className="grid gap-2">
+                              <div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.depth}</span><span className="text-white font-mono font-black">{d.depth} fsw</span></div>
+                              <div className="flex justify-between gap-8"><span className="text-[#64748b] font-bold">{msg?.clock}</span><span className="text-white font-mono font-black">{d.timeStr}</span></div>
+                              {d.duration > 0 && <div className="flex justify-between gap-8"><span className="text-[#0ea5e9] font-bold">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black">{m}m {s}s</span></div>}
+                              {d.segmentGasSCF > 0 && <div className="flex justify-between gap-8 pt-1 border-t border-dashed border-[#1e293b]"><span className="text-[#f59e0b] font-bold">{lang === 'zh' ? '區段消耗' : 'Seg. Gas'}</span><span className="text-[#fbbf24] font-mono font-black">{Math.ceil(d.segmentGasSCF)} SCF</span></div>}
+                              <div className="flex justify-between gap-8 pt-1 border-t border-[#1e293b]"><span className="text-[#64748b] font-bold">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black">{getGasName(d.gas)}</span></div>
+                            </div>
+
+                            {/* 手機版提示 */}
+                            <p className="lg:hidden text-center text-[8px] text-[#64748b] font-bold mt-2 animate-pulse uppercase tracking-widest">Release to close</p>
+                          </div>
+                        </div>
+                      ); 
+                    } 
+                    return null; 
+                  }} 
+                />
                 <Area type="linear" dataKey="depth" stroke={theme === 'dark' ? '#ffffff' : '#000000'} strokeWidth={2} fill="url(#gasGradient)" isAnimationActive={false} />
               </AreaChart>
             </ResponsiveContainer>
