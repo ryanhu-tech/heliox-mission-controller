@@ -229,7 +229,7 @@ function App() {
             <div>
               <h1 className="text-xl font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
                 <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/Dive%20Manual%20Rev%206%20with%20Chg%20A.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors">
-                  美海軍潛水手冊
+                  引用美海軍潛水教範V7
                 </a>
               </h1>
               <p className="text-[8px] font-bold tracking-tight mt-1 opacity-70" style={{ color: t.textSecondary }}>
