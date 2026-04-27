@@ -279,23 +279,23 @@ function App() {
                       if(d.pIndex) pStr = d.pIndex === 1 ? "P0.5" : `P${d.pIndex - 1}`; 
                       
                       return (
-                        <div className="lg:relative fixed top-0 left-0 right-0 flex justify-center pointer-events-none z-[9999] p-4">
-                          {/* 手機版頂部磨砂背景 */}
-                          <div className="lg:hidden absolute inset-0 bg-[#020617]/80 backdrop-blur-md border-b border-[#1e293b] shadow-2xl" />
+                        <div className="lg:relative fixed bottom-0 left-0 right-0 flex justify-center pointer-events-none z-[9999] p-4">
+                          {/* 手機版底部磨砂背景 */}
+                          <div className="lg:hidden absolute inset-0 bg-[#020617]/90 backdrop-blur-lg border-t border-[#1e293b] shadow-[0_-10px_20px_rgba(0,0,0,0.4)]" />
                           
                           <div className="lg:bg-[#020617] lg:border lg:border-[#1e293b] lg:p-6 lg:rounded-[2rem] lg:shadow-2xl text-sm lg:space-y-3 pointer-events-auto relative w-full lg:w-auto">
-                            <div className="lg:block flex flex-col gap-2">
-                              <p className="text-[11px] font-black text-[#f97316] uppercase tracking-[0.2em] lg:border-b lg:border-[#1e293b] lg:pb-2 flex justify-between items-center">
+                            <div className="lg:block flex flex-col gap-1.5">
+                              <p className="text-[10px] lg:text-[11px] font-black text-[#f97316] uppercase tracking-[0.2em] lg:border-b lg:border-[#1e293b] lg:pb-2 flex justify-between items-center">
                                 <span>{getPhaseName(d.phase)} {pStr}</span>
                                 <Activity size={12} className="opacity-50" />
                               </p>
                               
-                              <div className="grid grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-1 lg:gap-2">
-                                <div className="flex justify-between items-center lg:gap-8"><span className="text-[#64748b] font-bold text-[10px] lg:text-sm">{msg?.depth}</span><span className="text-white font-mono font-black">{d.depth} fsw</span></div>
-                                <div className="flex justify-between items-center lg:gap-8"><span className="text-[#64748b] font-bold text-[10px] lg:text-sm">{msg?.clock}</span><span className="text-white font-mono font-black">{d.timeStr}</span></div>
-                                {d.duration > 0 && <div className="flex justify-between items-center lg:gap-8"><span className="text-[#0ea5e9] font-bold text-[10px] lg:text-sm">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black">{m}m {s}s</span></div>}
-                                {d.segmentGasSCF > 0 && <div className="flex justify-between items-center lg:gap-8 lg:pt-1 lg:border-t lg:border-dashed lg:border-[#1e293b]"><span className="text-[#f59e0b] font-bold text-[10px] lg:text-sm">{lang === 'zh' ? '區段消耗' : 'Seg. Gas'}</span><span className="text-[#fbbf24] font-mono font-black">{Math.ceil(d.segmentGasSCF)} SCF</span></div>}
-                                <div className="flex justify-between items-center lg:gap-8 lg:pt-1 lg:border-t lg:border-[#1e293b] col-span-2 lg:col-span-1"><span className="text-[#64748b] font-bold text-[10px] lg:text-sm">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black">{getGasName(d.gas)}</span></div>
+                              <div className="grid grid-cols-2 lg:grid-cols-1 gap-x-4 gap-y-1 lg:gap-2">
+                                <div className="flex justify-between items-center lg:gap-8"><span className="text-[#64748b] font-bold text-[9px] lg:text-sm">{msg?.depth}</span><span className="text-white font-mono font-black">{d.depth} fsw</span></div>
+                                <div className="flex justify-between items-center lg:gap-8"><span className="text-[#64748b] font-bold text-[9px] lg:text-sm">{msg?.clock}</span><span className="text-white font-mono font-black">{d.timeStr}</span></div>
+                                {d.duration > 0 && <div className="flex justify-between items-center lg:gap-8"><span className="text-[#0ea5e9] font-bold text-[9px] lg:text-sm">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black">{m}m {s}s</span></div>}
+                                {d.segmentGasSCF > 0 && <div className="flex justify-between items-center lg:gap-8 lg:pt-1 lg:border-t lg:border-dashed lg:border-[#1e293b]"><span className="text-[#f59e0b] font-bold text-[9px] lg:text-sm">{lang === 'zh' ? '區段消耗' : 'Seg. Gas'}</span><span className="text-[#fbbf24] font-mono font-black">{Math.ceil(d.segmentGasSCF)} SCF</span></div>}
+                                <div className="flex justify-between items-center lg:gap-8 lg:pt-1 lg:border-t lg:border-[#1e293b] col-span-2 lg:col-span-1"><span className="text-[#64748b] font-bold text-[9px] lg:text-sm">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black text-[10px] lg:text-sm">{getGasName(d.gas)}</span></div>
                               </div>
                             </div>
                           </div>
