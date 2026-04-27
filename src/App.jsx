@@ -121,47 +121,51 @@ function App() {
 
   const handleExportPDF = async () => {
     try {
+      setIsExporting(true);
       const originalTheme = theme;
       setTheme('light'); 
       
-      // Wait for re-render
-      await new Promise(r => setTimeout(r, 500));
+      // Wait for re-render and CSS transitions
+      await new Promise(r => setTimeout(r, 600));
       
       const doc = new jsPDF('p', 'mm', 'a4');
       const pageWidth = 210;
       const pageHeight = 297;
-      const margin = 10;
+      const margin = 12;
       let currentY = 15;
 
-      // Helper function to capture element with high resolution
       const captureElement = async (id, widthMM) => {
         const el = document.getElementById(id);
         if (!el) return null;
-        const canvas = await html2canvas(el, { scale: 3, backgroundColor: '#ffffff', useCORS: true });
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const canvas = await html2canvas(el, { 
+          scale: 3, 
+          backgroundColor: '#ffffff', 
+          useCORS: true,
+          logging: false
+        });
+        const imgData = canvas.toDataURL('image/jpeg', 0.9);
         const imgProps = doc.getImageProperties(imgData);
         const heightMM = (imgProps.height * widthMM) / imgProps.width;
         return { imgData, heightMM };
       };
 
-      // 1. Header (programmatic capture)
+      // 1. Header
       const header = await captureElement('pdf-header', pageWidth - margin * 2);
       if (header) {
         doc.addImage(header.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, header.heightMM);
-        currentY += header.heightMM + 5;
+        currentY += header.heightMM + 8;
       }
 
       // 2. Chart
       const chart = await captureElement('pdf-chart', pageWidth - margin * 2);
       if (chart) {
         doc.addImage(chart.imgData, 'JPEG', margin, currentY, pageWidth - margin * 2, chart.heightMM);
-        currentY += chart.heightMM + 5;
+        currentY += chart.heightMM + 8;
       }
 
-      // 3. Grid (Tables)
+      // 3. Tables (Now fully expanded)
       const tables = await captureElement('pdf-tables', pageWidth - margin * 2);
       if (tables) {
-        // If it fits on the same page, add it. Otherwise, add a new page.
         if (currentY + tables.heightMM > pageHeight - margin) {
           doc.addPage();
           currentY = margin;
@@ -170,9 +174,11 @@ function App() {
       }
 
       setTheme(originalTheme);
-      doc.save(`Heliox_Mission_${maxDepth}ft_${bottomTime}min.pdf`);
+      setIsExporting(false);
+      doc.save(`Heliox_Mission_${maxDepth}ft.pdf`);
     } catch (err) {
       console.error('PDF Export Error:', err);
+      setIsExporting(false);
       alert(`PDF 導出失敗: ${err.message}`);
     }
   };
@@ -219,7 +225,7 @@ function App() {
              </div>
           </div>
 
-          <div className="no-print flex items-center gap-2">
+          <div className={`flex items-center gap-2 ${isExporting ? 'invisible h-0 w-0' : ''}`}>
              <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2" style={{ color: '#f97316' }} />{lang === 'en' ? '中文' : 'EN'}</button>
              <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-12 h-12 rounded-2xl flex items-center justify-center border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}>{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}</button>
              <button onClick={handleExportPDF} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#ffffff' : '#0f172a', color: theme === 'dark' ? '#000000' : '#ffffff' }}><Download size={16} />{msg?.export}</button>
@@ -254,7 +260,7 @@ function App() {
         <div id="pdf-tables" className="grid grid-cols-3 gap-6 pb-20">
           <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
-             <div className="space-y-2 max-h-[450px] overflow-y-auto pr-2 custom-scroll-container">
+             <div className={`space-y-2 pr-2 custom-scroll-container ${isExporting ? '' : 'max-h-[450px] overflow-y-auto'}`}>
                 {stops && stops.length > 0 ? stops.map(stop => (<div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="font-mono text-sm font-black" style={{ color: stop.depth <= 30 ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span><div className="flex items-center gap-2"><span className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>{stop.time}</span><span className="text-[8px] font-black uppercase opacity-50" style={{ color: t.textSecondary }}>Min</span></div></div>)) : <div className="text-center py-10 opacity-30 text-[10px] uppercase font-black" style={{ color: t.textSecondary }}>{msg?.noDeco}</div>}
              </div>
           </section>
