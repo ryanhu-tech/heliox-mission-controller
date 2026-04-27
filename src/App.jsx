@@ -50,6 +50,28 @@ function App() {
   const [maxDepth, setMaxDepth] = useState(270);
   const [bottomTime, setBottomTime] = useState(40);
   const [divers, setDivers] = useState(3);
+  const [hoveredPoint, setHoveredPoint] = useState(null);
+  const [vv, setVv] = useState({ left: 0, top: 0, w: window.innerWidth, h: window.innerHeight, s: 1 });
+
+  useEffect(() => {
+    if (!window.visualViewport) return;
+    const update = () => {
+      setVv({
+        left: window.visualViewport.offsetLeft,
+        top: window.visualViewport.offsetTop,
+        w: window.visualViewport.width,
+        h: window.visualViewport.height,
+        s: window.visualViewport.scale
+      });
+    };
+    window.visualViewport.addEventListener('resize', update);
+    window.visualViewport.addEventListener('scroll', update);
+    update();
+    return () => {
+      window.visualViewport.removeEventListener('resize', update);
+      window.visualViewport.removeEventListener('scroll', update);
+    };
+  }, []);
   const [runs, setRuns] = useState(1);
   const [decoMode, setDecoMode] = useState('SURD'); 
   const [selectedCyl, setSelectedCyl] = useState(CYLINDER_PRESETS[0]);
@@ -285,7 +307,17 @@ function App() {
           </div>
           <div className="w-full h-[675px]">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={profileData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <AreaChart 
+                data={profileData} 
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                onPointerMove={(e) => {
+                  if (e && e.activePayload) setHoveredPoint(e.activePayload[0].payload);
+                }}
+                onPointerDown={(e) => {
+                  if (e && e.activePayload) setHoveredPoint(e.activePayload[0].payload);
+                }}
+                onMouseLeave={() => setHoveredPoint(null)}
+              >
                 <defs><linearGradient id="gasGradient" x1="0" y1="0" x2="1" y2="0">{gradStops?.map((s, i) => <stop key={i} offset={s.offset} stopColor={s.color} stopOpacity={0.4} />)}</linearGradient></defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={t.grid} vertical={false} opacity={0.5} />
                 <XAxis dataKey="time" type="number" domain={[0, totalDuration]} tickFormatter={(v)=>`${Math.floor(v)}:${Math.round((v%1)*60).toString().padStart(2,'0')}`} stroke={t.textSecondary} fontSize={11} />
@@ -311,8 +343,8 @@ function App() {
                       if(d.pIndex) pStr = d.pIndex === 1 ? "P0.5" : `P${d.pIndex - 1}`; 
                       
                       return (
-                        <div className="lg:relative fixed bottom-2 left-0 right-0 flex justify-center pointer-events-none z-[9999] px-2">
-                          <div className="bg-[#020617]/95 backdrop-blur-2xl border border-[#1e293b] p-2 px-3 rounded-[1rem] shadow-[0_10px_40px_rgba(0,0,0,0.7)] pointer-events-auto relative w-auto">
+                        <div className="hidden lg:block relative z-[9999]">
+                          <div className="bg-[#020617]/95 backdrop-blur-2xl border border-[#1e293b] p-2 px-3 rounded-[1rem] shadow-[0_10px_40px_rgba(0,0,0,0.7)] pointer-events-auto relative w-auto min-w-[140px]">
                             <div className="flex flex-col gap-1">
                               <p className="text-[7px] font-black text-[#f97316] uppercase tracking-[0.2em] border-b border-[#1e293b]/50 pb-0.5 flex justify-between items-center mb-0.5">
                                 <span>{getPhaseName(d.phase)} {pStr}</span>
@@ -320,15 +352,9 @@ function App() {
                               </p>
                               
                               <div className="grid grid-cols-3 gap-x-2.5 gap-y-1">
-                                <div className="flex flex-col"><span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{msg?.depth}</span><span className="text-white font-mono font-black text-[10px]">{d.depth}</span></div>
+                                <div className="flex flex-col"><span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{msg?.depth}</span><span className="text-white font-mono font-black text-[10px]">{d.depth} fsw</span></div>
                                 <div className="flex flex-col"><span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{msg?.clock}</span><span className="text-white font-mono font-black text-[10px]">{d.timeStr}</span></div>
                                 <div className="flex flex-col"><span className="text-[#0ea5e9] font-bold text-[6px] leading-tight uppercase">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black text-[10px]">{m}m {s}s</span></div>
-                                
-                                {d.segmentGasSCF > 0 ? (
-                                  <div className="flex flex-col"><span className="text-[#f59e0b] font-bold text-[6px] leading-tight uppercase">{lang === 'zh' ? '消耗' : 'Gas'}</span><span className="text-[#fbbf24] font-mono font-black text-[10px]">{Math.ceil(d.segmentGasSCF)} SCF</span></div>
-                                ) : <div />}
-                                
-                                <div className="flex flex-col col-span-2"><span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black text-[9px] truncate">{getGasName(d.gas)}</span></div>
                               </div>
                             </div>
                           </div>
@@ -437,6 +463,39 @@ function App() {
              </div>
           </section>
         </div>
+        {/* Mobile Viewport-Locked Tooltip (V2 - Robust) */}
+        {hoveredPoint && !isExporting && (
+          <div 
+            className="lg:hidden fixed z-[99999] pointer-events-none"
+            style={{
+              left: vv.left + (vv.w / 2),
+              top: vv.top + vv.h - 12,
+              transform: `translate(-50%, -100%)`,
+              width: 'max-content'
+            }}
+          >
+            <div className="bg-[#020617] border-2 border-white/20 p-3 px-4 rounded-[1.5rem] shadow-[0_0_100px_rgba(0,0,0,0.9)] pointer-events-auto ring-1 ring-white/10">
+              <div className="flex flex-col gap-1.5">
+                <p className="text-[8px] font-black text-[#f97316] uppercase tracking-[0.2em] border-b border-white/10 pb-1 flex justify-between items-center mb-1">
+                  <span>{getPhaseName(hoveredPoint.phase)} {hoveredPoint.pIndex ? (hoveredPoint.pIndex === 1 ? "P0.5" : `P${hoveredPoint.pIndex - 1}`) : ""}</span>
+                  <Activity size={10} className="animate-pulse" />
+                </p>
+                
+                <div className="grid grid-cols-3 gap-x-4 gap-y-1.5">
+                  <div className="flex flex-col"><span className="text-[#94a3b8] font-bold text-[7px] uppercase">{msg?.depth}</span><span className="text-white font-mono font-black text-[12px]">{hoveredPoint.depth} fsw</span></div>
+                  <div className="flex flex-col"><span className="text-[#94a3b8] font-bold text-[7px] uppercase">{msg?.clock}</span><span className="text-white font-mono font-black text-[12px]">{hoveredPoint.timeStr}</span></div>
+                  <div className="flex flex-col"><span className="text-[#0ea5e9] font-bold text-[7px] uppercase">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black text-[12px]">{Math.floor(hoveredPoint.duration)}m {Math.round((hoveredPoint.duration % 1) * 60)}s</span></div>
+                  
+                  {hoveredPoint.segmentGasSCF > 0 ? (
+                    <div className="flex flex-col"><span className="text-[#f59e0b] font-bold text-[7px] uppercase">{lang === 'zh' ? '消耗' : 'Gas'}</span><span className="text-[#fbbf24] font-mono font-black text-[12px]">{Math.ceil(hoveredPoint.segmentGasSCF)} SCF</span></div>
+                  ) : <div />}
+                  
+                  <div className="flex flex-col col-span-2"><span className="text-[#94a3b8] font-bold text-[7px] uppercase">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[hoveredPoint.gas] }} className="font-black text-[11px]">{getGasName(hoveredPoint.gas)}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
   );
 }
