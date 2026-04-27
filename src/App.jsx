@@ -90,7 +90,7 @@ function App() {
     else setAscentGasSCF(calcAscentGas(maxDepth, 0, divers));
   }, [stops, divers, maxDepth, o2Periods, decoMode]);
 
-    const { profileData, totalDuration, chamberSteps, gradStops, yTicks } = useMemo(() => {
+    const { profileData, totalDuration, chamberSteps, gradStops, originalYTicks, displayTicks, getDisplayDepth } = useMemo(() => {
     const res = generateProfileData(maxDepth, bottomTime, stops, o2Periods, decoMode, divers);
     const steps = decoMode === 'SURD' ? expandChamberSteps(o2Periods) : [];
     const duration = (res && res.data && res.data.length > 0) ? res.data[res.data.length - 1].time : 1;
@@ -116,7 +116,27 @@ function App() {
         gStops.push({ offset: `${endOffset}%`, color: endColor });
       }
     }
-    return { profileData: res.data || [], totalDuration: duration, chamberSteps: steps, gradStops: gStops, yTicks: allTicks };
+    // 非線性 Y 軸變換邏輯 (0-130ft 佔 80%)
+    const DECO_ZONE_LIMIT = 130;
+    const DECO_ZONE_HEIGHT_PCT = 80;
+    const getDisplayDepth = (d) => {
+      if (d <= DECO_ZONE_LIMIT) return d * (DECO_ZONE_HEIGHT_PCT / DECO_ZONE_LIMIT);
+      const remainingDepth = (maxDepth + 10) - DECO_ZONE_LIMIT;
+      return remainingDepth <= 0 ? d : DECO_ZONE_HEIGHT_PCT + ((d - DECO_ZONE_LIMIT) / remainingDepth) * (100 - DECO_ZONE_HEIGHT_PCT);
+    };
+
+    const transformedData = (res.data || []).map(p => ({ ...p, displayDepth: getDisplayDepth(p.depth) }));
+    const displayTicks = allTicks.map(v => getDisplayDepth(v));
+
+    return { 
+      profileData: transformedData, 
+      originalYTicks: allTicks,
+      displayTicks,
+      getDisplayDepth,
+      totalDuration: duration, 
+      chamberSteps: steps, 
+      gradStops: gStops 
+    };
   }, [maxDepth, bottomTime, stops, o2Periods, decoMode]);
 
   const handleCylChange = (e) => {
@@ -269,7 +289,19 @@ function App() {
                 <defs><linearGradient id="gasGradient" x1="0" y1="0" x2="1" y2="0">{gradStops?.map((s, i) => <stop key={i} offset={s.offset} stopColor={s.color} stopOpacity={0.4} />)}</linearGradient></defs>
                 <CartesianGrid strokeDasharray="3 3" stroke={t.grid} vertical={false} opacity={0.5} />
                 <XAxis dataKey="time" type="number" domain={[0, totalDuration]} tickFormatter={(v)=>`${Math.floor(v)}:${Math.round((v%1)*60).toString().padStart(2,'0')}`} stroke={t.textSecondary} fontSize={11} />
-                <YAxis reversed domain={[0, maxDepth + 10]} ticks={yTicks} interval={0} stroke={t.textSecondary} fontSize={11} tickFormatter={(v)=>`${v}'`} />
+                <YAxis 
+                  reversed 
+                  domain={[0, 100]} 
+                  ticks={displayTicks} 
+                  interval={0} 
+                  stroke={t.textSecondary} 
+                  fontSize={11} 
+                  tickFormatter={(v) => {
+                    if (v === 0) return "0'";
+                    const idx = displayTicks.findIndex(t => Math.abs(t - v) < 0.1);
+                    return idx !== -1 ? `${originalYTicks[idx]}'` : "";
+                  }} 
+                />
                 <Tooltip 
                   content={({ active, payload }) => { 
                     if (active && payload?.[0]) { 
@@ -306,7 +338,7 @@ function App() {
                     return null; 
                   }} 
                 />
-                <Area type="linear" dataKey="depth" stroke={theme === 'dark' ? '#ffffff' : '#000000'} strokeWidth={2} fill="url(#gasGradient)" isAnimationActive={false} />
+                <Area type="linear" dataKey="displayDepth" stroke={theme === 'dark' ? '#ffffff' : '#000000'} strokeWidth={2} fill="url(#gasGradient)" isAnimationActive={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
