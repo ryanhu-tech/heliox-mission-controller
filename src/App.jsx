@@ -240,37 +240,66 @@ function App() {
           </div>
           
           <div className="flex-1 grid grid-cols-4 gap-4">
-             <div className="p-3 px-4 rounded-xl border group hover:border-[#f97316]/50 transition-all cursor-pointer" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+             <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                   {msg?.maxDepth}
-                  <Edit2 size={8} className="opacity-0 group-hover:opacity-40 transition-opacity" />
+                  <Edit2 size={8} className="opacity-20" />
                 </label>
-                <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
-                  {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
-                </select>
+                <div className="border-b border-white/20">
+                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
+                    {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
+                  </select>
+                </div>
              </div>
-             <div className="p-3 px-4 rounded-xl border group hover:border-[#f97316]/50 transition-all cursor-pointer" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+             <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                   {msg?.bottomTime}
-                  <Edit2 size={8} className="opacity-0 group-hover:opacity-40 transition-opacity" />
+                  <Edit2 size={8} className="opacity-20" />
                 </label>
-                <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
-                  {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
-                </select>
+                <div className="border-b border-white/20">
+                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
+                    {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
+                  </select>
+                </div>
              </div>
-             <div className="p-2 rounded-xl border flex items-center" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <button onClick={()=>setDecoMode('SURD')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', color: decoMode === 'SURD' ? '#fff' : '#64748b' }}>SURD O2</button>
-                <button onClick={()=>setDecoMode('WATER')} className="flex-1 py-3 rounded-xl text-[10px] font-black transition-all" style={{ backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', color: decoMode === 'WATER' ? '#fff' : '#64748b' }}>IN-WATER</button>
+             <div className="p-1 rounded-xl border flex flex-col gap-1" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+                <label className="block text-[6px] font-black uppercase tracking-[0.2em] text-center opacity-40 mb-0.5" style={{ color: t.textSecondary }}>{lang === 'zh' ? '減壓模式' : 'DECO MODE'}</label>
+                <div className="flex gap-1">
+                  <button 
+                    onClick={()=>setDecoMode('SURD')} 
+                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                    style={{ 
+                      backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', 
+                      borderColor: decoMode === 'SURD' ? '#fdba74' : 'transparent',
+                      color: decoMode === 'SURD' ? '#fff' : '#64748b'
+                    }}
+                  >
+                    SURD
+                  </button>
+                  <button 
+                    onClick={()=>setDecoMode('WATER')} 
+                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                    style={{ 
+                      backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', 
+                      borderColor: decoMode === 'WATER' ? '#86efac' : 'transparent',
+                      color: decoMode === 'WATER' ? '#fff' : '#64748b'
+                    }}
+                  >
+                    WATER
+                  </button>
+                </div>
              </div>
-             <div className="p-3 px-4 rounded-xl border flex items-center justify-between group hover:border-[#f97316]/50 transition-all cursor-pointer" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                <div>
+             <div className="p-3 px-4 rounded-xl border flex items-center justify-between" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+                <div className="w-full">
                   <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                     {msg?.divers}
-                    <Edit2 size={8} className="opacity-0 group-hover:opacity-40 transition-opacity" />
+                    <Edit2 size={8} className="opacity-20" />
                   </label>
-                  <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-12 focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
+                  <div className="border-b border-white/20">
+                    <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-full focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
+                  </div>
                 </div>
-                <Users size={20} style={{ color: '#64748b' }} />
+                <Users size={20} className="ml-2" style={{ color: '#64748b' }} />
              </div>
           </div>
 
@@ -393,25 +422,25 @@ function App() {
                   <p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.model}</p>
                 </div>
                 <div className="text-right flex flex-col items-end pb-1 group cursor-pointer">
-                  <div className="flex items-center gap-1 mb-0.5 border-b border-dashed border-white/5 group-hover:border-[#f59e0b]/50 transition-all">
+                  <div className="flex items-center gap-1 mb-0.5 border-b border-white/20 group-hover:border-[#f59e0b]/50 transition-all">
                     {isExporting ? (
                       <span className="font-mono text-base font-black" style={{ color: '#d97706' }}>{cylinderPSI}</span>
                     ) : (
                       <input type="number" className="bg-transparent border-none outline-none font-mono text-sm font-bold w-12 text-right focus:text-white transition-colors" style={{ color: '#d97706' }} value={cylinderPSI} onChange={(e)=>setCylinderPSI(Number(e.target.value))} />
                     )}
                     <span className="text-[10px] font-bold" style={{ color: '#d97706' }}>PSI</span>
-                    <Edit2 size={8} className="opacity-0 group-hover:opacity-40 ml-1 transition-opacity" style={{ color: '#d97706' }} />
+                    <Edit2 size={8} className="opacity-20 ml-1" style={{ color: '#d97706' }} />
                   </div>
                   <p className="text-[8px] font-bold opacity-50 uppercase tracking-tighter" style={{ color: t.textSecondary }}>{msg?.workPress}</p>
                 </div>
               </div>
              <div className={`grid grid-cols-2 ${isExporting ? 'gap-1 mb-2' : 'gap-3 mb-6'}`}>
-                <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border group hover:border-[#f97316]/50 transition-all`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border group hover:border-[#f97316]/50 transition-all cursor-pointer`} style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
                   <label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5 flex justify-between items-center" style={{ color: t.textSecondary }}>
                     {msg?.runs}
-                    <Edit2 size={8} className="opacity-0 group-hover:opacity-40 transition-opacity" />
+                    <Edit2 size={8} className="opacity-20" />
                   </label>
-                  <div className="border-b border-dashed border-white/5 group-hover:border-[#f97316]/30">
+                  <div className="border-b border-white/20">
                     {isExporting ? (
                       <div className="font-mono text-sm font-black" style={{ color: t.textPrimary }}>{runs}</div>
                     ) : (
@@ -419,16 +448,18 @@ function App() {
                     )}
                   </div>
                 </div>
-                <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border group hover:border-[#f97316]/50 transition-all cursor-pointer`} style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                <div className={`${isExporting ? 'p-2' : 'p-4'} rounded-2xl border group hover:border-[#f97316]/50 transition-all cursor-pointer`} style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
                   <label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5 flex justify-between items-center" style={{ color: t.textSecondary }}>
                     {msg?.cylinder}
-                    <Edit2 size={8} className="opacity-0 group-hover:opacity-40 transition-opacity" />
+                    <Edit2 size={8} className="opacity-20" />
                   </label>
-                  {isExporting ? (
-                    <div className="font-mono text-[10px] font-black leading-tight" style={{ color: '#f97316' }}>{selectedCyl?.name}</div>
-                  ) : (
-                    <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: '#f97316' }} value={selectedCyl?.id} onChange={handleCylChange}>{CYLINDER_PRESETS.map(c => <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name}</option>)}</select>
-                  )}
+                  <div className="border-b border-white/20">
+                    {isExporting ? (
+                      <div className="font-mono text-[10px] font-black leading-tight" style={{ color: '#f97316' }}>{selectedCyl?.name}</div>
+                    ) : (
+                      <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: '#f97316' }} value={selectedCyl?.id} onChange={handleCylChange}>{CYLINDER_PRESETS.map(c => <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name}</option>)}</select>
+                    )}
+                  </div>
                 </div>
              </div>
              <div className="space-y-2 flex-1">
