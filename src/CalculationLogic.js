@@ -106,70 +106,89 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
   });
 
   let lastDepth = maxDepth;
-  const firstStopDepth = stops.length > 0 ? stops[0].depth : 0;
-  const travelT = (lastDepth - firstStopDepth) / CONSTANTS.ASCENT_RATE;
-  if (travelT > 0) {
-    currentTime += travelT;
-    data.push({ 
-      time: currentTime, depth: firstStopDepth, phase: 'Ascent to 1st Stop', gas: 'BOTTOM', timeStr: formatTime(currentTime), duration: travelT,
-      segmentGasSCF: getSegmentGas(travelT, (lastDepth + firstStopDepth)/2, 'Ascent', 'BOTTOM')
-    });
-    lastDepth = firstStopDepth;
-  }
-
   let o2Acc = 0; 
 
   stops.forEach((stop, idx) => {
+    // 1. Calculate Travel to current stop
+    const travelStepT = (lastDepth - stop.depth) / CONSTANTS.ASCENT_RATE;
+    if (travelStepT > 0) {
+      currentTime += travelStepT;
+      const travelGas = getGasType(lastDepth);
+      
+      // Continuous O2 Cycle: only accumulate if the gas during travel is O2
+      if (travelGas === 'O2' && mode === 'WATER') o2Acc += travelStepT;
+      
+      data.push({ 
+        time: currentTime, 
+        depth: stop.depth, 
+        phase: idx === 0 ? 'Ascent to 1st Stop' : 'Travel', 
+        gas: travelGas, 
+        timeStr: formatTime(currentTime), 
+        duration: travelStepT,
+        segmentGasSCF: getSegmentGas(travelStepT, (lastDepth + stop.depth)/2, 'Travel', travelGas)
+      });
+    }
+
+    // 2. Identify Gas Change / Ventilation
     const currentGasBase = getGasType(stop.depth);
-    const prevGas = idx === 0 ? 'BOTTOM' : getGasType(stops[idx-1].depth);
+    const prevGas = getGasType(lastDepth);
+    
+    // US Navy Rule: travel time between stops is included in the next stop's time.
+    // However, the very first ascent (Bottom to Stop 1) is NOT included.
+    const travelToSubtract = (idx === 0) ? 0 : travelStepT;
 
     if (currentGasBase !== prevGas && (stop.depth === 90 || stop.depth === 30)) {
+       // Ventilation Segment (starts AFTER arriving at the stop)
        currentTime += 3; 
        const ventGas = (stop.depth === 30 && mode === 'WATER') ? prevGas : currentGasBase;
        data.push({ 
-         time: currentTime, depth: stop.depth, phase: 'Ventilation', gas: ventGas, timeStr: formatTime(currentTime), duration: 3,
+         time: currentTime, 
+         depth: stop.depth, 
+         phase: 'Ventilation', 
+         gas: ventGas, 
+         timeStr: formatTime(currentTime), 
+         duration: 3,
          segmentGasSCF: getSegmentGas(3, stop.depth, 'Ventilation', ventGas)
        });
        
-       let remainingTime = stop.depth === 90 ? stop.time - 3 : stop.time;
-       if (remainingTime > 0) {
-         if (stop.depth <= 30 && mode === 'WATER') {
-            const res = handleWaterO2(remainingTime, stop.depth, data, currentTime, formatTime, o2Acc);
-            currentTime = res.endTime;
-            o2Acc = res.newO2Acc;
-         } else {
-            currentTime += remainingTime;
-            data.push({ 
-              time: currentTime, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime), duration: remainingTime,
-              segmentGasSCF: getSegmentGas(remainingTime, stop.depth, 'Deco Stop', currentGasBase)
-            });
-         }
+       // Calculate remaining duration for the stop
+       let remainingStopDuration;
+       if (stop.depth === 90) {
+         // 90' station: Travel and 3 mins vent are BOTH INCLUDED in stop time
+         remainingStopDuration = stop.time - travelToSubtract - 3;
+       } else { // stop.depth === 30
+         // 30' station (In-Water O2): Travel and Vent are EXTRA time
+         remainingStopDuration = (mode === 'WATER') ? stop.time : stop.time - travelToSubtract;
+       }
+
+       if (remainingStopDuration > 0) {
+          if (stop.depth <= 30 && mode === 'WATER') {
+             const res = handleWaterO2(remainingStopDuration, stop.depth, data, currentTime, formatTime, o2Acc);
+             currentTime = res.endTime;
+             o2Acc = res.newO2Acc;
+          } else {
+             currentTime += remainingStopDuration;
+             data.push({ 
+               time: currentTime, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime), duration: remainingStopDuration,
+               segmentGasSCF: getSegmentGas(remainingStopDuration, stop.depth, 'Deco Stop', currentGasBase)
+             });
+          }
        }
     } else {
-       const travelStepT = idx === 0 ? 0 : (stops[idx-1].depth - stop.depth) / CONSTANTS.ASCENT_RATE;
-       if (travelStepT > 0) {
-          const prevDepth = stops[idx-1].depth;
-          currentTime += travelStepT;
-          if (stop.depth <= 30 && mode === 'WATER') o2Acc += travelStepT;
-          data.push({ 
-            time: currentTime, depth: stop.depth, phase: 'Travel', gas: currentGasBase, timeStr: formatTime(currentTime), duration: travelStepT,
-            segmentGasSCF: getSegmentGas(travelStepT, (prevDepth + stop.depth)/2, 'Travel', currentGasBase)
-          });
-       }
-       
-       let stopDuration = idx === 0 ? stop.time : stop.time - travelStepT;
+       // Normal Stop without gas switch
+       const stopDuration = stop.time - travelToSubtract;
        if (stopDuration > 0) {
-         if (stop.depth <= 30 && mode === 'WATER') {
-            const res = handleWaterO2(stopDuration, stop.depth, data, currentTime, formatTime, o2Acc);
-            currentTime = res.endTime;
-            o2Acc = res.newO2Acc;
-         } else {
-            data.push({ 
-              time: currentTime + stopDuration, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime + stopDuration), duration: stopDuration,
-              segmentGasSCF: getSegmentGas(stopDuration, stop.depth, 'Deco Stop', currentGasBase)
-            });
-            currentTime += stopDuration;
-         }
+          if (stop.depth <= 30 && mode === 'WATER') {
+             const res = handleWaterO2(stopDuration, stop.depth, data, currentTime, formatTime, o2Acc);
+             currentTime = res.endTime;
+             o2Acc = res.newO2Acc;
+          } else {
+             currentTime += stopDuration;
+             data.push({ 
+               time: currentTime, depth: stop.depth, phase: 'Deco Stop', gas: currentGasBase, timeStr: formatTime(currentTime), duration: stopDuration,
+               segmentGasSCF: getSegmentGas(stopDuration, stop.depth, 'Deco Stop', currentGasBase)
+             });
+          }
        }
     }
     lastDepth = stop.depth;
