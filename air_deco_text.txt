@@ -1,0 +1,1439 @@
+--- Page 0 ---
+ 9-64 U.S. Navy Diving Manual — Volume 2
+Table 9‑8.  Residual Nitrogen Time Table for Repetitive Air Dives.
+Repetitive Group at Beginning of Surface Interval
+Locate the diver’s repetitive group designation from his previous dive along the diagonal line 
+above the table. Read horizontally to the interval in which the diver’s surface interval 
+lies.
+Next, read vertically downward to the new repetitive group designation. 
+Continue downward in this same column to the row that represents 
+the depth of the repetitive dive. The time given at the intersection 
+is residual nitrogen time, in minutes, to be applied to the 
+repetitive dive.
+* Dives following surface intervals longer than 
+this are not repetitive dives. Use actual 
+bottom times in the Air Decompression 
+Tables to compute decompression 
+for such dives.
+A :10
+2:20 *
+B :10 1:17
+1:16 3:36 *
+C :10 :56 2:12
+:55 2:11 4:31 *
+D :10 :53 1:48 3:04
+:52 1:47 3:03 5:23 *
+E :10 :53 1:45 2:40 3:56
+:52 1:44 2:39 3:55 6:15 *
+F :10 :53 1:45 2:38 3:32 4:49
+:52 1:44 2:37 3:31 4:48 7:08 *
+G :10 :53 1:45 2:38 3:30 4:24 5:41
+:52 1:44 2:37 3:29 4:23 5:40 8:00 *
+H :10 :53 1:45 2:38 3:30 4:22 5:17 6:33
+:52 1:44 2:37 3:29 4:21 5:16 6:32 8:52 *
+I :10 :53 1:45 2:38 3:30 4:22 5:14 6:09 7:25
+:52 1:44 2:37 3:29 4:21 5:13 6:08 7:24 9:44 *
+J :10 :53 1:45 2:38 3:30 4:22 5:14 6:07 7:01 8:17
+:52 1:44 2:37 3:29 4:21 5:13 6:06 7:00 8:16 10:36 *
+K :10 :53 1:45 2:38 3:30 4:22 5:14 6:07 6:59 7:53 9:10
+:52 1:44 2:37 3:29 4:21 5:13 6:06 6:58 7:52 9:09 11:29 *
+L :10 :53 1:45 2:38 3:30 4:22 5:14 6:07 6:59 7:51 8:45 10:02
+:52 1:44 2:37 3:29 4:21 5:13 6:06 6:58 7:50 8:44 10:01 12:21 *
+M :10 :53 1:45 2:38 3:30 4:22 5:14 6:07 6:59 7:51 8:43 9:38 10:54
+:52 1:44 2:37 3:29 4:21 5:13 6:06 6:58 7:50 8:42 9:37 10:53 13:13 *
+N :10 :53 1:45 2:38 3:30 4:22 5:14 6:07 6:59 7:51 8:43 9:35 10:30 11:46
+:52 1:44 2:37 3:29 4:21 5:13 6:06 6:58 7:50 8:42 9:34 10:29 11:45 14:05 *
+O :10 :53 1:45 2:38 3:30 4:22 5:14 6:07 6:59 7:51 8:43 9:35 10:28 11:22 12:38
+:52 1:44 2:37 3:29 4:21 5:13 6:06 6:58 7:50 8:42 9:34 10:27 11:21 12:37 14:58 *
+Z :10 :53 1:45 2:38 3:30 4:22 5:14 6:07 6:59 7:51 8:43 9:35 10:28 11:20 12:14 13:31
+:52 1:44 2:37 3:29 4:21 5:13 6:06 6:58 7:50 8:42 9:34 10:27 11:19 12:13 13:30 15:50 *
+Dive 
+Depth
+Z O N M L K J I H G F E D C B A
+Repetitive Group at the End of the Surface Interval
+10 ** ** ** ** ** ** ** ** ** ** ** 427 246 159 101 58
+15 ** ** ** ** ** ** ** ** 450 298 218 164 122 89 61 37
+20 ** ** ** ** ** 462 331 257 206 166 134 106 83 62 44 27
+25 † † 470 354 286 237 198 167 141 118 98 79 63 48 34 21
+30 372 308 261 224 194 168 146 126 108 92 77 63 51 39 28 18
+35 245 216 191 169 149 132 116 101 88 75 64 53 43 33 24 15
+40 188 169 152 136 122 109 97 85 74 64 55 45 37 29 21 13
+45 154 140 127 115 104 93 83 73 64 56 48 40 32 25 18 12
+50 131 120 109 99 90 81 73 65 57 49 42 35 29 23 17 11
+55 114 105 96 88 80 72 65 58 51 44 38 32 26 20 15 10
+60 101 93 86 79 72 65 58 52 46 40 35 29 24 19 14 9
+70 83 77 71 65 59 54 49 44 39 34 29 25 20 16 12 8
+80 70 65 60 55 51 46 42 38 33 29 25 22 18 14 10 7
+90 61 57 52 48 44 41 37 33 29 26 22 19 16 12 9 6
+100 54 50 47 43 40 36 33 30 26 23 20 17 14 11 8 5
+110 48 45 42 39 36 33 30 27 24 21 18 16 13 10 8 5
+120 44 41 38 35 32 30 27 24 22 19 17 14 12 9 7 5
+130 40 37 35 32 30 27 25 22 20 18 15 13 11 9 6 4
+140 37 34 32 30 27 25 23 21 19 16 14 12 10 8 6 4
+150 34 32 30 28 26 23 21 19 17 15 13 11 9 8 6 4
+160 32 30 28 26 24 22 20 18 16 14 13 11 9 7 5 4
+170 30 28 26 24 22 21 19 17 15 14 12 10 8 7 5 3
+180 28 26 25 23 21 19 18 16 14 13 11 10 8 6 5 3
+190 26 25 23 22 20 18 17 15 14 12 11 9 8 6 5 3
+Residual Nitrogen Times (Minutes)
+** Residual Nitrogen Time cannot be determined using this table (see paragraph 9-9.1 subparagraph 8 for instructions).
+†  Read vertically downward to the 30 fsw repetitive dive depth. Use the corresponding residual nitrogen times to compute the 
+equivalent single dive time. Decompress using the 30 fsw air decompression table.
+--- Page 1 ---
+CHAPTER 9 — Air Decompression   9-65
+Table 9‑9.  Air Decompression Table.
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+30 FSW
+371 1:00 AIR 0 1:00 0 Z
+AIR/O2 0 1:00
+380 0:20 AIR 5 6:00 0.5 Z
+AIR/O2 1 2:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+420 0:20 AIR 22 23:00 0.5 Z
+AIR/O2 5 6:00
+480 0:20 AIR 42 43:00 0.5
+AIR/O2 9 10:00
+540 0:20 AIR 71 72:00 1
+AIR/O2 14 15:00
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+600 0:20 AIR 92 93:00 1
+AIR/O2 19 20:00
+660 0:20 AIR 120 121:00 1
+AIR/O2 22 23:00
+720 0:20 AIR 158 159:00 1
+AIR/O2 27 28:00
+35 FSW
+232 1:10 AIR 0 1:10 0 Z
+AIR/O2 0 1:10
+240 0:30 AIR 4 5:10 0.5 Z
+AIR/O2 2 3:10
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+270 0:30 AIR 28 29:10 0.5 Z
+AIR/O2 7 8:10
+300 0:30 AIR 53 54:10 0.5 Z
+AIR/O2 13 14:10
+330 0:30 AIR 71 72:10 1 Z
+AIR/O2 18 19:10
+360 0:30 AIR 88 89:10 1
+AIR/O2 22 23:10
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+420 0:30 AIR 134 135:10 1.5
+AIR/O2 29 30:10
+480 0:30 AIR 173 174:10 1.5
+AIR/O2 38 44:10
+540 0:30 AIR 228 229:10 2
+AIR/O2 45 51:10
+600 0:30 AIR 277 278:10 2
+AIR/O2 53 59:10
+660 0:30 AIR 314 315:10 2.5
+AIR/O2 63 69:10
+720 0:30 AIR 342 343:10 3
+AIR/O2 71 82:10
+--- Page 2 ---
+ 9-66 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+40 FSW
+163 1:20 AIR 0 1:20 0 O
+AIR/O2 0 1:20
+170 0:40 AIR 6 7:20 0.5 O
+AIR/O2 2 3:20
+180 0:40 AIR 14 15:20 0.5 Z
+AIR/O2 5 6:20
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+190 0:40 AIR 21 22:20 0.5 Z
+AIR/O2 7 8:20
+200 0:40 AIR 27 28:20 0.5 Z
+AIR/O2 9 10:20
+210 0:40 AIR 39 40:20 0.5 Z
+AIR/O2 11 12:20
+220 0:40 AIR 52 53:20 0.5 Z
+AIR/O2 12 13:20
+230 0:40 AIR 64 65:20 1 Z
+AIR/O2 16 17:20
+240 0:40 AIR 75 76:20 1 Z
+AIR/O2 19 20:20
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+270 0:40 AIR 101 102:20 1 Z
+AIR/O2 26 27:20
+300 0:40 AIR 128 129:20 1.5
+AIR/O2 33 34:20
+330 0:40 AIR 160 161:20 1.5
+AIR/O2 38 44:20
+360 0:40 AIR 184 185:20 2
+AIR/O2 44 50:20
+420 0:40 AIR 248 249:20 2.5
+AIR/O2 56 62:20
+480 0:40 AIR 321 322:20 2.5
+AIR/O2 68 79:20
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+540 0:40 AIR 372 373:20 3
+AIR/O2 80 91:20
+600 0:40 AIR 410 411:20 3.5
+AIR/O2 93 104:20
+660 0:40 AIR 439 440:20 4
+AIR/O2 103 119:20
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+720 0:40 AIR 461 462:20 4.5
+AIR/O2 112 128:20
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 3 ---
+CHAPTER 9 — Air Decompression   9-67
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+45 FSW
+125 1:30 AIR 0 1:30 0 N
+AIR/O2 0 1:30
+130 0:50 AIR 2 3:30 0.5 O
+AIR/O2 1 2:30
+140 0:50 AIR 14 15:30 0.5 O
+AIR/O2 5 6:30
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+150 0:50 AIR 25 26:30 0.5 Z
+AIR/O2 8 9:30
+160 0:50 AIR 34 35:30 0.5 Z
+AIR/O2 11 12:30
+170 0:50 AIR 41 42:30 1 Z
+AIR/O2 14 15:30
+180 0:50 AIR 59 60:30 1 Z
+AIR/O2 17 18:30
+190 0:50 AIR 75 76:30 1 Z
+AIR/O2 19 20:30
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+200 0:50 AIR 89 90:30 1 Z
+AIR/O2 23 24:30
+210 0:50 AIR 101 102:30 1 Z
+AIR/O2 27 28:30
+220 0:50 AIR 112 113:30 1.5 Z
+AIR/O2 30 31:30
+230 0:50 AIR 121 122:30 1.5 Z
+AIR/O2 33 34:30
+240 0:50 AIR 130 131:30 1.5 Z
+AIR/O2 37 43:30
+270 0:50 AIR 173 174:30 2
+AIR/O2 45 51:30
+300 0:50 AIR 206 207:30 2
+AIR/O2 51 57:30
+330 0:50 AIR 243 244:30 2.5
+AIR/O2 61 67:30
+360 0:50 AIR 288 289:30 3
+AIR/O2 69 80:30
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+420 0:50 AIR 373 374:30 3.5
+AIR/O2 84 95:30
+480 0:50 AIR 431 432:30 4
+AIR/O2 101 117:30
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+540 0:50 AIR 473 474:30 4.5
+AIR/O2 117 133:30
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 4 ---
+ 9-68 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+50 FSW
+92 1:40 AIR 0 1:40 0 M
+AIR/O2 0 1:40
+95 1:00 AIR 2 3:40 0.5 M
+AIR/O2 1 2:40
+100 1:00 AIR 4 5:40 0.5 N
+AIR/O2 2 3:40
+110 1:00 AIR 8 9:40 0.5 O
+AIR/O2 4 5:40
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+120 1:00 AIR 21 22:40 0.5 O
+AIR/O2 7 8:40
+130 1:00 AIR 34 35:40 0.5 Z
+AIR/O2 12 13:40
+140 1:00 AIR 45 46:40 1 Z
+AIR/O2 16 17:40
+150 1:00 AIR 56 57:40 1 Z
+AIR/O2 19 20:40
+160 1:00 AIR 78 79:40 1 Z
+AIR/O2 23 24:40
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+170 1:00 AIR 96 97:40 1 Z
+AIR/O2 26 27:40
+180 1:00 AIR 111 112:40 1.5 Z
+AIR/O2 30 31:40
+190 1:00 AIR 125 126:40 1.5 Z
+AIR/O2 35 36:40
+200 1:00 AIR 136 137:40 1.5 Z
+AIR/O2 39 45:40
+210 1:00 AIR 147 148:40 2
+AIR/O2 43 49:40
+220 1:00 AIR 166 167:40 2
+AIR/O2 47 53:40
+230 1:00 AIR 183 184:40 2
+AIR/O2 50 56:40
+240 1:00 AIR 198 199:40 2
+AIR/O2 53 59:40
+270 1:00 AIR 236 237:40 2.5
+AIR/O2 62 68:40
+300 1:00 AIR 285 286:40 3
+AIR/O2 74 85:40
+Exceptional Exposure: In-Water Air/O2 Decompression ------------- SurDO2 Required-------------------------------------------------------
+330 1:00 AIR 345 346:40 3.5
+AIR/O2 83 94:40
+360 1:00 AIR 393 394:40 3.5
+AIR/O2 92 103:40
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+420 1:00 AIR 464 465:40 4.5
+AIR/O2 113 129:40
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 5 ---
+CHAPTER 9 — Air Decompression   9-69
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+55 FSW
+74 1:50 AIR 0 1:50 0 L
+AIR/O2 0 1:50
+75 1:10 AIR 1 2:50 0.5 L
+AIR/O2 1 2:50
+80 1:10 AIR 4 5:50 0.5 M
+AIR/O2 2 3:50
+90 1:10 AIR 10 11:50 0.5 N
+AIR/O2 5 6:50
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+100 1:10 AIR 17 18:50 0.5 O
+AIR/O2 8 9:50
+110 1:10 AIR 34 35:50 0.5 O
+AIR/O2 12 13:50
+120 1:10 AIR 48 49:50 1 Z
+AIR/O2 17 18:50
+130 1:10 AIR 59 60:50 1 Z
+AIR/O2 22 23:50
+140 1:10 AIR 84 85:50 1 Z
+AIR/O2 26 27:50
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+150 1:10 AIR 105 106:50 1.5 Z
+AIR/O2 30 31:50
+160 1:10 AIR 123 124:50 1.5 Z
+AIR/O2 34 35:50
+170 1:10 AIR 138 139:50 1.5 Z
+AIR/O2 40 46:50
+180 1:10 AIR 151 152:50 2 Z
+AIR/O2 45 51:50
+190 1:10 AIR 169 170:50 2
+AIR/O2 50 56:50
+200 1:10 AIR 190 191:50 2
+AIR/O2 54 60:50
+210 1:10 AIR 208 209:50 2.5
+AIR/O2 58 64:50
+220 1:10 AIR 224 225:50 2.5
+AIR/O2 62 68:50
+230 1:10 AIR 239 240:50 2.5
+AIR/O2 66 77:50
+240 1:10 AIR 254 255:50 3
+AIR/O2 69 80:50
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+270 1:10 AIR 313 314:50 3.5
+AIR/O2 83 94:50
+300 1:10 AIR 380 381:50 3.5
+AIR/O2 94 105:50
+330 1:10 AIR 432 433:50 4
+AIR/O2 106 122:50
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+360 1:10 AIR 474 475:50 4.5
+AIR/O2 118 134:50
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 6 ---
+ 9-70 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+60 FSW
+63 2:00 AIR 0 2:00 0 K
+AIR/O2 0 2:00
+65 1:20 AIR 2 4:00 0.5 L
+AIR/O2 1 3:00
+70 1:20 AIR 7 9:00 0.5 L
+AIR/O2 4 6:00
+80 1:20 AIR 14 16:00 0.5 N
+AIR/O2 7 9:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+90 1:20 AIR 23 25:00 0.5 O
+AIR/O2 10 12:00
+100 1:20 AIR 42 44:00 1 Z
+AIR/O2 15 17:00
+110 1:20 AIR 57 59:00 1 Z
+AIR/O2 21 23:00
+120 1:20 AIR 75 77:00 1 Z
+AIR/O2 26 28:00
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+130 1:20 AIR 102 104:00 1.5 Z
+AIR/O2 31 33:00
+140 1:20 AIR 124 126:00 1.5 Z
+AIR/O2 35 37:00
+150 1:20 AIR 143 145:00 2 Z
+AIR/O2 41 48:00
+160 1:20 AIR 158 160:00 2 Z
+AIR/O2 48 55:00
+170 1:20 AIR 178 180:00 2
+AIR/O2 53 60:00
+180 1:20 AIR 201 203:00 2.5
+AIR/O2 59 66:00
+190 1:20 AIR 222 224:00 2.5
+AIR/O2 64 71:00
+200 1:20 AIR 240 242:00 2.5
+AIR/O2 68 80:00
+210 1:20 AIR 256 258:00 3
+AIR/O2 73 85:00
+220 1:20 AIR 278 280:00 3
+AIR/O2 77 89:00
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+230 1:20 AIR 300 302:00 3.5
+AIR/O2 82 94:00
+240 1:20 AIR 321 323:00 3.5
+AIR/O2 88 100:00
+270 1:20 AIR 398 400:00 4
+AIR/O2 102 119:00
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+300 1:20 AIR 456 458:00 4.5
+AIR/O2 115 132:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 7 ---
+CHAPTER 9 — Air Decompression   9-71
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+70 FSW
+48 2:20 AIR 0 2:20 0 K
+AIR/O2 0 2:20
+50 1:40 AIR 2 4:20 0.5 K
+AIR/O2 1 3:20
+55 1:40 AIR 9 11:20 0.5 L
+AIR/O2 5 7:20
+60 1:40 AIR 14 16:20 0.5 M
+AIR/O2 8 10:20
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+70 1:40 AIR 24 26:20 0.5 N
+AIR/O2 13 15:20
+80 1:40 AIR 44 46:20 1 O
+AIR/O2 17 19:20
+90 1:40 AIR 64 66:20 1 Z
+AIR/O2 24 26:20
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+100 1:40 AIR 88 90:20 1.5 Z
+AIR/O2 31 33:20
+110 1:40 AIR 120 122:20 1.5 Z
+AIR/O2 38 45:20
+120 1:40 AIR 145 147:20 2 Z
+AIR/O2 44 51:20
+130 1:40 AIR 167 169:20 2 Z
+AIR/O2 51 58:20
+140 1:40 AIR 189 191:20 2.5
+AIR/O2 59 66:20
+150 1:40 AIR 219 221:20 2.5
+AIR/O2 66 78:20
+160 1:20 AIR 1 244 247:00 3
+AIR/O2 1 72 85:00
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+170 1:20 AIR 2 265 269:00 3
+AIR/O2 1 78 91:00
+180 1:20 AIR 4 289 295:00 3.5
+AIR/O2 2 83 97:00
+190 1:20 AIR 5 316 323:00 3.5
+AIR/O2 3 88 103:00
+200 1:20 AIR 9 345 356:00 4
+AIR/O2 5 93 115:00
+210 1:20 AIR 13 378 393:00 4
+AIR/O2 7 98 122:00
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+240 1:20 AIR 25 454 481:00 5
+AIR/O2 13 110 140:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 8 ---
+ 9-72 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+80 FSW
+39 2:40 AIR 0 2:40 0 J
+AIR/O2 0 2:40
+40 2:00 AIR 1 3:40 0.5 J
+AIR/O2 1 3:40
+45 2:00 AIR 10 12:40 0.5 K
+AIR/O2 5 7:40
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+50 2:00 AIR 17 19:40 0.5 M
+AIR/O2 9 11:40
+55 2:00 AIR 24 26:40 0.5 M
+AIR/O2 13 15:40
+60 2:00 AIR 30 32:40 1 N
+AIR/O2 16 18:40
+70 2:00 AIR 54 56:40 1 O
+AIR/O2 22 24:40
+80 2:00 AIR 77 79:40 1.5 Z
+AIR/O2 30 32:40
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+90 2:00 AIR 114 116:40 1.5 Z
+AIR/O2 39 46:40
+100 1:40 AIR 1 147 150:20 2 Z
+AIR/O2 1 46 54:20
+110 1:40 AIR 6 171 179:20 2 Z
+AIR/O2 3 51 61:20
+120 1:40 AIR 10 200 212:20 2.5
+AIR/O2 5 59 71:20
+130 1:40 AIR 14 232 248:20 3
+AIR/O2 7 67 86:20
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+140 1:40 AIR 17 258 277:20 3.5
+AIR/O2 9 73 94:20
+150 1:40 AIR 19 285 306:20 3.5
+AIR/O2 10 80 102:20
+160 1:40 AIR 21 318 341:20 4
+AIR/O2 11 86 114:20
+170 1:40 AIR 27 354 383:20 4
+AIR/O2 14 90 121:20
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+180 1:40 AIR 33 391 426:20 4.5
+AIR/O2 17 96 130:20
+210 1:40 AIR 51 473 526:20 5
+AIR/O2 26 110 158:20
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 9 ---
+CHAPTER 9 — Air Decompression   9-73
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+90 FSW
+33 3:00 AIR 0 3:00 0 J
+AIR/O2 0 3:00
+35 2:20 AIR 4 7:00 0.5 J
+AIR/O2 2 5:00
+40 2:20 AIR 14 17:00 0.5 L
+AIR/O2 7 10:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+45 2:20 AIR 23 26:00 0.5 M
+AIR/O2 12 15:00
+50 2:20 AIR 31 34:00 1 N
+AIR/O2 17 20:00
+55 2:20 AIR 39 42:00 1 O
+AIR/O2 21 24:00
+60 2:20 AIR 56 59:00 1 O
+AIR/O2 24 27:00
+70 2:20 AIR 83 86:00 1.5 Z
+AIR/O2 32 35:00
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+80 2:00 AIR 5 125 132:40 2 Z
+AIR/O2 3 40 50:40
+90 2:00 AIR 13 158 173:40 2 Z
+AIR/O2 7 46 60:40
+100 2:00 AIR 19 185 206:40 2.5
+AIR/O2 10 53 70:40
+110 2:00 AIR 25 224 251:40 3
+AIR/O2 13 61 86:40
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+120 1:40 AIR 2 28 256 288:20 3.5
+AIR/O2 2 14 70 98:40
+130 1:40 AIR 5 28 291 326:20 3.5
+AIR/O2 5 14 79 110:40
+140 1:40 AIR 8 28 330 368:20 4
+AIR/O2 8 14 87 126:40
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+150 1:40 AIR 11 34 378 425:20 4.5
+AIR/O2 11 17 94 139:40
+160 1:40 AIR 13 40 418 473:20 4.5
+AIR/O2 13 20 101 151:40
+170 1:40 AIR 15 45 451 513:20 5
+AIR/O2 15 23 106 166:40
+180 1:40 AIR 16 51 479 548:20 5.5
+AIR/O2 16 26 112 176:40
+240 1:40 AIR 42 68 592 704:20 7.5
+AIR/O2 42 34 159 267:40
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 10 ---
+ 9-74 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+100 FSW
+25 3:20 AIR 0 3:20 0 H
+AIR/O2 0 3:20
+30 2:40 AIR 3 6:20 0.5 J
+AIR/O2 2 5:20
+35 2:40 AIR 15 18:20 0.5 L
+AIR/O2 8 11:20
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+40 2:40 AIR 26 29:20 1 M
+AIR/O2 14 17:20
+45 2:40 AIR 36 39:20 1 N
+AIR/O2 19 22:20
+50 2:40 AIR 47 50:20 1 O
+AIR/O2 24 27:20
+55 2:40 AIR 65 68:20 1.5 Z
+AIR/O2 28 31:20
+60 2:40 AIR 81 84:20 1.5 Z
+AIR/O2 33 36:20
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+70 2:20 AIR 11 124 138:00 2 Z
+AIR/O2 6 39 53:00
+80 2:20 AIR 21 160 184:00 2.5 Z
+AIR/O2 11 45 64:00
+90 2:00 AIR 2 28 196 228:40 2.5
+AIR/O2 2 14 53 82:00
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+100 2:00 AIR 9 28 241 280:40 3
+AIR/O2 9 14 66 102:00
+110 2:00 AIR 14 28 278 322:40 3.5
+AIR/O2 14 14 76 117:00
+120 2:00 AIR 19 28 324 373:40 4
+AIR/O2 19 14 85 136:00
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+150 1:40 AIR 3 26 46 461 538:20 5
+AIR/O2 3 26 23 109 183:40
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 11 ---
+CHAPTER 9 — Air Decompression   9-75
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+110 FSW
+20 3:40 AIR 0 3:40 0 H
+AIR/O2 0 3:40
+25 3:00 AIR 5 8:40 0.5 I
+AIR/O2 3 6:40
+30 3:00 AIR 14 17:40 0.5 K
+AIR/O2 7 10:40
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+35 3:00 AIR 27 30:40 1 M
+AIR/O2 14 17:40
+40 3:00 AIR 39 42:40 1 N
+AIR/O2 20 23:40
+45 3:00 AIR 50 53:40 1 O
+AIR/O2 26 29:40
+50 3:00 AIR 71 74:40 1.5 Z
+AIR/O2 32 35:40
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+55 2:40 AIR 5 85 93:20 1.5 Z
+AIR/O2 3 33 44:20
+60 2:40 AIR 13 111 127:20 2 Z
+AIR/O2 7 36 51:20
+70 2:40 AIR 26 155 184:20 2.5 Z
+AIR/O2 14 42 64:20
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+80 2:20 AIR 9 28 200 240:00 2.5
+AIR/O2 9 14 54 90:20
+90 2:20 AIR 18 28 249 298:00 3.5
+AIR/O2 18 14 68 113:20
+100 2:20 AIR 25 28 295 351:00 3.5
+AIR/O2 25 14 79 131:20
+110 2:00 AIR 5 26 28 353 414:40 4
+AIR/O2 5 26 14 91 154:00
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+120 2:00 AIR 10 26 35 413 486:40 4.5
+AIR/O2 10 26 18 101 173:00
+180 1:40 AIR 3 23 47 68 593 736:20 7.5
+AIR/O2 3 23 47 34 159 298:40
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 12 ---
+ 9-76 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+120 FSW
+15 4:00 AIR 0 4:00 0 F
+AIR/O2 0 4:00
+20 3:20 AIR 4 8:00 0.5 H
+AIR/O2 2 6:00
+25 3:20 AIR 9 13:00 0.5 J
+AIR/O2 5 9:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+30 3:20 AIR 24 28:00 0.5 L
+AIR/O2 13 17:00
+35 3:20 AIR 38 42:00 1 N
+AIR/O2 20 24:00
+40 3:00 AIR 2 49 54:40 1 O
+AIR/O2 1 26 30:40
+45 3:00 AIR 3 71 77:40 1.5 Z
+AIR/O2 2 31 36:40
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+50 3:00 AIR 10 85 98:40 1.5 Z
+AIR/O2 5 33 46:40
+55 3:00 AIR 19 116 138:40 2 Z
+AIR/O2 10 35 53:40
+60 3:00 AIR 27 142 172:40 2 Z
+AIR/O2 14 39 61:40
+70 2:40 AIR 13 28 190 234:20 2.5
+AIR/O2 13 14 51 86:40
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+80 2:40 AIR 24 28 246 301:20 3
+AIR/O2 24 14 67 118:40
+90 2:20 AIR 7 26 28 303 367:00 3.5
+AIR/O2 7 26 14 80 140:20
+100 2:20 AIR 15 25 28 372 443:00 4
+AIR/O2 15 25 14 95 167:20
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+110 2:20 AIR 21 25 38 433 520:00 5
+AIR/O2 21 25 19 105 188:20
+120 2:00 AIR 3 23 25 47 480 580:40 5.5
+AIR/O2 3 23 25 24 113 211:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 13 ---
+CHAPTER 9 — Air Decompression   9-77
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+130 FSW
+12 4:20 AIR 0 4:20 0 F
+AIR/O2 0 4:20
+15 3:40 AIR 3 7:20 0.5 G
+AIR/O2 2 6:20
+20 3:40 AIR 8 12:20 0.5 I
+AIR/O2 5 9:20
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+25 3:40 AIR 17 21:20 0.5 K
+AIR/O2 9 13:20
+30 3:20 AIR 2 32 38:00 1 M
+AIR/O2 1 17 22:00
+35 3:20 AIR 5 44 53:00 1 O
+AIR/O2 3 23 30:00
+40 3:20 AIR 6 66 76:00 1.5 Z
+AIR/O2 3 30 37:00
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+45 3:00 AIR 1 11 84 99:40 1.5 Z
+AIR/O2 1 6 33 49:00
+50 3:00 AIR 2 20 118 143:40 2 Z
+AIR/O2 2 10 36 57:00
+55 3:00 AIR 4 28 146 181:40 2 Z
+AIR/O2 4 14 40 67:00
+60 3:00 AIR 12 28 170 213:40 2.5 Z
+AIR/O2 12 14 46 81:00
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+70 2:40 AIR 1 26 28 235 293:20 3
+AIR/O2 1 26 14 63 117:40
+80 2:40 AIR 12 26 28 297 366:20 3.5
+AIR/O2 12 26 14 79 144:40
+90 2:40 AIR 22 25 28 375 453:20 4
+AIR/O2 22 25 14 95 174:40
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+100 2:20 AIR 6 23 26 38 444 540:00 5
+AIR/O2 6 23 26 20 106 204:20
+120 2:20 AIR 17 24 27 57 534 662:00 6
+AIR/O2 17 24 27 29 130 255:20
+180 2:00 AIR 13 21 45 57 94 658 890:40 9
+AIR/O2 13 21 45 57 46 198 418:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 14 ---
+ 9-78 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+140 FSW
+10 4:40 AIR 0 4:40 0 E
+AIR/O2 0 4:40
+15 4:00 AIR 5 9:40 0.5 H
+AIR/O2 3 7:40
+20 4:00 AIR 13 17:40 0.5 J
+AIR/O2 7 11:40
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+25 3:40 AIR 3 24 31:20 1 L
+AIR/O2 2 12 18:20
+30 3:40 AIR 7 37 48:20 1 N
+AIR/O2 4 19 27:20
+35 3:20 AIR 2 7 58 71:00 1.5 O
+AIR/O2 2 4 26 36:20
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+40 3:20 AIR 4 7 82 97:00 1.5 Z
+AIR/O2 4 4 33 50:20
+45 3:20 AIR 5 18 114 141:00 2 Z
+AIR/O2 5 9 36 59:20
+50 3:20 AIR 8 27 145 184:00 2 Z
+AIR/O2 8 14 39 70:20
+55 3:00 AIR 1 15 29 171 219:40 2.5 Z
+AIR/O2 1 15 15 45 85:00
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+60 3:00 AIR 2 23 28 209 265:40 3
+AIR/O2 2 23 14 56 109:00
+70 3:00 AIR 14 25 29 276 347:40 3.5
+AIR/O2 14 25 15 74 142:00
+80 2:40 AIR 2 24 25 29 362 445:20 4
+AIR/O2 2 24 25 15 91 175:40
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+90 2:40 AIR 12 23 26 38 443 545:20 5
+AIR/O2 12 23 26 19 107 210:40
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 15 ---
+CHAPTER 9 — Air Decompression   9-79
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+150 FSW
+8 5:00 AIR 0 5:00 0 E
+AIR/O2 0 5:00
+10 4:20 AIR 2 7:00 0.5 F
+AIR/O2 1 6:00
+15 4:20 AIR 8 13:00 0.5 H
+AIR/O2 5 10:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+20 4:00 AIR 2 15 21:40 0.5 K
+AIR/O2 1 8 13:40
+25 4:00 AIR 7 29 40:40 1 M
+AIR/O2 4 14 22:40
+30 3:40 AIR 4 7 45 60:20 1.5 O
+AIR/O2 4 4 22 34:40
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+35 3:40 AIR 6 7 74 91:20 1.5 Z
+AIR/O2 6 4 30 44:40
+40 3:20 AIR 2 6 14 106 132:00 2 Z
+AIR/O2 2 6 7 35 59:20
+45 3:20 AIR 3 8 24 142 181:00 2 Z
+AIR/O2 3 8 12 40 72:20
+50 3:20 AIR 4 14 28 170 220:00 2.5 Z
+AIR/O2 4 14 14 46 87:20
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+55 3:20 AIR 7 21 28 212 272:00 3
+AIR/O2 7 21 14 57 113:20
+60 3:20 AIR 11 26 28 248 317:00 3
+AIR/O2 11 26 14 67 132:20
+70 3:00 AIR 3 24 25 28 330 413:40 4
+AIR/O2 3 24 25 14 85 170:00
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+80 3:00 AIR 15 23 26 35 430 532:40 4.5
+AIR/O2 15 23 26 18 104 205:00
+90 2:40 AIR 3 22 23 26 47 496 620:20 5.5
+AIR/O2 3 22 23 26 24 118 239:40
+120 2:20 AIR 3 20 22 23 50 75 608 804:00 8
+AIR/O2 3 20 22 23 50 37 168 356:20
+180 2:00 AIR 2 19 20 42 48 79 121 694 1027:40 10.5
+AIR/O2 2 19 20 42 48 79 58 222 538:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 16 ---
+ 9-80 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+160 FSW
+7 5:20 AIR 0 5:20 0 E
+AIR/O2 0 5:20
+10 4:40 AIR 4 9:20 0.5 F
+AIR/O2 2 7:20
+15 4:20 AIR 2 10 17:00 0.5 I
+AIR/O2 1 6 12:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+20 4:00 AIR 1 4 19 28:40 0.5 L
+AIR/O2 1 2 10 18:00
+25 4:00 AIR 4 7 35 50:40 1 N
+AIR/O2 4 4 17 30:00
+30 3:40 AIR 2 6 7 62 81:20 1.5 Z
+AIR/O2 2 6 4 26 42:40
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+35 3:40 AIR 4 6 8 89 111:20 1.5 Z
+AIR/O2 4 6 4 34 57:40
+40 3:40 AIR 6 6 21 134 171:20 2 Z
+AIR/O2 6 6 11 38 70:40
+45 3:20 AIR 2 5 11 28 166 216:00 2.5 Z
+AIR/O2 2 5 11 14 45 86:20
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+50 3:20 AIR 2 8 19 28 207 268:00 3
+AIR/O2 2 8 19 15 55 113:20
+55 3:20 AIR 3 11 26 28 248 320:00 3
+AIR/O2 3 11 26 14 67 135:20
+60 3:20 AIR 6 17 25 29 291 372:00 3.5
+AIR/O2 6 17 25 15 77 154:20
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+70 3:20 AIR 15 23 26 29 399 496:00 4.5
+AIR/O2 15 23 26 15 99 197:20
+80 3:00 AIR 6 21 24 25 44 482 605:40 5.5
+AIR/O2 6 21 24 25 23 114 237:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 17 ---
+CHAPTER 9 — Air Decompression   9-81
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+170 FSW
+6 5:40 AIR 0 5:40 0 D
+AIR/O2 0 5:40
+10 5:00 AIR 6 11:40 0.5 G
+AIR/O2 3 8:40
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+15 4:40 AIR 3 13 21:20 0.5 J
+AIR/O2 2 6 13:20
+20 4:20 AIR 3 6 24 38:00 1 M
+AIR/O2 3 3 12 23:20
+25 4:00 AIR 1 7 7 41 60:40 1 O
+AIR/O2 1 7 4 20 37:00
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+30 4:00 AIR 5 7 7 77 100:40 1.5 Z
+AIR/O2 5 7 3 30 50:00
+35 3:40 AIR 2 6 6 15 120 153:20 2 Z
+AIR/O2 2 6 6 8 37 68:40
+40 3:40 AIR 4 6 9 25 158 206:20 2.5 Z
+AIR/O2 4 6 9 12 44 84:40
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+45 3:40 AIR 5 7 16 28 197 257:20 2.5 Z
+AIR/O2 5 7 16 14 53 109:40
+50 3:20 AIR 1 5 11 23 28 244 316:00 3
+AIR/O2 1 5 11 23 14 66 134:20
+55 3:20 AIR 2 7 16 26 28 289 372:00 3.5
+AIR/O2 2 7 16 26 14 77 156:20
+60 3:20 AIR 2 11 21 26 28 344 436:00 4
+AIR/O2 2 11 21 26 14 88 181:20
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+70 3:20 AIR 7 19 24 25 39 454 572:00 5
+AIR/O2 7 19 24 25 20 109 228:20
+80 3:20 AIR 17 22 23 26 53 525 670:00 6
+AIR/O2 17 22 23 26 27 128 267:20
+90 3:00 AIR 8 19 22 23 37 66 574 752:40 7
+AIR/O2 8 19 22 23 37 33 148 319:00
+120 2:40 AIR 9 19 20 22 42 60 94 659 928:20 9
+AIR/O2 9 19 20 22 42 60 46 198 454:40
+180 2:20 AIR 10 18 19 40 43 70 97 156 703 1159:00 11.5
+AIR/O2 10 18 19 40 43 70 97 74 229 648:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 18 ---
+ 9-82 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+180 FSW
+6 6:00 AIR 0 6:00 0 E
+AIR/O2 0 6:00
+10 5:20 AIR 8 14:00 0.5 G
+AIR/O2 4 10:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+15 4:40 AIR 2 3 14 24:20 0.5 K
+AIR/O2 2 2 7 16:40
+20 4:20 AIR 1 5 7 29 47:00 1 M
+AIR/O2 1 5 3 15 29:20
+25 4:20 AIR 5 6 7 57 80:00 1.5 O
+AIR/O2 5 6 4 24 44:20
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+30 4:00 AIR 3 6 6 7 95 121:40 1.5 Z
+AIR/O2 3 6 6 4 34 63:00
+35 3:40 AIR 1 5 6 6 22 144 188:20 2 Z
+AIR/O2 1 5 6 6 11 41 79:40
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+40 3:40 AIR 2 6 5 13 28 178 236:20 2.5
+AIR/O2 2 6 5 13 14 48 97:40
+45 3:40 AIR 4 5 10 20 28 235 306:20 3
+AIR/O2 4 5 10 20 14 63 130:40
+50 3:40 AIR 4 8 13 25 29 277 360:20 3.5
+AIR/O2 4 8 13 25 15 75 154:40
+55 3:40 AIR 5 11 19 26 28 336 429:20 4
+AIR/O2 5 11 19 26 14 87 181:40
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+60 3:20 AIR 1 8 13 23 25 31 406 511:00 4.5
+AIR/O2 1 8 13 23 25 16 100 205:20
+70 3:20 AIR 4 12 21 24 25 48 499 637:00 5.5
+AIR/O2 4 12 21 24 25 24 119 253:20
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 19 ---
+CHAPTER 9 — Air Decompression   9-83
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+190 FSW
+5 6:20 AIR 0 6:20 0 D
+AIR/O2 0 6:20
+10 5:20 AIR 2 8 16:00 0.5 H
+AIR/O2 1 4 11:00
+In-Water Air/O2 Decompression or SurDO2 Recommended  --------------------------------------------------------------------------------------
+15 4:40 AIR 1 3 3 16 28:20 0.5 K
+AIR/O2 1 3 2 8 19:40
+20 4:20 AIR 1 2 6 7 34 55:00 1 N
+AIR/O2 1 2 6 4 17 35:20
+Exceptional Exposure: In-Water Air Decompression ------------- In-Water Air/O2 Decompression or SurDO2 Required -----------
+25 4:20 AIR 2 6 7 7 72 99:00 1.5 Z
+AIR/O2 2 6 7 3 28 51:20
+30 4:00 AIR 1 6 5 7 13 122 158:40 2 Z
+AIR/O2 1 6 5 7 7 38 74:00
+Exceptional Exposure: In-Water Air/02 Decompression ------------- SurDO2 Required-------------------------------------------------------
+35 4:00 AIR 4 5 6 8 26 165 218:40 2.5 Z
+AIR/O2 4 5 6 8 13 45 91:00
+40 3:40 AIR 1 5 5 8 17 28 217 285:20 3
+AIR/O2 1 5 5 8 17 15 58 123:40
+45 3:40 AIR 2 5 6 12 24 29 264 346:20 3.5
+AIR/O2 2 5 6 12 24 15 71 149:40
+50 3:40 AIR 3 5 10 17 26 28 324 417:20 4
+AIR/O2 3 5 10 17 26 14 85 179:40
+Exceptional Exposure: SurDO2  ----------------------------------------------------------------------------------------------------------------------------
+55 3:40 AIR 4 8 10 24 25 30 397 502:20 4.5
+AIR/O2 4 8 10 24 25 15 99 204:40
+60 3:40 AIR 5 10 16 24 25 40 454 578:20 5
+AIR/O2 5 10 16 24 25 20 109 233:40
+90 3:20 AIR 11 19 20 21 28 51 83 626 863:00 8.5
+AIR/O2 11 19 20 21 28 51 41 178 408:20
+120 3:00 AIR 15 17 19 20 37 46 79 113 691 1040:40 10.5
+AIR/O2 15 17 19 20 37 46 79 55 219 551:00
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 20 ---
+ 9-84 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S) Gas Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group100 90 80 70 60 50 40 30 20
+200 FSW
+Exceptional Exposure   ---------------------------------------------------------------------------------------------------------------------------------
+5 6:40 AIR 0 6:40 0 E
+AIR/O2 0 6:40
+10 5:40 AIR 3 8 17:20 0.5 H
+AIR/O2 2 4 12:20
+15 5:00 AIR 2 3 5 19 34:40 0.5 L
+AIR/O2 2 3 3 9 23:00
+20 4:40 AIR 2 4 6 7 43 67:20 1 O
+AIR/O2 2 4 6 4 20 41:40
+25 4:20 AIR 1 5 6 6 7 85 115:00 1.5 Z
+AIR/O2 1 5 6 6 4 32 64:20
+30 4:20 AIR 4 6 5 7 19 145 191:00 2 Z
+AIR/O2 4 6 5 7 10 42 84:20
+35 4:00 AIR 2 5 5 6 13 28 188 251:40 2.5
+AIR/O2 2 5 5 6 13 14 51 106:00
+40 4:00 AIR 4 5 5 11 21 28 249 327:40 3.5
+AIR/O2 4 5 5 11 21 14 68 143:00
+45 3:40 AIR 1 4 5 10 14 25 28 306 397:20 3.5
+AIR/O2 1 4 5 10 14 25 14 81 168:40
+50 3:40 AIR 2 4 8 10 21 26 28 382 485:20 4.5
+AIR/O2 2 4 8 10 21 26 14 97 201:40
+210 FSW
+Exceptional Exposure   ---------------------------------------------------------------------------------------------------------------------------------
+4 7:00 AIR 0 7:00 0 D
+AIR/O2 0 7:00
+5 6:20 AIR 2 9:00 0.5 E
+AIR/O2 1 8:00
+10 5:40 AIR 2 3 9 20:20 0.5 I
+AIR/O2 2 2 4 14:40
+15 5:00 AIR 1 3 3 6 24 42:40 1 M
+AIR/O2 1 3 3 3 12 28:00
+20 4:40 AIR 1 3 5 6 7 57 84:20 1 O
+AIR/O2 1 3 5 6 4 23 47:40
+25 4:40 AIR 3 6 5 7 8 110 144:20 2 Z
+AIR/O2 3 6 5 7 4 38 73:40
+30 4:20 AIR 2 5 6 6 6 26 163 219:00 2.5 Z
+AIR/O2 2 5 6 6 6 13 45 93:20
+35 4:00 AIR 1 4 5 6 7 18 28 223 296:40 3
+AIR/O2 1 4 5 6 7 18 14 60 130:00
+40 4:00 AIR 2 5 5 7 11 26 28 278 366:40 3.5
+AIR/O2 2 5 5 7 11 26 14 76 161:00
+45 4:00 AIR 4 4 6 11 18 26 28 355 456:40 4
+AIR/O2 4 4 6 11 18 26 14 91 194:00
+50 3:40 AIR 1 4 5 10 12 23 26 36 432 553:20 5
+AIR/O2 1 4 5 10 12 23 26 18 105 223:40
+ 
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+--- Page 21 ---
+CHAPTER 9 — Air Decompression   9-85
+Table 9‑9.  Air Decompression Table (Continued).
+(DESCENT RATE 75 FPM—ASCENT RATE 30 FPM)
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S)
+Gas 
+Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group130 120 110 100 90 80 70 60 50 40 30 20
+220 FSW
+Exceptional Exposure   ---------------------------------------------------------------------------------------------------------------------------------
+4 7:20 AIR 0 7:20 0 E
+AIR/O2 0 7:20
+5 6:40 AIR 3 10:20 0.5 E
+AIR/O2 2 9:20
+10 6:00 AIR 3 4 10 23:40 0.5 J
+AIR/O2 3 2 5 17:00
+15 5:20 AIR 3 2 4 7 28 50:00 1 N
+AIR/O2 3 2 4 4 14 33:20
+20 5:00 AIR 2 4 6 6 7 70 100:40 1.5 Z
+AIR/O2 2 4 6 6 4 26 54:00
+25 4:40 AIR 1 5 6 6 6 14 133 176:20 2 Z
+AIR/O2 1 5 6 6 6 7 41 82:40
+30 4:20 AIR 1 4 5 6 6 10 28 183 248:00 2.5
+AIR/O2 1 4 5 6 6 10 14 50 106:20
+35 4:20 AIR 3 5 5 5 10 22 28 251 334:00 3.5
+AIR/O2 3 5 5 5 10 22 14 68 147:20
+40 4:00 AIR 1 4 5 5 9 15 26 28 319 416:40 4
+AIR/O2 1 4 5 5 9 15 26 14 84 183:00
+250 FSW
+Exceptional Exposure   ---------------------------------------------------------------------------------------------------------------------------------
+4 7:40 AIR 4 12:20 0.5 F
+AIR/O2 2 10:20
+5 7:40 AIR 7 15:20 0.5 G
+AIR/O2 4 12:20
+10 6:20 AIR 2 2 4 3 15 33:00 0.5 L
+AIR/O2 2 2 4 2 7 24:20
+15 5:40 AIR 2 2 3 4 6 7 53 83:20 1 O
+AIR/O2 2 2 3 4 6 4 22 49:40
+20 5:20 AIR 2 2 4 6 6 6 11 125 168:00 2 Z
+AIR/O2 2 2 4 6 6 6 6 39 82:20
+25 5:00 AIR 1 4 4 5 6 6 10 28 189 258:40 2.5
+AIR/O2 1 4 4 5 6 6 10 14 51 112:00
+30 4:40 AIR 1 4 4 4 5 6 9 25 28 267 358:20 3.5
+AIR/O2 1 4 4 4 5 6 9 25 15 72 160:40
+35 4:40 AIR 3 4 4 5 5 10 19 26 28 363 472:20 4
+AIR/O2 3 4 4 5 5 10 19 26 14 93 203:40
+--- Page 22 ---
+ 9-86 U.S. Navy Diving Manual — Volume 2
+Bottom Time 
+(min)
+Time 
+to First 
+Stop
+(M:S)
+Gas 
+Mix
+DECOMPRESSION STOPS (FSW)
+Stop times (min) include travel time,  
+except first air and first O2 stop
+Total 
+Ascent 
+Time
+(M:S)
+Chamber 
+O2 
+Periods
+Repet 
+Group130 120 110 100 90 80 70 60 50 40 30 20
+300 FSW
+Exceptional Exposure   ---------------------------------------------------------------------------------------------------------------------------------
+4 9:00 AIR 3 7 19:40 0.5 G
+AIR/O2 2 4 15:40
+5 8:40 AIR 3 3 8 23:20 0.5 I
+AIR/O2 3 2 4 18:40
+10 7:20 AIR 2 3 2 3 4 7 35 64:00 1 N
+AIR/O2 2 3 2 3 4 4 18 44:20
+15 6:20 AIR 1 2 2 3 3 5 6 7 11 125 172:00 2 Z
+AIR/O2 1 2 2 3 3 5 6 7 6 39 86:20
+20 6:00 AIR 2 2 2 4 5 5 5 6 16 28 219 300:40 3
+AIR/O2 2 2 2 4 5 5 5 6 16 14 59 137:00
+25 5:40 AIR 1 3 4 4 4 5 5 5 18 26 28 324 433:20 4
+AIR/O2 1 3 4 4 4 5 5 5 18 26 14 85 195:40
+ 

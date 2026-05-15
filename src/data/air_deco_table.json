@@ -1,0 +1,5526 @@
+{
+  "30": {
+    "371": {
+      "ttfs": "1:00",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "Z"
+    },
+    "380": {
+      "ttfs": "0:20",
+      "airStops": [
+        5
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "420": {
+      "ttfs": "0:20",
+      "airStops": [
+        22
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "480": {
+      "ttfs": "0:20",
+      "airStops": [
+        42
+      ],
+      "airo2Stops": [
+        9
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": null
+    },
+    "540": {
+      "ttfs": "0:20",
+      "airStops": [
+        71
+      ],
+      "airo2Stops": [
+        14
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": null
+    },
+    "600": {
+      "ttfs": "0:20",
+      "airStops": [
+        92
+      ],
+      "airo2Stops": [
+        19
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": null
+    },
+    "660": {
+      "ttfs": "0:20",
+      "airStops": [
+        120
+      ],
+      "airo2Stops": [
+        22
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": null
+    },
+    "720": {
+      "ttfs": "0:20",
+      "airStops": [
+        158
+      ],
+      "airo2Stops": [
+        27
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": null
+    }
+  },
+  "35": {
+    "232": {
+      "ttfs": "1:10",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "Z"
+    },
+    "240": {
+      "ttfs": "0:30",
+      "airStops": [
+        4
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "270": {
+      "ttfs": "0:30",
+      "airStops": [
+        28
+      ],
+      "airo2Stops": [
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "300": {
+      "ttfs": "0:30",
+      "airStops": [
+        53
+      ],
+      "airo2Stops": [
+        13
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "330": {
+      "ttfs": "0:30",
+      "airStops": [
+        71
+      ],
+      "airo2Stops": [
+        18
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "360": {
+      "ttfs": "0:30",
+      "airStops": [
+        88
+      ],
+      "airo2Stops": [
+        22
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": null
+    },
+    "420": {
+      "ttfs": "0:30",
+      "airStops": [
+        134
+      ],
+      "airo2Stops": [
+        29
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": null
+    },
+    "480": {
+      "ttfs": "0:30",
+      "airStops": [
+        173
+      ],
+      "airo2Stops": [
+        38
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": null
+    },
+    "540": {
+      "ttfs": "0:30",
+      "airStops": [
+        228
+      ],
+      "airo2Stops": [
+        45
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "600": {
+      "ttfs": "0:30",
+      "airStops": [
+        277
+      ],
+      "airo2Stops": [
+        53
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "660": {
+      "ttfs": "0:30",
+      "airStops": [
+        314
+      ],
+      "airo2Stops": [
+        63
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "720": {
+      "ttfs": "0:30",
+      "airStops": [
+        342
+      ],
+      "airo2Stops": [
+        71
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    }
+  },
+  "40": {
+    "163": {
+      "ttfs": "1:20",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "O"
+    },
+    "170": {
+      "ttfs": "0:40",
+      "airStops": [
+        6
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "180": {
+      "ttfs": "0:40",
+      "airStops": [
+        14
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "190": {
+      "ttfs": "0:40",
+      "airStops": [
+        21
+      ],
+      "airo2Stops": [
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "200": {
+      "ttfs": "0:40",
+      "airStops": [
+        27
+      ],
+      "airo2Stops": [
+        9
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "210": {
+      "ttfs": "0:40",
+      "airStops": [
+        39
+      ],
+      "airo2Stops": [
+        11
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "220": {
+      "ttfs": "0:40",
+      "airStops": [
+        52
+      ],
+      "airo2Stops": [
+        12
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "230": {
+      "ttfs": "0:40",
+      "airStops": [
+        64
+      ],
+      "airo2Stops": [
+        16
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "240": {
+      "ttfs": "0:40",
+      "airStops": [
+        75
+      ],
+      "airo2Stops": [
+        19
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "270": {
+      "ttfs": "0:40",
+      "airStops": [
+        101
+      ],
+      "airo2Stops": [
+        26
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "300": {
+      "ttfs": "0:40",
+      "airStops": [
+        128
+      ],
+      "airo2Stops": [
+        33
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": null
+    },
+    "330": {
+      "ttfs": "0:40",
+      "airStops": [
+        160
+      ],
+      "airo2Stops": [
+        38
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": null
+    },
+    "360": {
+      "ttfs": "0:40",
+      "airStops": [
+        184
+      ],
+      "airo2Stops": [
+        44
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "420": {
+      "ttfs": "0:40",
+      "airStops": [
+        248
+      ],
+      "airo2Stops": [
+        56
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "480": {
+      "ttfs": "0:40",
+      "airStops": [
+        321
+      ],
+      "airo2Stops": [
+        68
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "540": {
+      "ttfs": "0:40",
+      "airStops": [
+        372
+      ],
+      "airo2Stops": [
+        80
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "600": {
+      "ttfs": "0:40",
+      "airStops": [
+        410
+      ],
+      "airo2Stops": [
+        93
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "660": {
+      "ttfs": "0:40",
+      "airStops": [
+        439
+      ],
+      "airo2Stops": [
+        103
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "720": {
+      "ttfs": "0:40",
+      "airStops": [
+        461
+      ],
+      "airo2Stops": [
+        112
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    }
+  },
+  "45": {
+    "125": {
+      "ttfs": "1:30",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "N"
+    },
+    "130": {
+      "ttfs": "0:50",
+      "airStops": [
+        2
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "140": {
+      "ttfs": "0:50",
+      "airStops": [
+        14
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "150": {
+      "ttfs": "0:50",
+      "airStops": [
+        25
+      ],
+      "airo2Stops": [
+        8
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "160": {
+      "ttfs": "0:50",
+      "airStops": [
+        34
+      ],
+      "airo2Stops": [
+        11
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "170": {
+      "ttfs": "0:50",
+      "airStops": [
+        41
+      ],
+      "airo2Stops": [
+        14
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "180": {
+      "ttfs": "0:50",
+      "airStops": [
+        59
+      ],
+      "airo2Stops": [
+        17
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "190": {
+      "ttfs": "0:50",
+      "airStops": [
+        75
+      ],
+      "airo2Stops": [
+        19
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "200": {
+      "ttfs": "0:50",
+      "airStops": [
+        89
+      ],
+      "airo2Stops": [
+        23
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "210": {
+      "ttfs": "0:50",
+      "airStops": [
+        101
+      ],
+      "airo2Stops": [
+        27
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "220": {
+      "ttfs": "0:50",
+      "airStops": [
+        112
+      ],
+      "airo2Stops": [
+        30
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "230": {
+      "ttfs": "0:50",
+      "airStops": [
+        121
+      ],
+      "airo2Stops": [
+        33
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "240": {
+      "ttfs": "0:50",
+      "airStops": [
+        130
+      ],
+      "airo2Stops": [
+        37
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "270": {
+      "ttfs": "0:50",
+      "airStops": [
+        173
+      ],
+      "airo2Stops": [
+        45
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "300": {
+      "ttfs": "0:50",
+      "airStops": [
+        206
+      ],
+      "airo2Stops": [
+        51
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "330": {
+      "ttfs": "0:50",
+      "airStops": [
+        243
+      ],
+      "airo2Stops": [
+        61
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "360": {
+      "ttfs": "0:50",
+      "airStops": [
+        288
+      ],
+      "airo2Stops": [
+        69
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "420": {
+      "ttfs": "0:50",
+      "airStops": [
+        373
+      ],
+      "airo2Stops": [
+        84
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "480": {
+      "ttfs": "0:50",
+      "airStops": [
+        431
+      ],
+      "airo2Stops": [
+        101
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "540": {
+      "ttfs": "0:50",
+      "airStops": [
+        473
+      ],
+      "airo2Stops": [
+        117
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    }
+  },
+  "50": {
+    "92": {
+      "ttfs": "1:40",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "M"
+    },
+    "95": {
+      "ttfs": "1:00",
+      "airStops": [
+        2
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "M"
+    },
+    "100": {
+      "ttfs": "1:00",
+      "airStops": [
+        4
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "N"
+    },
+    "110": {
+      "ttfs": "1:00",
+      "airStops": [
+        8
+      ],
+      "airo2Stops": [
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "120": {
+      "ttfs": "1:00",
+      "airStops": [
+        21
+      ],
+      "airo2Stops": [
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "130": {
+      "ttfs": "1:00",
+      "airStops": [
+        34
+      ],
+      "airo2Stops": [
+        12
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "Z"
+    },
+    "140": {
+      "ttfs": "1:00",
+      "airStops": [
+        45
+      ],
+      "airo2Stops": [
+        16
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "150": {
+      "ttfs": "1:00",
+      "airStops": [
+        56
+      ],
+      "airo2Stops": [
+        19
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "160": {
+      "ttfs": "1:00",
+      "airStops": [
+        78
+      ],
+      "airo2Stops": [
+        23
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "170": {
+      "ttfs": "1:00",
+      "airStops": [
+        96
+      ],
+      "airo2Stops": [
+        26
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "180": {
+      "ttfs": "1:00",
+      "airStops": [
+        111
+      ],
+      "airo2Stops": [
+        30
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "190": {
+      "ttfs": "1:00",
+      "airStops": [
+        125
+      ],
+      "airo2Stops": [
+        35
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "200": {
+      "ttfs": "1:00",
+      "airStops": [
+        136
+      ],
+      "airo2Stops": [
+        39
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "210": {
+      "ttfs": "1:00",
+      "airStops": [
+        147
+      ],
+      "airo2Stops": [
+        43
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "220": {
+      "ttfs": "1:00",
+      "airStops": [
+        166
+      ],
+      "airo2Stops": [
+        47
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "230": {
+      "ttfs": "1:00",
+      "airStops": [
+        183
+      ],
+      "airo2Stops": [
+        50
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "240": {
+      "ttfs": "1:00",
+      "airStops": [
+        198
+      ],
+      "airo2Stops": [
+        53
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "270": {
+      "ttfs": "1:00",
+      "airStops": [
+        236
+      ],
+      "airo2Stops": [
+        62
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "300": {
+      "ttfs": "1:00",
+      "airStops": [
+        285
+      ],
+      "airo2Stops": [
+        74
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "330": {
+      "ttfs": "1:00",
+      "airStops": [
+        345
+      ],
+      "airo2Stops": [
+        83
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "360": {
+      "ttfs": "1:00",
+      "airStops": [
+        393
+      ],
+      "airo2Stops": [
+        92
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "420": {
+      "ttfs": "1:00",
+      "airStops": [
+        464
+      ],
+      "airo2Stops": [
+        113
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    }
+  },
+  "55": {
+    "74": {
+      "ttfs": "1:50",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "L"
+    },
+    "75": {
+      "ttfs": "1:10",
+      "airStops": [
+        1
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "80": {
+      "ttfs": "1:10",
+      "airStops": [
+        4
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "M"
+    },
+    "90": {
+      "ttfs": "1:10",
+      "airStops": [
+        10
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "N"
+    },
+    "100": {
+      "ttfs": "1:10",
+      "airStops": [
+        17
+      ],
+      "airo2Stops": [
+        8
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "110": {
+      "ttfs": "1:10",
+      "airStops": [
+        34
+      ],
+      "airo2Stops": [
+        12
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "120": {
+      "ttfs": "1:10",
+      "airStops": [
+        48
+      ],
+      "airo2Stops": [
+        17
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "130": {
+      "ttfs": "1:10",
+      "airStops": [
+        59
+      ],
+      "airo2Stops": [
+        22
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "140": {
+      "ttfs": "1:10",
+      "airStops": [
+        84
+      ],
+      "airo2Stops": [
+        26
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "150": {
+      "ttfs": "1:10",
+      "airStops": [
+        105
+      ],
+      "airo2Stops": [
+        30
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "160": {
+      "ttfs": "1:10",
+      "airStops": [
+        123
+      ],
+      "airo2Stops": [
+        34
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "170": {
+      "ttfs": "1:10",
+      "airStops": [
+        138
+      ],
+      "airo2Stops": [
+        40
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "180": {
+      "ttfs": "1:10",
+      "airStops": [
+        151
+      ],
+      "airo2Stops": [
+        45
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "190": {
+      "ttfs": "1:10",
+      "airStops": [
+        169
+      ],
+      "airo2Stops": [
+        50
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "200": {
+      "ttfs": "1:10",
+      "airStops": [
+        190
+      ],
+      "airo2Stops": [
+        54
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "210": {
+      "ttfs": "1:10",
+      "airStops": [
+        208
+      ],
+      "airo2Stops": [
+        58
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "220": {
+      "ttfs": "1:10",
+      "airStops": [
+        224
+      ],
+      "airo2Stops": [
+        62
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "230": {
+      "ttfs": "1:10",
+      "airStops": [
+        239
+      ],
+      "airo2Stops": [
+        66
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "240": {
+      "ttfs": "1:10",
+      "airStops": [
+        254
+      ],
+      "airo2Stops": [
+        69
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "270": {
+      "ttfs": "1:10",
+      "airStops": [
+        313
+      ],
+      "airo2Stops": [
+        83
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "300": {
+      "ttfs": "1:10",
+      "airStops": [
+        380
+      ],
+      "airo2Stops": [
+        94
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "330": {
+      "ttfs": "1:10",
+      "airStops": [
+        432
+      ],
+      "airo2Stops": [
+        106
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "360": {
+      "ttfs": "1:10",
+      "airStops": [
+        474
+      ],
+      "airo2Stops": [
+        118
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    }
+  },
+  "60": {
+    "63": {
+      "ttfs": "2:00",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "K"
+    },
+    "65": {
+      "ttfs": "1:20",
+      "airStops": [
+        2
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "70": {
+      "ttfs": "1:20",
+      "airStops": [
+        7
+      ],
+      "airo2Stops": [
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "80": {
+      "ttfs": "1:20",
+      "airStops": [
+        14
+      ],
+      "airo2Stops": [
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "N"
+    },
+    "90": {
+      "ttfs": "1:20",
+      "airStops": [
+        23
+      ],
+      "airo2Stops": [
+        10
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "O"
+    },
+    "100": {
+      "ttfs": "1:20",
+      "airStops": [
+        42
+      ],
+      "airo2Stops": [
+        15
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "110": {
+      "ttfs": "1:20",
+      "airStops": [
+        57
+      ],
+      "airo2Stops": [
+        21
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "120": {
+      "ttfs": "1:20",
+      "airStops": [
+        75
+      ],
+      "airo2Stops": [
+        26
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "130": {
+      "ttfs": "1:20",
+      "airStops": [
+        102
+      ],
+      "airo2Stops": [
+        31
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "140": {
+      "ttfs": "1:20",
+      "airStops": [
+        124
+      ],
+      "airo2Stops": [
+        35
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "150": {
+      "ttfs": "1:20",
+      "airStops": [
+        143
+      ],
+      "airo2Stops": [
+        41
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "160": {
+      "ttfs": "1:20",
+      "airStops": [
+        158
+      ],
+      "airo2Stops": [
+        48
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "170": {
+      "ttfs": "1:20",
+      "airStops": [
+        178
+      ],
+      "airo2Stops": [
+        53
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "1:20",
+      "airStops": [
+        201
+      ],
+      "airo2Stops": [
+        59
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "190": {
+      "ttfs": "1:20",
+      "airStops": [
+        222
+      ],
+      "airo2Stops": [
+        64
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "200": {
+      "ttfs": "1:20",
+      "airStops": [
+        240
+      ],
+      "airo2Stops": [
+        68
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "210": {
+      "ttfs": "1:20",
+      "airStops": [
+        256
+      ],
+      "airo2Stops": [
+        73
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "220": {
+      "ttfs": "1:20",
+      "airStops": [
+        278
+      ],
+      "airo2Stops": [
+        77
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "230": {
+      "ttfs": "1:20",
+      "airStops": [
+        300
+      ],
+      "airo2Stops": [
+        82
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "240": {
+      "ttfs": "1:20",
+      "airStops": [
+        321
+      ],
+      "airo2Stops": [
+        88
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "270": {
+      "ttfs": "1:20",
+      "airStops": [
+        398
+      ],
+      "airo2Stops": [
+        102
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "300": {
+      "ttfs": "1:20",
+      "airStops": [
+        456
+      ],
+      "airo2Stops": [
+        115
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    }
+  },
+  "70": {
+    "48": {
+      "ttfs": "2:20",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "K"
+    },
+    "50": {
+      "ttfs": "1:40",
+      "airStops": [
+        2
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "K"
+    },
+    "55": {
+      "ttfs": "1:40",
+      "airStops": [
+        9
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "60": {
+      "ttfs": "1:40",
+      "airStops": [
+        14
+      ],
+      "airo2Stops": [
+        8
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "M"
+    },
+    "70": {
+      "ttfs": "1:40",
+      "airStops": [
+        24
+      ],
+      "airo2Stops": [
+        13
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "N"
+    },
+    "80": {
+      "ttfs": "1:40",
+      "airStops": [
+        44
+      ],
+      "airo2Stops": [
+        17
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "90": {
+      "ttfs": "1:40",
+      "airStops": [
+        64
+      ],
+      "airo2Stops": [
+        24
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "Z"
+    },
+    "100": {
+      "ttfs": "1:40",
+      "airStops": [
+        88
+      ],
+      "airo2Stops": [
+        31
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "110": {
+      "ttfs": "1:40",
+      "airStops": [
+        120
+      ],
+      "airo2Stops": [
+        38
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "120": {
+      "ttfs": "1:40",
+      "airStops": [
+        145
+      ],
+      "airo2Stops": [
+        44
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "130": {
+      "ttfs": "1:40",
+      "airStops": [
+        167
+      ],
+      "airo2Stops": [
+        51
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "140": {
+      "ttfs": "1:40",
+      "airStops": [
+        189
+      ],
+      "airo2Stops": [
+        59
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "150": {
+      "ttfs": "1:40",
+      "airStops": [
+        219
+      ],
+      "airo2Stops": [
+        66
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "160": {
+      "ttfs": "1:20",
+      "airStops": [
+        1,
+        244
+      ],
+      "airo2Stops": [
+        1,
+        72
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "170": {
+      "ttfs": "1:20",
+      "airStops": [
+        2,
+        265
+      ],
+      "airo2Stops": [
+        1,
+        78
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "1:20",
+      "airStops": [
+        4,
+        289
+      ],
+      "airo2Stops": [
+        2,
+        83
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "190": {
+      "ttfs": "1:20",
+      "airStops": [
+        5,
+        316
+      ],
+      "airo2Stops": [
+        3,
+        88
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "200": {
+      "ttfs": "1:20",
+      "airStops": [
+        9,
+        345
+      ],
+      "airo2Stops": [
+        5,
+        93
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "210": {
+      "ttfs": "1:20",
+      "airStops": [
+        13,
+        378
+      ],
+      "airo2Stops": [
+        7,
+        98
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "240": {
+      "ttfs": "1:20",
+      "airStops": [
+        25,
+        454
+      ],
+      "airo2Stops": [
+        13,
+        110
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    }
+  },
+  "80": {
+    "39": {
+      "ttfs": "2:40",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "J"
+    },
+    "40": {
+      "ttfs": "2:00",
+      "airStops": [
+        1
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "J"
+    },
+    "45": {
+      "ttfs": "2:00",
+      "airStops": [
+        10
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "K"
+    },
+    "50": {
+      "ttfs": "2:00",
+      "airStops": [
+        17
+      ],
+      "airo2Stops": [
+        9
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "M"
+    },
+    "55": {
+      "ttfs": "2:00",
+      "airStops": [
+        24
+      ],
+      "airo2Stops": [
+        13
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "M"
+    },
+    "60": {
+      "ttfs": "2:00",
+      "airStops": [
+        30
+      ],
+      "airo2Stops": [
+        16
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "70": {
+      "ttfs": "2:00",
+      "airStops": [
+        54
+      ],
+      "airo2Stops": [
+        22
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "80": {
+      "ttfs": "2:00",
+      "airStops": [
+        77
+      ],
+      "airo2Stops": [
+        30
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "90": {
+      "ttfs": "2:00",
+      "airStops": [
+        114
+      ],
+      "airo2Stops": [
+        39
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "100": {
+      "ttfs": "1:40",
+      "airStops": [
+        1,
+        147
+      ],
+      "airo2Stops": [
+        1,
+        46
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "110": {
+      "ttfs": "1:40",
+      "airStops": [
+        6,
+        171
+      ],
+      "airo2Stops": [
+        3,
+        51
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "120": {
+      "ttfs": "1:40",
+      "airStops": [
+        10,
+        200
+      ],
+      "airo2Stops": [
+        5,
+        59
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "130": {
+      "ttfs": "1:40",
+      "airStops": [
+        14,
+        232
+      ],
+      "airo2Stops": [
+        7,
+        67
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "140": {
+      "ttfs": "1:40",
+      "airStops": [
+        17,
+        258
+      ],
+      "airo2Stops": [
+        9,
+        73
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "150": {
+      "ttfs": "1:40",
+      "airStops": [
+        19,
+        285
+      ],
+      "airo2Stops": [
+        10,
+        80
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "160": {
+      "ttfs": "1:40",
+      "airStops": [
+        21,
+        318
+      ],
+      "airo2Stops": [
+        11,
+        86
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "170": {
+      "ttfs": "1:40",
+      "airStops": [
+        27,
+        354
+      ],
+      "airo2Stops": [
+        14,
+        90
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "1:40",
+      "airStops": [
+        33,
+        391
+      ],
+      "airo2Stops": [
+        17,
+        96
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "210": {
+      "ttfs": "1:40",
+      "airStops": [
+        51,
+        473
+      ],
+      "airo2Stops": [
+        26,
+        110
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    }
+  },
+  "90": {
+    "33": {
+      "ttfs": "3:00",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "J"
+    },
+    "35": {
+      "ttfs": "2:20",
+      "airStops": [
+        4
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "J"
+    },
+    "40": {
+      "ttfs": "2:20",
+      "airStops": [
+        14
+      ],
+      "airo2Stops": [
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "45": {
+      "ttfs": "2:20",
+      "airStops": [
+        23
+      ],
+      "airo2Stops": [
+        12
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "M"
+    },
+    "50": {
+      "ttfs": "2:20",
+      "airStops": [
+        31
+      ],
+      "airo2Stops": [
+        17
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "55": {
+      "ttfs": "2:20",
+      "airStops": [
+        39
+      ],
+      "airo2Stops": [
+        21
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "60": {
+      "ttfs": "2:20",
+      "airStops": [
+        56
+      ],
+      "airo2Stops": [
+        24
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "70": {
+      "ttfs": "2:20",
+      "airStops": [
+        83
+      ],
+      "airo2Stops": [
+        32
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "80": {
+      "ttfs": "2:00",
+      "airStops": [
+        5,
+        125
+      ],
+      "airo2Stops": [
+        3,
+        40
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "90": {
+      "ttfs": "2:00",
+      "airStops": [
+        13,
+        158
+      ],
+      "airo2Stops": [
+        7,
+        46
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "100": {
+      "ttfs": "2:00",
+      "airStops": [
+        19,
+        185
+      ],
+      "airo2Stops": [
+        10,
+        53
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "110": {
+      "ttfs": "2:00",
+      "airStops": [
+        25,
+        224
+      ],
+      "airo2Stops": [
+        13,
+        61
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "1:40",
+      "airStops": [
+        2,
+        28,
+        256
+      ],
+      "airo2Stops": [
+        2,
+        14,
+        70
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "130": {
+      "ttfs": "1:40",
+      "airStops": [
+        5,
+        28,
+        291
+      ],
+      "airo2Stops": [
+        5,
+        14,
+        79
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "140": {
+      "ttfs": "1:40",
+      "airStops": [
+        8,
+        28,
+        330
+      ],
+      "airo2Stops": [
+        8,
+        14,
+        87
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "150": {
+      "ttfs": "1:40",
+      "airStops": [
+        11,
+        34,
+        378
+      ],
+      "airo2Stops": [
+        11,
+        17,
+        94
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "160": {
+      "ttfs": "1:40",
+      "airStops": [
+        13,
+        40,
+        418
+      ],
+      "airo2Stops": [
+        13,
+        20,
+        101
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "170": {
+      "ttfs": "1:40",
+      "airStops": [
+        15,
+        45,
+        451
+      ],
+      "airo2Stops": [
+        15,
+        23,
+        106
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "1:40",
+      "airStops": [
+        16,
+        51,
+        479
+      ],
+      "airo2Stops": [
+        16,
+        26,
+        112
+      ],
+      "chamberO2": 5.5,
+      "repetitiveGroup": null
+    },
+    "240": {
+      "ttfs": "1:40",
+      "airStops": [
+        42,
+        68,
+        592
+      ],
+      "airo2Stops": [
+        42,
+        34,
+        159
+      ],
+      "chamberO2": 7.5,
+      "repetitiveGroup": null
+    }
+  },
+  "100": {
+    "25": {
+      "ttfs": "3:20",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "H"
+    },
+    "30": {
+      "ttfs": "2:40",
+      "airStops": [
+        3
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "J"
+    },
+    "35": {
+      "ttfs": "2:40",
+      "airStops": [
+        15
+      ],
+      "airo2Stops": [
+        8
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "40": {
+      "ttfs": "2:40",
+      "airStops": [
+        26
+      ],
+      "airo2Stops": [
+        14
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "M"
+    },
+    "45": {
+      "ttfs": "2:40",
+      "airStops": [
+        36
+      ],
+      "airo2Stops": [
+        19
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "50": {
+      "ttfs": "2:40",
+      "airStops": [
+        47
+      ],
+      "airo2Stops": [
+        24
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "55": {
+      "ttfs": "2:40",
+      "airStops": [
+        65
+      ],
+      "airo2Stops": [
+        28
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "60": {
+      "ttfs": "2:40",
+      "airStops": [
+        81
+      ],
+      "airo2Stops": [
+        33
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "70": {
+      "ttfs": "2:20",
+      "airStops": [
+        11,
+        124
+      ],
+      "airo2Stops": [
+        6,
+        39
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "80": {
+      "ttfs": "2:20",
+      "airStops": [
+        21,
+        160
+      ],
+      "airo2Stops": [
+        11,
+        45
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "90": {
+      "ttfs": "2:00",
+      "airStops": [
+        2,
+        28,
+        196
+      ],
+      "airo2Stops": [
+        2,
+        14,
+        53
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "100": {
+      "ttfs": "2:00",
+      "airStops": [
+        9,
+        28,
+        241
+      ],
+      "airo2Stops": [
+        9,
+        14,
+        66
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "110": {
+      "ttfs": "2:00",
+      "airStops": [
+        14,
+        28,
+        278
+      ],
+      "airo2Stops": [
+        14,
+        14,
+        76
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "2:00",
+      "airStops": [
+        19,
+        28,
+        324
+      ],
+      "airo2Stops": [
+        19,
+        14,
+        85
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "150": {
+      "ttfs": "1:40",
+      "airStops": [
+        3,
+        26,
+        46,
+        461
+      ],
+      "airo2Stops": [
+        3,
+        26,
+        23,
+        109
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    }
+  },
+  "110": {
+    "20": {
+      "ttfs": "3:40",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "H"
+    },
+    "25": {
+      "ttfs": "3:00",
+      "airStops": [
+        5
+      ],
+      "airo2Stops": [
+        3
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "I"
+    },
+    "30": {
+      "ttfs": "3:00",
+      "airStops": [
+        14
+      ],
+      "airo2Stops": [
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "K"
+    },
+    "35": {
+      "ttfs": "3:00",
+      "airStops": [
+        27
+      ],
+      "airo2Stops": [
+        14
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "M"
+    },
+    "40": {
+      "ttfs": "3:00",
+      "airStops": [
+        39
+      ],
+      "airo2Stops": [
+        20
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "45": {
+      "ttfs": "3:00",
+      "airStops": [
+        50
+      ],
+      "airo2Stops": [
+        26
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "50": {
+      "ttfs": "3:00",
+      "airStops": [
+        71
+      ],
+      "airo2Stops": [
+        32
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "55": {
+      "ttfs": "2:40",
+      "airStops": [
+        5,
+        85
+      ],
+      "airo2Stops": [
+        3,
+        33
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "60": {
+      "ttfs": "2:40",
+      "airStops": [
+        13,
+        111
+      ],
+      "airo2Stops": [
+        7,
+        36
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "70": {
+      "ttfs": "2:40",
+      "airStops": [
+        26,
+        155
+      ],
+      "airo2Stops": [
+        14,
+        42
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "80": {
+      "ttfs": "2:20",
+      "airStops": [
+        9,
+        28,
+        200
+      ],
+      "airo2Stops": [
+        9,
+        14,
+        54
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "90": {
+      "ttfs": "2:20",
+      "airStops": [
+        18,
+        28,
+        249
+      ],
+      "airo2Stops": [
+        18,
+        14,
+        68
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "100": {
+      "ttfs": "2:20",
+      "airStops": [
+        25,
+        28,
+        295
+      ],
+      "airo2Stops": [
+        25,
+        14,
+        79
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "110": {
+      "ttfs": "2:00",
+      "airStops": [
+        5,
+        26,
+        28,
+        353
+      ],
+      "airo2Stops": [
+        5,
+        26,
+        14,
+        91
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "2:00",
+      "airStops": [
+        10,
+        26,
+        35,
+        413
+      ],
+      "airo2Stops": [
+        10,
+        26,
+        18,
+        101
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "1:40",
+      "airStops": [
+        3,
+        23,
+        47,
+        68,
+        593
+      ],
+      "airo2Stops": [
+        3,
+        23,
+        47,
+        34,
+        159
+      ],
+      "chamberO2": 7.5,
+      "repetitiveGroup": null
+    }
+  },
+  "120": {
+    "15": {
+      "ttfs": "4:00",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "F"
+    },
+    "20": {
+      "ttfs": "3:20",
+      "airStops": [
+        4
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "H"
+    },
+    "25": {
+      "ttfs": "3:20",
+      "airStops": [
+        9
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "J"
+    },
+    "30": {
+      "ttfs": "3:20",
+      "airStops": [
+        24
+      ],
+      "airo2Stops": [
+        13
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "35": {
+      "ttfs": "3:20",
+      "airStops": [
+        38
+      ],
+      "airo2Stops": [
+        20
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "40": {
+      "ttfs": "3:00",
+      "airStops": [
+        2,
+        49
+      ],
+      "airo2Stops": [
+        1,
+        26
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "45": {
+      "ttfs": "3:00",
+      "airStops": [
+        3,
+        71
+      ],
+      "airo2Stops": [
+        2,
+        31
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "50": {
+      "ttfs": "3:00",
+      "airStops": [
+        10,
+        85
+      ],
+      "airo2Stops": [
+        5,
+        33
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "55": {
+      "ttfs": "3:00",
+      "airStops": [
+        19,
+        116
+      ],
+      "airo2Stops": [
+        10,
+        35
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "60": {
+      "ttfs": "3:00",
+      "airStops": [
+        27,
+        142
+      ],
+      "airo2Stops": [
+        14,
+        39
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "70": {
+      "ttfs": "2:40",
+      "airStops": [
+        13,
+        28,
+        190
+      ],
+      "airo2Stops": [
+        13,
+        14,
+        51
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "80": {
+      "ttfs": "2:40",
+      "airStops": [
+        24,
+        28,
+        246
+      ],
+      "airo2Stops": [
+        24,
+        14,
+        67
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "90": {
+      "ttfs": "2:20",
+      "airStops": [
+        7,
+        26,
+        28,
+        303
+      ],
+      "airo2Stops": [
+        7,
+        26,
+        14,
+        80
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "100": {
+      "ttfs": "2:20",
+      "airStops": [
+        15,
+        25,
+        28,
+        372
+      ],
+      "airo2Stops": [
+        15,
+        25,
+        14,
+        95
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "110": {
+      "ttfs": "2:20",
+      "airStops": [
+        21,
+        25,
+        38,
+        433
+      ],
+      "airo2Stops": [
+        21,
+        25,
+        19,
+        105
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "2:00",
+      "airStops": [
+        3,
+        23,
+        25,
+        47,
+        480
+      ],
+      "airo2Stops": [
+        3,
+        23,
+        25,
+        24,
+        113
+      ],
+      "chamberO2": 5.5,
+      "repetitiveGroup": null
+    }
+  },
+  "130": {
+    "12": {
+      "ttfs": "4:20",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "F"
+    },
+    "15": {
+      "ttfs": "3:40",
+      "airStops": [
+        3
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "G"
+    },
+    "20": {
+      "ttfs": "3:40",
+      "airStops": [
+        8
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "I"
+    },
+    "25": {
+      "ttfs": "3:40",
+      "airStops": [
+        17
+      ],
+      "airo2Stops": [
+        9
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "K"
+    },
+    "30": {
+      "ttfs": "3:20",
+      "airStops": [
+        2,
+        32
+      ],
+      "airo2Stops": [
+        1,
+        17
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "M"
+    },
+    "35": {
+      "ttfs": "3:20",
+      "airStops": [
+        5,
+        44
+      ],
+      "airo2Stops": [
+        3,
+        23
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "40": {
+      "ttfs": "3:20",
+      "airStops": [
+        6,
+        66
+      ],
+      "airo2Stops": [
+        3,
+        30
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "45": {
+      "ttfs": "3:00",
+      "airStops": [
+        1,
+        11,
+        84
+      ],
+      "airo2Stops": [
+        1,
+        6,
+        33
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "50": {
+      "ttfs": "3:00",
+      "airStops": [
+        2,
+        20,
+        118
+      ],
+      "airo2Stops": [
+        2,
+        10,
+        36
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "55": {
+      "ttfs": "3:00",
+      "airStops": [
+        4,
+        28,
+        146
+      ],
+      "airo2Stops": [
+        4,
+        14,
+        40
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "60": {
+      "ttfs": "3:00",
+      "airStops": [
+        12,
+        28,
+        170
+      ],
+      "airo2Stops": [
+        12,
+        14,
+        46
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "70": {
+      "ttfs": "2:40",
+      "airStops": [
+        1,
+        26,
+        28,
+        235
+      ],
+      "airo2Stops": [
+        1,
+        26,
+        14,
+        63
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "80": {
+      "ttfs": "2:40",
+      "airStops": [
+        12,
+        26,
+        28,
+        297
+      ],
+      "airo2Stops": [
+        12,
+        26,
+        14,
+        79
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "90": {
+      "ttfs": "2:40",
+      "airStops": [
+        22,
+        25,
+        28,
+        375
+      ],
+      "airo2Stops": [
+        22,
+        25,
+        14,
+        95
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "100": {
+      "ttfs": "2:20",
+      "airStops": [
+        6,
+        23,
+        26,
+        38,
+        444
+      ],
+      "airo2Stops": [
+        6,
+        23,
+        26,
+        20,
+        106
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "2:20",
+      "airStops": [
+        17,
+        24,
+        27,
+        57,
+        534
+      ],
+      "airo2Stops": [
+        17,
+        24,
+        27,
+        29,
+        130
+      ],
+      "chamberO2": 6.0,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "2:00",
+      "airStops": [
+        13,
+        21,
+        45,
+        57,
+        94,
+        658
+      ],
+      "airo2Stops": [
+        13,
+        21,
+        45,
+        57,
+        46,
+        198
+      ],
+      "chamberO2": 9.0,
+      "repetitiveGroup": null
+    }
+  },
+  "140": {
+    "10": {
+      "ttfs": "4:40",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "E"
+    },
+    "15": {
+      "ttfs": "4:00",
+      "airStops": [
+        5
+      ],
+      "airo2Stops": [
+        3
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "H"
+    },
+    "20": {
+      "ttfs": "4:00",
+      "airStops": [
+        13
+      ],
+      "airo2Stops": [
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "J"
+    },
+    "25": {
+      "ttfs": "3:40",
+      "airStops": [
+        3,
+        24
+      ],
+      "airo2Stops": [
+        2,
+        12
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "L"
+    },
+    "30": {
+      "ttfs": "3:40",
+      "airStops": [
+        7,
+        37
+      ],
+      "airo2Stops": [
+        4,
+        19
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "35": {
+      "ttfs": "3:20",
+      "airStops": [
+        2,
+        7,
+        58
+      ],
+      "airo2Stops": [
+        2,
+        4,
+        26
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "O"
+    },
+    "40": {
+      "ttfs": "3:20",
+      "airStops": [
+        4,
+        7,
+        82
+      ],
+      "airo2Stops": [
+        4,
+        4,
+        33
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "45": {
+      "ttfs": "3:20",
+      "airStops": [
+        5,
+        18,
+        114
+      ],
+      "airo2Stops": [
+        5,
+        9,
+        36
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "50": {
+      "ttfs": "3:20",
+      "airStops": [
+        8,
+        27,
+        145
+      ],
+      "airo2Stops": [
+        8,
+        14,
+        39
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "55": {
+      "ttfs": "3:00",
+      "airStops": [
+        1,
+        15,
+        29,
+        171
+      ],
+      "airo2Stops": [
+        1,
+        15,
+        15,
+        45
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "60": {
+      "ttfs": "3:00",
+      "airStops": [
+        2,
+        23,
+        28,
+        209
+      ],
+      "airo2Stops": [
+        2,
+        23,
+        14,
+        56
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "70": {
+      "ttfs": "3:00",
+      "airStops": [
+        14,
+        25,
+        29,
+        276
+      ],
+      "airo2Stops": [
+        14,
+        25,
+        15,
+        74
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "80": {
+      "ttfs": "2:40",
+      "airStops": [
+        2,
+        24,
+        25,
+        29,
+        362
+      ],
+      "airo2Stops": [
+        2,
+        24,
+        25,
+        15,
+        91
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "90": {
+      "ttfs": "2:40",
+      "airStops": [
+        12,
+        23,
+        26,
+        38,
+        443
+      ],
+      "airo2Stops": [
+        12,
+        23,
+        26,
+        19,
+        107
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    }
+  },
+  "150": {
+    "8": {
+      "ttfs": "5:00",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "E"
+    },
+    "10": {
+      "ttfs": "4:20",
+      "airStops": [
+        2
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "F"
+    },
+    "15": {
+      "ttfs": "4:20",
+      "airStops": [
+        8
+      ],
+      "airo2Stops": [
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "H"
+    },
+    "20": {
+      "ttfs": "4:00",
+      "airStops": [
+        2,
+        15
+      ],
+      "airo2Stops": [
+        1,
+        8
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "K"
+    },
+    "25": {
+      "ttfs": "4:00",
+      "airStops": [
+        7,
+        29
+      ],
+      "airo2Stops": [
+        4,
+        14
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "M"
+    },
+    "30": {
+      "ttfs": "3:40",
+      "airStops": [
+        4,
+        7,
+        45
+      ],
+      "airo2Stops": [
+        4,
+        4,
+        22
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "O"
+    },
+    "35": {
+      "ttfs": "3:40",
+      "airStops": [
+        6,
+        7,
+        74
+      ],
+      "airo2Stops": [
+        6,
+        4,
+        30
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "40": {
+      "ttfs": "3:20",
+      "airStops": [
+        2,
+        6,
+        14,
+        106
+      ],
+      "airo2Stops": [
+        2,
+        6,
+        7,
+        35
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "45": {
+      "ttfs": "3:20",
+      "airStops": [
+        3,
+        8,
+        24,
+        142
+      ],
+      "airo2Stops": [
+        3,
+        8,
+        12,
+        40
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "50": {
+      "ttfs": "3:20",
+      "airStops": [
+        4,
+        14,
+        28,
+        170
+      ],
+      "airo2Stops": [
+        4,
+        14,
+        14,
+        46
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "55": {
+      "ttfs": "3:20",
+      "airStops": [
+        7,
+        21,
+        28,
+        212
+      ],
+      "airo2Stops": [
+        7,
+        21,
+        14,
+        57
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "60": {
+      "ttfs": "3:20",
+      "airStops": [
+        11,
+        26,
+        28,
+        248
+      ],
+      "airo2Stops": [
+        11,
+        26,
+        14,
+        67
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "70": {
+      "ttfs": "3:00",
+      "airStops": [
+        3,
+        24,
+        25,
+        28,
+        330
+      ],
+      "airo2Stops": [
+        3,
+        24,
+        25,
+        14,
+        85
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "80": {
+      "ttfs": "3:00",
+      "airStops": [
+        15,
+        23,
+        26,
+        35,
+        430
+      ],
+      "airo2Stops": [
+        15,
+        23,
+        26,
+        18,
+        104
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "90": {
+      "ttfs": "2:40",
+      "airStops": [
+        3,
+        22,
+        23,
+        26,
+        47,
+        496
+      ],
+      "airo2Stops": [
+        3,
+        22,
+        23,
+        26,
+        24,
+        118
+      ],
+      "chamberO2": 5.5,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "2:20",
+      "airStops": [
+        3,
+        20,
+        22,
+        23,
+        50,
+        75,
+        608
+      ],
+      "airo2Stops": [
+        3,
+        20,
+        22,
+        23,
+        50,
+        37,
+        168
+      ],
+      "chamberO2": 8.0,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "2:00",
+      "airStops": [
+        2,
+        19,
+        20,
+        42,
+        48,
+        79,
+        121,
+        694
+      ],
+      "airo2Stops": [
+        2,
+        19,
+        20,
+        42,
+        48,
+        79,
+        58,
+        222
+      ],
+      "chamberO2": 10.5,
+      "repetitiveGroup": null
+    }
+  },
+  "160": {
+    "7": {
+      "ttfs": "5:20",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "E"
+    },
+    "10": {
+      "ttfs": "4:40",
+      "airStops": [
+        4
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "F"
+    },
+    "15": {
+      "ttfs": "4:20",
+      "airStops": [
+        2,
+        10
+      ],
+      "airo2Stops": [
+        1,
+        6
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "I"
+    },
+    "20": {
+      "ttfs": "4:00",
+      "airStops": [
+        1,
+        4,
+        19
+      ],
+      "airo2Stops": [
+        1,
+        2,
+        10
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "25": {
+      "ttfs": "4:00",
+      "airStops": [
+        4,
+        7,
+        35
+      ],
+      "airo2Stops": [
+        4,
+        4,
+        17
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "30": {
+      "ttfs": "3:40",
+      "airStops": [
+        2,
+        6,
+        7,
+        62
+      ],
+      "airo2Stops": [
+        2,
+        6,
+        4,
+        26
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "35": {
+      "ttfs": "3:40",
+      "airStops": [
+        4,
+        6,
+        8,
+        89
+      ],
+      "airo2Stops": [
+        4,
+        6,
+        4,
+        34
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "40": {
+      "ttfs": "3:40",
+      "airStops": [
+        6,
+        6,
+        21,
+        134
+      ],
+      "airo2Stops": [
+        6,
+        6,
+        11,
+        38
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "45": {
+      "ttfs": "3:20",
+      "airStops": [
+        2,
+        5,
+        11,
+        28,
+        166
+      ],
+      "airo2Stops": [
+        2,
+        5,
+        11,
+        14,
+        45
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "50": {
+      "ttfs": "3:20",
+      "airStops": [
+        2,
+        8,
+        19,
+        28,
+        207
+      ],
+      "airo2Stops": [
+        2,
+        8,
+        19,
+        15,
+        55
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "55": {
+      "ttfs": "3:20",
+      "airStops": [
+        3,
+        11,
+        26,
+        28,
+        248
+      ],
+      "airo2Stops": [
+        3,
+        11,
+        26,
+        14,
+        67
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "60": {
+      "ttfs": "3:20",
+      "airStops": [
+        6,
+        17,
+        25,
+        29,
+        291
+      ],
+      "airo2Stops": [
+        6,
+        17,
+        25,
+        15,
+        77
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "70": {
+      "ttfs": "3:20",
+      "airStops": [
+        15,
+        23,
+        26,
+        29,
+        399
+      ],
+      "airo2Stops": [
+        15,
+        23,
+        26,
+        15,
+        99
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "80": {
+      "ttfs": "3:00",
+      "airStops": [
+        6,
+        21,
+        24,
+        25,
+        44,
+        482
+      ],
+      "airo2Stops": [
+        6,
+        21,
+        24,
+        25,
+        23,
+        114
+      ],
+      "chamberO2": 5.5,
+      "repetitiveGroup": null
+    }
+  },
+  "170": {
+    "6": {
+      "ttfs": "5:40",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "D"
+    },
+    "10": {
+      "ttfs": "5:00",
+      "airStops": [
+        6
+      ],
+      "airo2Stops": [
+        3
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "G"
+    },
+    "15": {
+      "ttfs": "4:40",
+      "airStops": [
+        3,
+        13
+      ],
+      "airo2Stops": [
+        2,
+        6
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "J"
+    },
+    "20": {
+      "ttfs": "4:20",
+      "airStops": [
+        3,
+        6,
+        24
+      ],
+      "airo2Stops": [
+        3,
+        3,
+        12
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "M"
+    },
+    "25": {
+      "ttfs": "4:00",
+      "airStops": [
+        1,
+        7,
+        7,
+        41
+      ],
+      "airo2Stops": [
+        1,
+        7,
+        4,
+        20
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "30": {
+      "ttfs": "4:00",
+      "airStops": [
+        5,
+        7,
+        7,
+        77
+      ],
+      "airo2Stops": [
+        5,
+        7,
+        3,
+        30
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "35": {
+      "ttfs": "3:40",
+      "airStops": [
+        2,
+        6,
+        6,
+        15,
+        120
+      ],
+      "airo2Stops": [
+        2,
+        6,
+        6,
+        8,
+        37
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "40": {
+      "ttfs": "3:40",
+      "airStops": [
+        4,
+        6,
+        9,
+        25,
+        158
+      ],
+      "airo2Stops": [
+        4,
+        6,
+        9,
+        12,
+        44
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "45": {
+      "ttfs": "3:40",
+      "airStops": [
+        5,
+        7,
+        16,
+        28,
+        197
+      ],
+      "airo2Stops": [
+        5,
+        7,
+        16,
+        14,
+        53
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "50": {
+      "ttfs": "3:20",
+      "airStops": [
+        1,
+        5,
+        11,
+        23,
+        28,
+        244
+      ],
+      "airo2Stops": [
+        1,
+        5,
+        11,
+        23,
+        14,
+        66
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "55": {
+      "ttfs": "3:20",
+      "airStops": [
+        2,
+        7,
+        16,
+        26,
+        28,
+        289
+      ],
+      "airo2Stops": [
+        2,
+        7,
+        16,
+        26,
+        14,
+        77
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "60": {
+      "ttfs": "3:20",
+      "airStops": [
+        2,
+        11,
+        21,
+        26,
+        28,
+        344
+      ],
+      "airo2Stops": [
+        2,
+        11,
+        21,
+        26,
+        14,
+        88
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "70": {
+      "ttfs": "3:20",
+      "airStops": [
+        7,
+        19,
+        24,
+        25,
+        39,
+        454
+      ],
+      "airo2Stops": [
+        7,
+        19,
+        24,
+        25,
+        20,
+        109
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    },
+    "80": {
+      "ttfs": "3:20",
+      "airStops": [
+        17,
+        22,
+        23,
+        26,
+        53,
+        525
+      ],
+      "airo2Stops": [
+        17,
+        22,
+        23,
+        26,
+        27,
+        128
+      ],
+      "chamberO2": 6.0,
+      "repetitiveGroup": null
+    },
+    "90": {
+      "ttfs": "3:00",
+      "airStops": [
+        8,
+        19,
+        22,
+        23,
+        37,
+        66,
+        574
+      ],
+      "airo2Stops": [
+        8,
+        19,
+        22,
+        23,
+        37,
+        33,
+        148
+      ],
+      "chamberO2": 7.0,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "2:40",
+      "airStops": [
+        9,
+        19,
+        20,
+        22,
+        42,
+        60,
+        94,
+        659
+      ],
+      "airo2Stops": [
+        9,
+        19,
+        20,
+        22,
+        42,
+        60,
+        46,
+        198
+      ],
+      "chamberO2": 9.0,
+      "repetitiveGroup": null
+    },
+    "180": {
+      "ttfs": "2:20",
+      "airStops": [
+        10,
+        18,
+        19,
+        40,
+        43,
+        70,
+        97,
+        156,
+        703
+      ],
+      "airo2Stops": [
+        10,
+        18,
+        19,
+        40,
+        43,
+        70,
+        97,
+        74,
+        229
+      ],
+      "chamberO2": 11.5,
+      "repetitiveGroup": null
+    }
+  },
+  "180": {
+    "6": {
+      "ttfs": "6:00",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "E"
+    },
+    "10": {
+      "ttfs": "5:20",
+      "airStops": [
+        8
+      ],
+      "airo2Stops": [
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "G"
+    },
+    "15": {
+      "ttfs": "4:40",
+      "airStops": [
+        2,
+        3,
+        14
+      ],
+      "airo2Stops": [
+        2,
+        2,
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "K"
+    },
+    "20": {
+      "ttfs": "4:20",
+      "airStops": [
+        1,
+        5,
+        7,
+        29
+      ],
+      "airo2Stops": [
+        1,
+        5,
+        3,
+        15
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "M"
+    },
+    "25": {
+      "ttfs": "4:20",
+      "airStops": [
+        5,
+        6,
+        7,
+        57
+      ],
+      "airo2Stops": [
+        5,
+        6,
+        4,
+        24
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "O"
+    },
+    "30": {
+      "ttfs": "4:00",
+      "airStops": [
+        3,
+        6,
+        6,
+        7,
+        95
+      ],
+      "airo2Stops": [
+        3,
+        6,
+        6,
+        4,
+        34
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "35": {
+      "ttfs": "3:40",
+      "airStops": [
+        1,
+        5,
+        6,
+        6,
+        22,
+        144
+      ],
+      "airo2Stops": [
+        1,
+        5,
+        6,
+        6,
+        11,
+        41
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "40": {
+      "ttfs": "3:40",
+      "airStops": [
+        2,
+        6,
+        5,
+        13,
+        28,
+        178
+      ],
+      "airo2Stops": [
+        2,
+        6,
+        5,
+        13,
+        14,
+        48
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "45": {
+      "ttfs": "3:40",
+      "airStops": [
+        4,
+        5,
+        10,
+        20,
+        28,
+        235
+      ],
+      "airo2Stops": [
+        4,
+        5,
+        10,
+        20,
+        14,
+        63
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "50": {
+      "ttfs": "3:40",
+      "airStops": [
+        4,
+        8,
+        13,
+        25,
+        29,
+        277
+      ],
+      "airo2Stops": [
+        4,
+        8,
+        13,
+        25,
+        15,
+        75
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "55": {
+      "ttfs": "3:40",
+      "airStops": [
+        5,
+        11,
+        19,
+        26,
+        28,
+        336
+      ],
+      "airo2Stops": [
+        5,
+        11,
+        19,
+        26,
+        14,
+        87
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "60": {
+      "ttfs": "3:20",
+      "airStops": [
+        1,
+        8,
+        13,
+        23,
+        25,
+        31,
+        406
+      ],
+      "airo2Stops": [
+        1,
+        8,
+        13,
+        23,
+        25,
+        16,
+        100
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "70": {
+      "ttfs": "3:20",
+      "airStops": [
+        4,
+        12,
+        21,
+        24,
+        25,
+        48,
+        499
+      ],
+      "airo2Stops": [
+        4,
+        12,
+        21,
+        24,
+        25,
+        24,
+        119
+      ],
+      "chamberO2": 5.5,
+      "repetitiveGroup": null
+    }
+  },
+  "190": {
+    "5": {
+      "ttfs": "6:20",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "D"
+    },
+    "10": {
+      "ttfs": "5:20",
+      "airStops": [
+        2,
+        8
+      ],
+      "airo2Stops": [
+        1,
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "H"
+    },
+    "15": {
+      "ttfs": "4:40",
+      "airStops": [
+        1,
+        3,
+        3,
+        16
+      ],
+      "airo2Stops": [
+        1,
+        3,
+        2,
+        8
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "K"
+    },
+    "20": {
+      "ttfs": "4:20",
+      "airStops": [
+        1,
+        2,
+        6,
+        7,
+        34
+      ],
+      "airo2Stops": [
+        1,
+        2,
+        6,
+        4,
+        17
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "25": {
+      "ttfs": "4:20",
+      "airStops": [
+        2,
+        6,
+        7,
+        7,
+        72
+      ],
+      "airo2Stops": [
+        2,
+        6,
+        7,
+        3,
+        28
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "30": {
+      "ttfs": "4:00",
+      "airStops": [
+        1,
+        6,
+        5,
+        7,
+        13,
+        122
+      ],
+      "airo2Stops": [
+        1,
+        6,
+        5,
+        7,
+        7,
+        38
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "35": {
+      "ttfs": "4:00",
+      "airStops": [
+        4,
+        5,
+        6,
+        8,
+        26,
+        165
+      ],
+      "airo2Stops": [
+        4,
+        5,
+        6,
+        8,
+        13,
+        45
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "40": {
+      "ttfs": "3:40",
+      "airStops": [
+        1,
+        5,
+        5,
+        8,
+        17,
+        28,
+        217
+      ],
+      "airo2Stops": [
+        1,
+        5,
+        5,
+        8,
+        17,
+        15,
+        58
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "45": {
+      "ttfs": "3:40",
+      "airStops": [
+        2,
+        5,
+        6,
+        12,
+        24,
+        29,
+        264
+      ],
+      "airo2Stops": [
+        2,
+        5,
+        6,
+        12,
+        24,
+        15,
+        71
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "50": {
+      "ttfs": "3:40",
+      "airStops": [
+        3,
+        5,
+        10,
+        17,
+        26,
+        28,
+        324
+      ],
+      "airo2Stops": [
+        3,
+        5,
+        10,
+        17,
+        26,
+        14,
+        85
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "55": {
+      "ttfs": "3:40",
+      "airStops": [
+        4,
+        8,
+        10,
+        24,
+        25,
+        30,
+        397
+      ],
+      "airo2Stops": [
+        4,
+        8,
+        10,
+        24,
+        25,
+        15,
+        99
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    },
+    "60": {
+      "ttfs": "3:40",
+      "airStops": [
+        5,
+        10,
+        16,
+        24,
+        25,
+        40,
+        454
+      ],
+      "airo2Stops": [
+        5,
+        10,
+        16,
+        24,
+        25,
+        20,
+        109
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    },
+    "90": {
+      "ttfs": "3:20",
+      "airStops": [
+        11,
+        19,
+        20,
+        21,
+        28,
+        51,
+        83,
+        626
+      ],
+      "airo2Stops": [
+        11,
+        19,
+        20,
+        21,
+        28,
+        51,
+        41,
+        178
+      ],
+      "chamberO2": 8.5,
+      "repetitiveGroup": null
+    },
+    "120": {
+      "ttfs": "3:00",
+      "airStops": [
+        15,
+        17,
+        19,
+        20,
+        37,
+        46,
+        79,
+        113,
+        691
+      ],
+      "airo2Stops": [
+        15,
+        17,
+        19,
+        20,
+        37,
+        46,
+        79,
+        55,
+        219
+      ],
+      "chamberO2": 10.5,
+      "repetitiveGroup": null
+    }
+  },
+  "200": {
+    "5": {
+      "ttfs": "6:40",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "E"
+    },
+    "10": {
+      "ttfs": "5:40",
+      "airStops": [
+        3,
+        8
+      ],
+      "airo2Stops": [
+        2,
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "H"
+    },
+    "15": {
+      "ttfs": "5:00",
+      "airStops": [
+        2,
+        3,
+        5,
+        19
+      ],
+      "airo2Stops": [
+        2,
+        3,
+        3,
+        9
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "20": {
+      "ttfs": "4:40",
+      "airStops": [
+        2,
+        4,
+        6,
+        7,
+        43
+      ],
+      "airo2Stops": [
+        2,
+        4,
+        6,
+        4,
+        20
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "25": {
+      "ttfs": "4:20",
+      "airStops": [
+        1,
+        5,
+        6,
+        6,
+        7,
+        85
+      ],
+      "airo2Stops": [
+        1,
+        5,
+        6,
+        6,
+        4,
+        32
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "30": {
+      "ttfs": "4:20",
+      "airStops": [
+        4,
+        6,
+        5,
+        7,
+        19,
+        145
+      ],
+      "airo2Stops": [
+        4,
+        6,
+        5,
+        7,
+        10,
+        42
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "35": {
+      "ttfs": "4:00",
+      "airStops": [
+        2,
+        5,
+        5,
+        6,
+        13,
+        28,
+        188
+      ],
+      "airo2Stops": [
+        2,
+        5,
+        5,
+        6,
+        13,
+        14,
+        51
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "40": {
+      "ttfs": "4:00",
+      "airStops": [
+        4,
+        5,
+        5,
+        11,
+        21,
+        28,
+        249
+      ],
+      "airo2Stops": [
+        4,
+        5,
+        5,
+        11,
+        21,
+        14,
+        68
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "45": {
+      "ttfs": "3:40",
+      "airStops": [
+        1,
+        4,
+        5,
+        10,
+        14,
+        25,
+        28,
+        306
+      ],
+      "airo2Stops": [
+        1,
+        4,
+        5,
+        10,
+        14,
+        25,
+        14,
+        81
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "50": {
+      "ttfs": "3:40",
+      "airStops": [
+        2,
+        4,
+        8,
+        10,
+        21,
+        26,
+        28,
+        382
+      ],
+      "airo2Stops": [
+        2,
+        4,
+        8,
+        10,
+        21,
+        26,
+        14,
+        97
+      ],
+      "chamberO2": 4.5,
+      "repetitiveGroup": null
+    }
+  },
+  "210": {
+    "4": {
+      "ttfs": "7:00",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "D"
+    },
+    "5": {
+      "ttfs": "6:20",
+      "airStops": [
+        2
+      ],
+      "airo2Stops": [
+        1
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "E"
+    },
+    "10": {
+      "ttfs": "5:40",
+      "airStops": [
+        2,
+        3,
+        9
+      ],
+      "airo2Stops": [
+        2,
+        2,
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "I"
+    },
+    "15": {
+      "ttfs": "5:00",
+      "airStops": [
+        1,
+        3,
+        3,
+        6,
+        24
+      ],
+      "airo2Stops": [
+        1,
+        3,
+        3,
+        3,
+        12
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "M"
+    },
+    "20": {
+      "ttfs": "4:40",
+      "airStops": [
+        1,
+        3,
+        5,
+        6,
+        7,
+        57
+      ],
+      "airo2Stops": [
+        1,
+        3,
+        5,
+        6,
+        4,
+        23
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "25": {
+      "ttfs": "4:40",
+      "airStops": [
+        3,
+        6,
+        5,
+        7,
+        8,
+        110
+      ],
+      "airo2Stops": [
+        3,
+        6,
+        5,
+        7,
+        4,
+        38
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "30": {
+      "ttfs": "4:20",
+      "airStops": [
+        2,
+        5,
+        6,
+        6,
+        6,
+        26,
+        163
+      ],
+      "airo2Stops": [
+        2,
+        5,
+        6,
+        6,
+        6,
+        13,
+        45
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": "Z"
+    },
+    "35": {
+      "ttfs": "4:00",
+      "airStops": [
+        1,
+        4,
+        5,
+        6,
+        7,
+        18,
+        28,
+        223
+      ],
+      "airo2Stops": [
+        1,
+        4,
+        5,
+        6,
+        7,
+        18,
+        14,
+        60
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "40": {
+      "ttfs": "4:00",
+      "airStops": [
+        2,
+        5,
+        5,
+        7,
+        11,
+        26,
+        28,
+        278
+      ],
+      "airo2Stops": [
+        2,
+        5,
+        5,
+        7,
+        11,
+        26,
+        14,
+        76
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "45": {
+      "ttfs": "4:00",
+      "airStops": [
+        4,
+        4,
+        6,
+        11,
+        18,
+        26,
+        28,
+        355
+      ],
+      "airo2Stops": [
+        4,
+        4,
+        6,
+        11,
+        18,
+        26,
+        14,
+        91
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    },
+    "50": {
+      "ttfs": "3:40",
+      "airStops": [
+        1,
+        4,
+        5,
+        10,
+        12,
+        23,
+        26,
+        36,
+        432
+      ],
+      "airo2Stops": [
+        1,
+        4,
+        5,
+        10,
+        12,
+        23,
+        26,
+        18,
+        105
+      ],
+      "chamberO2": 5.0,
+      "repetitiveGroup": null
+    }
+  },
+  "220": {
+    "4": {
+      "ttfs": "7:20",
+      "airStops": [
+        0
+      ],
+      "airo2Stops": [
+        0
+      ],
+      "chamberO2": 0.0,
+      "repetitiveGroup": "E"
+    },
+    "5": {
+      "ttfs": "6:40",
+      "airStops": [
+        3
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "E"
+    },
+    "10": {
+      "ttfs": "6:00",
+      "airStops": [
+        3,
+        4,
+        10
+      ],
+      "airo2Stops": [
+        3,
+        2,
+        5
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "J"
+    },
+    "15": {
+      "ttfs": "5:20",
+      "airStops": [
+        3,
+        2,
+        4,
+        7,
+        28
+      ],
+      "airo2Stops": [
+        3,
+        2,
+        4,
+        4,
+        14
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "20": {
+      "ttfs": "5:00",
+      "airStops": [
+        2,
+        4,
+        6,
+        6,
+        7,
+        70
+      ],
+      "airo2Stops": [
+        2,
+        4,
+        6,
+        6,
+        4,
+        26
+      ],
+      "chamberO2": 1.5,
+      "repetitiveGroup": "Z"
+    },
+    "25": {
+      "ttfs": "4:40",
+      "airStops": [
+        1,
+        5,
+        6,
+        6,
+        6,
+        14,
+        133
+      ],
+      "airo2Stops": [
+        1,
+        5,
+        6,
+        6,
+        6,
+        7,
+        41
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "30": {
+      "ttfs": "4:20",
+      "airStops": [
+        1,
+        4,
+        5,
+        6,
+        6,
+        10,
+        28,
+        183
+      ],
+      "airo2Stops": [
+        1,
+        4,
+        5,
+        6,
+        6,
+        10,
+        14,
+        50
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "35": {
+      "ttfs": "4:20",
+      "airStops": [
+        3,
+        5,
+        5,
+        5,
+        10,
+        22,
+        28,
+        251
+      ],
+      "airo2Stops": [
+        3,
+        5,
+        5,
+        5,
+        10,
+        22,
+        14,
+        68
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "40": {
+      "ttfs": "4:00",
+      "airStops": [
+        1,
+        4,
+        5,
+        5,
+        9,
+        15,
+        26,
+        28,
+        319
+      ],
+      "airo2Stops": [
+        1,
+        4,
+        5,
+        5,
+        9,
+        15,
+        26,
+        14,
+        84
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    }
+  },
+  "250": {
+    "4": {
+      "ttfs": "7:40",
+      "airStops": [
+        4
+      ],
+      "airo2Stops": [
+        2
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "F"
+    },
+    "5": {
+      "ttfs": "7:40",
+      "airStops": [
+        7
+      ],
+      "airo2Stops": [
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "G"
+    },
+    "10": {
+      "ttfs": "6:20",
+      "airStops": [
+        2,
+        2,
+        4,
+        3,
+        15
+      ],
+      "airo2Stops": [
+        2,
+        2,
+        4,
+        2,
+        7
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "L"
+    },
+    "15": {
+      "ttfs": "5:40",
+      "airStops": [
+        2,
+        2,
+        3,
+        4,
+        6,
+        7,
+        53
+      ],
+      "airo2Stops": [
+        2,
+        2,
+        3,
+        4,
+        6,
+        4,
+        22
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "O"
+    },
+    "20": {
+      "ttfs": "5:20",
+      "airStops": [
+        2,
+        2,
+        4,
+        6,
+        6,
+        6,
+        11,
+        125
+      ],
+      "airo2Stops": [
+        2,
+        2,
+        4,
+        6,
+        6,
+        6,
+        6,
+        39
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "25": {
+      "ttfs": "5:00",
+      "airStops": [
+        1,
+        4,
+        4,
+        5,
+        6,
+        6,
+        10,
+        28,
+        189
+      ],
+      "airo2Stops": [
+        1,
+        4,
+        4,
+        5,
+        6,
+        6,
+        10,
+        14,
+        51
+      ],
+      "chamberO2": 2.5,
+      "repetitiveGroup": null
+    },
+    "30": {
+      "ttfs": "4:40",
+      "airStops": [
+        1,
+        4,
+        4,
+        4,
+        5,
+        6,
+        9,
+        25,
+        28,
+        267
+      ],
+      "airo2Stops": [
+        1,
+        4,
+        4,
+        4,
+        5,
+        6,
+        9,
+        25,
+        15,
+        72
+      ],
+      "chamberO2": 3.5,
+      "repetitiveGroup": null
+    },
+    "35": {
+      "ttfs": "4:40",
+      "airStops": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        10,
+        19,
+        26,
+        28,
+        363
+      ],
+      "airo2Stops": [
+        3,
+        4,
+        4,
+        5,
+        5,
+        10,
+        19,
+        26,
+        14,
+        93
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    }
+  },
+  "300": {
+    "4": {
+      "ttfs": "9:00",
+      "airStops": [
+        3,
+        7
+      ],
+      "airo2Stops": [
+        2,
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "G"
+    },
+    "5": {
+      "ttfs": "8:40",
+      "airStops": [
+        3,
+        3,
+        8
+      ],
+      "airo2Stops": [
+        3,
+        2,
+        4
+      ],
+      "chamberO2": 0.5,
+      "repetitiveGroup": "I"
+    },
+    "10": {
+      "ttfs": "7:20",
+      "airStops": [
+        2,
+        3,
+        2,
+        3,
+        4,
+        7,
+        35
+      ],
+      "airo2Stops": [
+        2,
+        3,
+        2,
+        3,
+        4,
+        4,
+        18
+      ],
+      "chamberO2": 1.0,
+      "repetitiveGroup": "N"
+    },
+    "15": {
+      "ttfs": "6:20",
+      "airStops": [
+        1,
+        2,
+        2,
+        3,
+        3,
+        5,
+        6,
+        7,
+        11,
+        125
+      ],
+      "airo2Stops": [
+        1,
+        2,
+        2,
+        3,
+        3,
+        5,
+        6,
+        7,
+        6,
+        39
+      ],
+      "chamberO2": 2.0,
+      "repetitiveGroup": "Z"
+    },
+    "20": {
+      "ttfs": "6:00",
+      "airStops": [
+        2,
+        2,
+        2,
+        4,
+        5,
+        5,
+        5,
+        6,
+        16,
+        28,
+        219
+      ],
+      "airo2Stops": [
+        2,
+        2,
+        2,
+        4,
+        5,
+        5,
+        5,
+        6,
+        16,
+        14,
+        59
+      ],
+      "chamberO2": 3.0,
+      "repetitiveGroup": null
+    },
+    "25": {
+      "ttfs": "5:40",
+      "airStops": [
+        1,
+        3,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        18,
+        26,
+        28,
+        324
+      ],
+      "airo2Stops": [
+        1,
+        3,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        18,
+        26,
+        14,
+        85
+      ],
+      "chamberO2": 4.0,
+      "repetitiveGroup": null
+    }
+  }
+}

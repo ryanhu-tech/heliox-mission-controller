@@ -10,6 +10,7 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import dsodLogo from './assets/dsod_logo.png';
 import decoTable from './data/deco_table.json';
+import airDecoTable from './data/air_deco_table.json';
 import { 
   calcBottomGas, 
   calcTotalDecoGas, 
@@ -29,11 +30,11 @@ const THEMES = {
 };
 
 const TRANSLATIONS = {
-  en: {
-    title: 'Heliox Mission', subtitle: 'US NAVY MANUAL REV.7', maxDepth: 'Max Depth', bottomTime: 'Bottom Time', decoMode: 'Deco Mode', divers: 'Divers', opTime: 'Op Time', export: 'Export PDF', generating: 'Generating...', profile: 'Mission Profile', waterDeco: 'Water Deco Schedule', chamber: 'Chamber Procedure', protocol: 'Protocol', logistics: 'Logistics & Mission Demand', runs: 'Mission Runs', cylinder: 'Cylinder Type', spec: 'Active Cylinder Spec', model: 'Selected Model', workPress: 'Fill Press / Internal Vol', bottomMix: 'Bottom Mix', decoMix: 'Deco Mix (50/50)', oxygen: 'Oxygen (100% O2)', cyls: 'Cyls', singleRun: 'Single Run', airNote: 'Air supply is managed via local compressor.', noDeco: 'No deco required.', vent: 'VENT (3m)', switch: 'SW', depth: 'Depth', clock: 'Clock', duration: 'Duration', o2Period: 'O2 Period', airBreak: 'Air Break', gasSource: 'Gas Source', segmentTime: 'Seg. Time', ascent: 'Ascent', descent: 'Descent', chamberTravel: 'To Chamber', chamberDescent: 'Chamber Desc.', surface: 'Surface', surfInterval: 'Surf Interval', surfacing: 'Surfacing', budget: 'Est. Budget', totalBudget: 'Total Est. Budget'
+    en: {
+    title: 'Mission Calculator', subtitle: 'US NAVY MANUAL REV.7', maxDepth: 'Max Depth', bottomTime: 'Bottom Time', decoMode: 'Deco Mode', divingMode: 'Diving Mode', divers: 'Divers', opTime: 'Op Time', export: 'Export PDF', generating: 'Generating...', profile: 'Mission Profile', repGroup: 'Repetitive Group', inWaterGas: 'In-Water Gas', waterDeco: 'Water Deco Schedule', chamber: 'Chamber Procedure', protocol: 'Protocol', logistics: 'Logistics & Mission Demand', runs: 'Mission Runs', cylinder: 'Cylinder Type', spec: 'Active Cylinder Spec', model: 'Selected Model', workPress: 'Fill Press / Internal Vol', bottomMix: 'Bottom Mix', decoMix: 'Deco Mix (50/50)', oxygen: 'Oxygen (100% O2)', airMix: 'Air (Compressor/Cyl)', cyls: 'Cyls', singleRun: 'Single Run', airNote: 'Air supply is managed via local compressor.', noDeco: 'No deco required.', vent: 'VENT (3m)', switch: 'SW', depth: 'Depth', clock: 'Clock', duration: 'Duration', o2Period: 'O2 Period', airBreak: 'Air Break', gasSource: 'Gas Source', segmentTime: 'Seg. Time', ascent: 'Ascent', descent: 'Descent', chamberTravel: 'To Chamber', chamberDescent: 'Chamber Desc.', surface: 'Surface', surfInterval: 'Surf Interval', surfacing: 'Surfacing', budget: 'Est. Budget', totalBudget: 'Total Est. Budget'
   },
   zh: {
-    title: '氦氧潛水計畫', subtitle: '美國海軍潛水手冊第七版', maxDepth: '最大深度', bottomTime: '海底時間', decoMode: '減壓模式', divers: '潛水員人數', opTime: '總作業時間', export: '導出計畫報告', generating: '生成中...', profile: '任務剖面分析', waterDeco: '水下減壓站點', chamber: '減壓艙程序', protocol: '作業協議', logistics: '後勤與氣瓶需求', runs: '計畫執行次數', cylinder: '鋼瓶型號', spec: '目前鋼瓶規格', model: '選定型號', workPress: '實務充填壓力 / 內部容積', bottomMix: '海底混合氣', decoMix: '減壓混合氣 (50/50)', oxygen: '純氧 (100% O2)', cyls: '支', singleRun: '單次潛水需求', airNote: '空氣由空壓機現場填充。', noDeco: '無需減壓。', vent: '通風切換 (3分)', switch: '氣體切換', depth: '深度', clock: '時間', duration: '區段時長', o2Period: '氧氣週期', airBreak: '空氣呼吸期', gasSource: '呼吸氣源', segmentTime: '區段停留', ascent: '上升過程', descent: '下潛過程', chamberTravel: '前往減壓艙', chamberDescent: '減壓艙加壓', surface: '出水上岸', surfInterval: '水面間隔', surfacing: '正在出水', Travel: '上升移動', budget: '預算估計', totalBudget: '總預算估計'
+    title: '潛水作業計畫', subtitle: '美國海軍潛水手冊第七版', maxDepth: '最大深度', bottomTime: '海底時間', decoMode: '減壓模式', divingMode: '潛水模式', divers: '潛水員人數', opTime: '總作業時間', export: '導出計畫報告', generating: '生成中...', profile: '任務剖面分析', repGroup: '覆潛組別代號', inWaterGas: '水中減壓氣體', waterDeco: '水下減壓站點', chamber: '減壓艙程序', protocol: '作業協議', logistics: '後勤與氣瓶需求', runs: '計畫執行次數', cylinder: '鋼瓶型號', spec: '目前鋼瓶規格', model: '選定型號', workPress: '實務充填壓力 / 內部容積', bottomMix: '海底混合氣', decoMix: '減壓混合氣 (50/50)', oxygen: '純氧 (100% O2)', airMix: '空氣 (Air)', cyls: '支', singleRun: '單次潛水需求', airNote: '空氣由空壓機現場填充。', noDeco: '無需減壓。', vent: '通風切換 (3分)', switch: '氣體切換', depth: '深度', clock: '時間', duration: '區段時長', o2Period: '氧氣週期', airBreak: '空氣呼吸期', gasSource: '呼吸氣源', segmentTime: '區段停留', ascent: '上升過程', descent: '下潛過程', chamberTravel: '前往減壓艙', chamberDescent: '減壓艙加壓', surface: '出水上岸', surfInterval: '水面間隔', surfacing: '正在出水', Travel: '上升移動', budget: '預算估計', totalBudget: '總預算估計'
   }
 };
 
@@ -52,12 +53,15 @@ function App() {
   const [divers, setDivers] = useState(3);
   const [runs, setRuns] = useState(1);
   const [decoMode, setDecoMode] = useState('SURD'); 
+  const [divingMode, setDivingMode] = useState('HELIOX');
   const [selectedCyl, setSelectedCyl] = useState(CYLINDER_PRESETS[0]);
   const [cylinderPSI, setCylinderPSI] = useState(CYLINDER_PRESETS[0].psi);
   const [cylinderCF, setCylinderCF] = useState(1.518);
   const [reservePSI, setReservePSI] = useState(200);
+  const [inWaterGas, setInWaterGas] = useState('O2');
   const [stops, setStops] = useState([]);
   const [o2Periods, setO2Periods] = useState(0);
+  const [repetitiveGroup, setRepetitiveGroup] = useState(null);
   const [bottomGasSCF, setBottomGasSCF] = useState(0);
   const [ascentGasSCF, setAscentGasSCF] = useState(0);
   const [decoGasTotals, setDecoGasTotals] = useState({ bottomMix: 0, decoMix: 0, oxygen: 0, air: 0 });
@@ -67,13 +71,41 @@ function App() {
   const t = currentTheme; 
   const msg = TRANSLATIONS[lang] || TRANSLATIONS.zh;
 
+  const activeTable = divingMode === 'AIR' ? airDecoTable : decoTable;
+
+  useEffect(() => {
+    const depths = Object.keys(activeTable).map(Number).sort((a, b) => a - b);
+    if (!depths.includes(maxDepth)) {
+       const newDepth = depths[0] || 0;
+       setMaxDepth(newDepth);
+       const times = Object.keys(activeTable[newDepth] || {}).map(Number).sort((a, b) => a - b);
+       setBottomTime(times[0] || 0);
+    } else {
+       const times = Object.keys(activeTable[maxDepth] || {}).map(Number).sort((a, b) => a - b);
+       if (!times.includes(bottomTime)) {
+         setBottomTime(times[0] || 0);
+       }
+    }
+  }, [divingMode, activeTable]);
+
   useEffect(() => {
     try {
-      const depthData = decoTable[maxDepth];
+      const depthData = activeTable[maxDepth];
       if (depthData && depthData[bottomTime]) {
         const profile = depthData[bottomTime];
-        const rawStops = [...(profile.stops || [])];
-        const periods = rawStops.length > 0 ? rawStops.pop() : 0;
+        setRepetitiveGroup(profile.repetitiveGroup || null);
+        
+        let rawStops = [];
+        let periods = 0;
+        
+        if (divingMode === 'AIR') {
+          rawStops = inWaterGas === 'O2' ? [...(profile.airo2Stops || [])] : [...(profile.airStops || [])];
+          periods = profile.chamberO2 || 0;
+        } else {
+          rawStops = [...(profile.stops || [])];
+          periods = rawStops.length > 0 ? rawStops.pop() : 0;
+        }
+        
         setO2Periods(periods || 0);
         const mappedStops = rawStops.reverse().map((time, idx) => ({ id: `water-${idx}`, depth: 20 + (idx * 10), time: time })).filter(s => s.time > 0);
         if (decoMode === 'SURD') setStops(mappedStops.filter(s => s.depth >= 40).sort((a, b) => b.depth - a.depth));
@@ -81,22 +113,22 @@ function App() {
       }
       setBottomGasSCF(calcBottomGas(maxDepth, bottomTime, divers));
     } catch (e) { console.error(e); }
-  }, [maxDepth, bottomTime, divers, decoMode]);
+  }, [maxDepth, bottomTime, divers, decoMode, divingMode, activeTable, inWaterGas]);
 
   useEffect(() => {
-    const decoTotals = calcTotalDecoGas(stops, divers, o2Periods, decoMode);
+    const decoTotals = calcTotalDecoGas(stops, divers, o2Periods, decoMode, divingMode, inWaterGas);
     setDecoGasTotals(decoTotals);
     if (stops && stops.length > 0) setAscentGasSCF(calcAscentGas(maxDepth, stops[0].depth, divers));
     else setAscentGasSCF(calcAscentGas(maxDepth, 0, divers));
-  }, [stops, divers, maxDepth, o2Periods, decoMode]);
+  }, [stops, divers, maxDepth, o2Periods, decoMode, divingMode, inWaterGas]);
 
     const { profileData, totalDuration, chamberSteps, gradStops, originalYTicks, displayTicks, getDisplayDepth } = useMemo(() => {
-    const res = generateProfileData(maxDepth, bottomTime, stops, o2Periods, decoMode, divers);
+    const res = generateProfileData(maxDepth, bottomTime, stops, o2Periods, decoMode, divers, divingMode, inWaterGas);
     const steps = decoMode === 'SURD' ? expandChamberSteps(o2Periods) : [];
     const duration = (res && res.data && res.data.length > 0) ? res.data[res.data.length - 1].time : 1;
     
-    const stopDepths = stops.map(s => s.depth);
-    const allTicks = Array.from(new Set([0, ...stopDepths, maxDepth])).sort((a, b) => a - b);
+    const profileDepths = (res?.data || []).map(p => p.depth);
+    const allTicks = Array.from(new Set([0, ...profileDepths, maxDepth])).sort((a, b) => a - b);
 
     const gStops = [];
     gStops.push({ offset: '0%', color: '#f97316' });
@@ -137,7 +169,7 @@ function App() {
       chamberSteps: steps, 
       gradStops: gStops 
     };
-  }, [maxDepth, bottomTime, stops, o2Periods, decoMode]);
+  }, [maxDepth, bottomTime, stops, o2Periods, decoMode, divingMode]);
 
   const handleCylChange = (e) => {
      const cyl = CYLINDER_PRESETS.find(c => c.id === e.target.value);
@@ -199,7 +231,7 @@ function App() {
       
       setTheme(originalTheme);
       setIsExporting(false);
-      doc.save(`Heliox_Mission_${maxDepth}ft.pdf`);
+      doc.save(`${divingMode}_Mission_${maxDepth}ft.pdf`);
     } catch (err) {
       console.error('PDF Export Error:', err);
       setIsExporting(false);
@@ -211,9 +243,19 @@ function App() {
   const getPhaseName = (k) => lang === 'zh' ? {Bottom:'海底時間','Ascent to 1st Stop':'海底上升過程','Deco Stop':'減壓停留',Ventilation:'通風切換',Descent:'下潛過程','Chamber Descent':'減壓艙加壓','O2 Period':'氧氣週期','Air Break':'空氣呼吸期','Surface Interval':'水面間隔',Surfacing:'正在出水',Surface:'完成作業',Travel:'上升移動'}[k] || k : k;
 
   const availableSCFPerCyl = getCylinderAvailableSCF(cylinderPSI, cylinderCF, reservePSI);
-  const bottomCylCount = calcCylinderCount((Math.round(bottomGasSCF + ascentGasSCF + (decoGasTotals?.bottomMix || 0)) * runs), availableSCFPerCyl);
-  const decoCylCount = calcCylinderCount(((decoGasTotals?.decoMix || 0) * runs), availableSCFPerCyl);
-  const oxygenCylCount = calcCylinderCount(((decoGasTotals?.oxygen || 0) * runs), availableSCFPerCyl);
+  
+  const bottomTotalBase = Math.round(bottomGasSCF + ascentGasSCF + (decoGasTotals?.bottomMix || 0)) * runs;
+  const airTotalBase = (decoGasTotals?.air || 0) * runs;
+  const isAirMode = divingMode === 'AIR';
+
+  const bottomTotal = isAirMode ? 0 : bottomTotalBase;
+  const bottomCylCount = calcCylinderCount(bottomTotal, availableSCFPerCyl);
+  const decoTotal = (decoGasTotals?.decoMix || 0) * runs;
+  const decoCylCount = calcCylinderCount(decoTotal, availableSCFPerCyl);
+  const oxygenTotal = (decoGasTotals?.oxygen || 0) * runs;
+  const oxygenCylCount = calcCylinderCount(oxygenTotal, availableSCFPerCyl);
+  const airTotal = isAirMode ? (bottomTotalBase + airTotalBase) : airTotalBase;
+  const airCylCount = calcCylinderCount(airTotal, availableSCFPerCyl);
 
   return (
       <div id="report-container" className="mx-auto space-y-4 p-4" style={{ maxWidth: '1700px' }}>
@@ -239,15 +281,45 @@ function App() {
             </div>
           </div>
           
-          <div className="flex-1 grid grid-cols-4 gap-4">
+          <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-4">
+             <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+                <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
+                  {msg?.divingMode}
+                  <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                </label>
+                <div className="flex gap-1">
+                  <button 
+                    onClick={()=>setDivingMode('HELIOX')} 
+                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                    style={{ 
+                      backgroundColor: divingMode === 'HELIOX' ? '#3b82f6' : 'transparent', 
+                      borderColor: divingMode === 'HELIOX' ? '#93c5fd' : 'transparent',
+                      color: divingMode === 'HELIOX' ? '#fff' : '#64748b'
+                    }}
+                  >
+                    HELIOX
+                  </button>
+                  <button 
+                    onClick={()=>setDivingMode('AIR')} 
+                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                    style={{ 
+                      backgroundColor: divingMode === 'AIR' ? '#0ea5e9' : 'transparent', 
+                      borderColor: divingMode === 'AIR' ? '#7dd3fc' : 'transparent',
+                      color: divingMode === 'AIR' ? '#fff' : '#64748b'
+                    }}
+                  >
+                    AIR
+                  </button>
+                </div>
+             </div>
              <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                   {msg?.maxDepth}
                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                 </label>
                 <div className="border-b border-white/20">
-                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
-                    {Object.keys(decoTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
+                  <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
+                    {Object.keys(activeTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
                   </select>
                 </div>
              </div>
@@ -257,8 +329,8 @@ function App() {
                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                 </label>
                 <div className="border-b border-white/20">
-                  <select className="bg-transparent border-none outline-none font-mono text-xl font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
-                    {decoTable?.[maxDepth] && Object.keys(decoTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
+                  <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
+                    {activeTable?.[maxDepth] && Object.keys(activeTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
                   </select>
                 </div>
              </div>
@@ -299,11 +371,43 @@ function App() {
                     <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                   </label>
                   <div className="border-b border-white/20">
-                    <input type="number" className="bg-transparent border-none outline-none font-mono text-xl font-black w-full focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
+                    <input type="number" className="bg-transparent border-none outline-none font-mono text-lg font-black w-full focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
                   </div>
                 </div>
                 <Users size={20} className="ml-2" style={{ color: '#64748b' }} />
              </div>
+              {divingMode === 'AIR' && (
+                <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+                   <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
+                     {msg?.inWaterGas}
+                     <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                   </label>
+                   <div className="flex gap-1">
+                     <button 
+                       onClick={()=>setInWaterGas('AIR')} 
+                       className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                       style={{ 
+                         backgroundColor: inWaterGas === 'AIR' ? '#3b82f6' : 'transparent', 
+                         borderColor: inWaterGas === 'AIR' ? '#60a5fa' : 'transparent',
+                         color: inWaterGas === 'AIR' ? '#fff' : '#64748b'
+                       }}
+                     >
+                       AIR
+                     </button>
+                     <button 
+                       onClick={()=>setInWaterGas('O2')} 
+                       className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                       style={{ 
+                         backgroundColor: inWaterGas === 'O2' ? '#22c55e' : 'transparent', 
+                         borderColor: inWaterGas === 'O2' ? '#86efac' : 'transparent',
+                         color: inWaterGas === 'O2' ? '#fff' : '#64748b'
+                       }}
+                     >
+                       O2
+                     </button>
+                   </div>
+                </div>
+              )}
           </div>
 
           <div className={`flex items-center gap-2 ${isExporting ? 'invisible h-0 w-0' : ''}`}>
@@ -315,7 +419,15 @@ function App() {
 
         <section id="pdf-chart" className="p-8 rounded-[3rem] border shadow-2xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center justify-between mb-8 gap-4">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-2 shrink-0" style={{ color: '#64748b' }}><Activity size={14} style={{ color: '#f97316' }} /> {msg?.profile}</h2>
+            <div className="flex items-center gap-4 shrink-0">
+              <h2 className="text-[10px] font-black uppercase tracking-[0.4em] flex items-center gap-2" style={{ color: '#64748b' }}><Activity size={14} style={{ color: '#f97316' }} /> {msg?.profile}</h2>
+              {repetitiveGroup && (
+                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md border" style={{ backgroundColor: 'rgba(249, 115, 22, 0.1)', borderColor: 'rgba(249, 115, 22, 0.2)' }}>
+                  <span className="text-[8px] font-black uppercase tracking-widest" style={{ color: '#f97316' }}>{msg?.repGroup}</span>
+                  <span className="font-mono text-xs font-black" style={{ color: t.textPrimary }}>{repetitiveGroup}</span>
+                </div>
+              )}
+            </div>
             <div className="flex flex-nowrap gap-3 p-2 px-3 rounded-full border overflow-hidden shrink-0" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
               {Object.entries(GAS_COLORS).map(([k,v]) => (
                 <div key={k} className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest whitespace-nowrap" style={{ color: '#64748b' }}>
@@ -390,10 +502,10 @@ function App() {
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
              <div className={`space-y-2 pr-2 custom-scroll-container ${isExporting ? '' : 'max-h-[450px] overflow-y-auto'}`}>
                 {stops && stops.length > 0 ? stops.map(stop => {
-                  const gas = getGasType(stop.depth);
+                  const gas = getGasType(stop.depth, divingMode, inWaterGas);
                   return (
                     <div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                      <span className="font-mono text-sm font-black" style={{ color: stop.depth <= 30 ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span>
+                      <span className="font-mono text-sm font-black" style={{ color: (divingMode === 'AIR' ? (inWaterGas === 'O2' && stop.depth <= 30) : stop.depth <= 30) ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span>
                       <span className="text-[7px] font-black uppercase tracking-widest opacity-60 px-2 py-0.5 rounded-md border" style={{ color: GAS_COLORS[gas], borderColor: `${GAS_COLORS[gas]}44`, backgroundColor: `${GAS_COLORS[gas]}11` }}>{getGasName(gas)}</span>
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>{stop.time}</span>
@@ -467,10 +579,11 @@ function App() {
              </div>
              <div className="space-y-2 flex-1">
                 {[
-                  { label: msg?.bottomMix, val: Math.round(bottomGasSCF + ascentGasSCF + (decoGasTotals?.bottomMix || 0)) * runs, count: bottomCylCount, color: '#f97316', price: 15000 },
-                  { label: msg?.decoMix, val: (decoGasTotals?.decoMix || 0) * runs, count: decoCylCount, color: '#eab308', price: 15000 },
-                  { label: msg?.oxygen, val: (decoGasTotals?.oxygen || 0) * runs, count: oxygenCylCount, color: '#22c55e', price: 1000 }
-                ].map(item => (
+                  { label: msg?.bottomMix, val: bottomTotal, count: bottomCylCount, color: '#f97316', price: divingMode === 'AIR' ? 0 : 15000, hidden: bottomTotal === 0 },
+                  { label: msg?.decoMix, val: decoTotal, count: decoCylCount, color: '#eab308', price: divingMode === 'AIR' ? 0 : 15000, hidden: decoTotal === 0 && divingMode === 'AIR' },
+                  { label: msg?.oxygen, val: oxygenTotal, count: oxygenCylCount, color: '#22c55e', price: 1000, hidden: oxygenTotal === 0 },
+                  { label: msg?.airMix, val: airTotal, count: airCylCount, color: '#3b82f6', price: 0, hidden: airTotal === 0 }
+                ].filter(i => !i.hidden).map(item => (
                   <div key={item.label} className="p-3 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
                     <div className="flex items-center justify-between mb-1">
                       <div><p className="text-[7px] font-black uppercase opacity-50 tracking-widest" style={{ color: t.textSecondary }}>{item.label}</p><p className="text-sm font-mono font-black" style={{ color: t.textPrimary }}>{item.val} SCF</p></div>
@@ -485,7 +598,7 @@ function App() {
              </div>
              <div className="mt-4 p-4 rounded-3xl border-2 border-dashed flex justify-between items-center" style={{ backgroundColor: 'rgba(34, 197, 94, 0.05)', borderColor: 'rgba(34, 197, 94, 0.2)' }}>
                 <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: '#22c55e' }}>{msg?.totalBudget}</span>
-                <span className="text-xl font-mono font-black" style={{ color: '#22c55e' }}>NT$ {((bottomCylCount + decoCylCount) * 15000 + oxygenCylCount * 1000).toLocaleString()}</span>
+                <span className="text-xl font-mono font-black" style={{ color: '#22c55e' }}>NT$ {((bottomCylCount * (divingMode==='AIR'?0:15000)) + (decoCylCount * (divingMode==='AIR'?0:15000)) + oxygenCylCount * 1000).toLocaleString()}</span>
              </div>
           </section>
         </div>
@@ -502,7 +615,7 @@ function App() {
             </div>
           </div>
           <div className="mt-8 flex justify-between items-center opacity-60">
-            <p>© 2026 Heliox Diving Mission Controller V1.0.0</p>
+            <p>© 2026 Diving Mission Controller V1.0.0</p>
             <p>Based on U.S. Navy Diving Manual Rev 7</p>
           </div>
         </footer>
