@@ -284,6 +284,19 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
       });
     }
   } else {
+    // 1. Ascent from lastDepth to 40 fsw (at 30 fpm)
+    const travelTo40 = Math.max(0, (lastDepth - 40) / CONSTANTS.ASCENT_RATE);
+    if (travelTo40 > 0) {
+      currentTime += travelTo40;
+      const gas = getGasType(lastDepth, divingMode, inWaterGas);
+      data.push({ 
+        time: currentTime, depth: 40, phase: 'Ascent to 40', gas, timeStr: formatTime(currentTime), duration: travelTo40,
+        segmentGasSCF: getSegmentGas(travelTo40, (lastDepth + 40)/2, 'Ascent', gas)
+      });
+      lastDepth = 40;
+    }
+
+    // 2. Ascent from 40 fsw to Surface (at 40 fpm)
     const travelToSurf = lastDepth / 40;
     if (travelToSurf > 0) {
       currentTime += travelToSurf;
