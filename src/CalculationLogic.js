@@ -294,99 +294,101 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
       });
     }
     
-    data.push({ 
-      time: currentTime + 3.5, depth: 0, phase: 'Surface Interval', gas: 'AIR', timeStr: formatTime(currentTime+3.5), duration: 3.5,
-      segmentGasSCF: 0 
-    });
-    currentTime += 3.5;
-    
-    let chamberDepth = 50;
-    currentTime += 0.5;
-    data.push({ 
-      time: currentTime, depth: 50, phase: 'Chamber Descent', gas: 'AIR', timeStr: formatTime(currentTime), duration: 0.5,
-      segmentGasSCF: getSegmentGas(0.5, 25, 'Chamber Descent', 'AIR')
-    });
+    if (o2Periods > 0) {
+      data.push({ 
+        time: currentTime + 3.5, depth: 0, phase: 'Surface Interval', gas: 'AIR', timeStr: formatTime(currentTime+3.5), duration: 3.5,
+        segmentGasSCF: 0 
+      });
+      currentTime += 3.5;
+      
+      let chamberDepth = 50;
+      currentTime += 0.5;
+      data.push({ 
+        time: currentTime, depth: 50, phase: 'Chamber Descent', gas: 'AIR', timeStr: formatTime(currentTime), duration: 0.5,
+        segmentGasSCF: getSegmentGas(0.5, 25, 'Chamber Descent', 'AIR')
+      });
 
-    const fullPeriods = Math.ceil(o2Periods);
-    for (let i = 1; i <= fullPeriods; i++) {
-      const isHalfPeriod = (i === fullPeriods && o2Periods % 1 !== 0);
-      if (i === 1) {
-        if (isHalfPeriod) {
-          data.push({ 
-            time: currentTime + 15, depth: 50, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+15), duration: 15, pIndex: 1,
-            segmentGasSCF: getSegmentGas(15, 50, 'O2 Period', 'O2')
-          });
-          currentTime += 15;
-          chamberDepth = 50;
+      const fullPeriods = Math.ceil(o2Periods);
+      for (let i = 1; i <= fullPeriods; i++) {
+        const isHalfPeriod = (i === fullPeriods && o2Periods % 1 !== 0);
+        if (i === 1) {
+          if (isHalfPeriod) {
+            data.push({ 
+              time: currentTime + 15, depth: 50, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+15), duration: 15, pIndex: 1,
+              segmentGasSCF: getSegmentGas(15, 50, 'O2 Period', 'O2')
+            });
+            currentTime += 15;
+            chamberDepth = 50;
+          } else {
+            data.push({ 
+              time: currentTime + 15, depth: 50, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+15), duration: 15, pIndex: 1,
+              segmentGasSCF: getSegmentGas(15, 50, 'O2 Period', 'O2')
+            });
+            currentTime += 15;
+            
+            const moveT = 40 / 60;
+            const stayT = 15 - moveT;
+            currentTime += moveT;
+            data.push({ 
+              time: currentTime, depth: 40, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime), duration: moveT, pIndex: 1,
+              segmentGasSCF: getSegmentGas(moveT, 45, 'O2 Period', 'O2')
+            });
+            currentTime += stayT;
+            data.push({ 
+              time: currentTime, depth: 40, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime), duration: stayT, pIndex: 1,
+              segmentGasSCF: getSegmentGas(stayT, 40, 'O2 Period', 'O2')
+            });
+            chamberDepth = 40;
+          }
         } else {
-          data.push({ 
-            time: currentTime + 15, depth: 50, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+15), duration: 15, pIndex: 1,
-            segmentGasSCF: getSegmentGas(15, 50, 'O2 Period', 'O2')
-          });
-          currentTime += 15;
-          
-          const moveT = 40 / 60;
-          const stayT = 15 - moveT;
-          currentTime += moveT;
-          data.push({ 
-            time: currentTime, depth: 40, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime), duration: moveT, pIndex: 1,
-            segmentGasSCF: getSegmentGas(moveT, 45, 'O2 Period', 'O2')
-          });
-          currentTime += stayT;
-          data.push({ 
-            time: currentTime, depth: 40, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime), duration: stayT, pIndex: 1,
-            segmentGasSCF: getSegmentGas(stayT, 40, 'O2 Period', 'O2')
-          });
-          chamberDepth = 40;
+          const currentDepth = i >= 5 ? 30 : 40;
+          if (isHalfPeriod) {
+            data.push({ 
+              time: currentTime + 15, depth: currentDepth, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+15), duration: 15, pIndex: i,
+              segmentGasSCF: getSegmentGas(15, currentDepth, 'O2 Period', 'O2')
+            });
+            currentTime += 15;
+          } else {
+            data.push({ 
+              time: currentTime + 30, depth: currentDepth, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+30), duration: 30, pIndex: i,
+              segmentGasSCF: getSegmentGas(30, currentDepth, 'O2 Period', 'O2')
+            });
+            currentTime += 30;
+          }
+          chamberDepth = currentDepth;
         }
-      } else {
-        const currentDepth = i >= 5 ? 30 : 40;
-        if (isHalfPeriod) {
-          data.push({ 
-            time: currentTime + 15, depth: currentDepth, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+15), duration: 15, pIndex: i,
-            segmentGasSCF: getSegmentGas(15, currentDepth, 'O2 Period', 'O2')
-          });
-          currentTime += 15;
-        } else {
-          data.push({ 
-            time: currentTime + 30, depth: currentDepth, phase: 'O2 Period', gas: 'O2', timeStr: formatTime(currentTime+30), duration: 30, pIndex: i,
-            segmentGasSCF: getSegmentGas(30, currentDepth, 'O2 Period', 'O2')
-          });
-          currentTime += 30;
-        }
-        chamberDepth = currentDepth;
-      }
 
-      if (i < fullPeriods) {
-        const nextDepth = (i + 1) >= 5 ? 30 : 40;
-        if (nextDepth !== chamberDepth) {
-          const moveT = 40 / 60;
-          const stayT = 5 - moveT;
-          currentTime += moveT;
-          data.push({ 
-            time: currentTime, depth: nextDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime), duration: moveT,
-            segmentGasSCF: getSegmentGas(moveT, (chamberDepth + nextDepth)/2, 'Air Break', 'AIR')
-          });
-          currentTime += stayT;
-          data.push({ 
-            time: currentTime, depth: nextDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime), duration: stayT,
-            segmentGasSCF: getSegmentGas(stayT, nextDepth, 'Air Break', 'AIR')
-          });
-          chamberDepth = nextDepth;
-        } else {
-          data.push({ 
-            time: currentTime + 5, depth: chamberDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime+5), duration: 5,
-            segmentGasSCF: getSegmentGas(5, chamberDepth, 'Air Break', 'AIR')
-          });
-          currentTime += 5;
+        if (i < fullPeriods) {
+          const nextDepth = (i + 1) >= 5 ? 30 : 40;
+          if (nextDepth !== chamberDepth) {
+            const moveT = 40 / 60;
+            const stayT = 5 - moveT;
+            currentTime += moveT;
+            data.push({ 
+              time: currentTime, depth: nextDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime), duration: moveT,
+              segmentGasSCF: getSegmentGas(moveT, (chamberDepth + nextDepth)/2, 'Air Break', 'AIR')
+            });
+            currentTime += stayT;
+            data.push({ 
+              time: currentTime, depth: nextDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime), duration: stayT,
+              segmentGasSCF: getSegmentGas(stayT, nextDepth, 'Air Break', 'AIR')
+            });
+            chamberDepth = nextDepth;
+          } else {
+            data.push({ 
+              time: currentTime + 5, depth: chamberDepth, phase: 'Air Break', gas: 'AIR', timeStr: formatTime(currentTime+5), duration: 5,
+              segmentGasSCF: getSegmentGas(5, chamberDepth, 'Air Break', 'AIR')
+            });
+            currentTime += 5;
+          }
         }
       }
+      const finalAscentT = chamberDepth / 30;
+      data.push({ 
+        time: currentTime + finalAscentT, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime + finalAscentT), duration: finalAscentT,
+        segmentGasSCF: getSegmentGas(finalAscentT, chamberDepth/2, 'Ascent', 'AIR')
+      });
     }
-    const finalAscentT = chamberDepth / 30;
-    data.push({ 
-      time: currentTime + finalAscentT, depth: 0, phase: 'Surface', gas: 'AIR', timeStr: formatTime(currentTime + finalAscentT), duration: finalAscentT,
-      segmentGasSCF: getSegmentGas(finalAscentT, chamberDepth/2, 'Ascent', 'AIR')
-    });
   }
 
   return { data, switches: [] };
