@@ -20,7 +20,9 @@ import {
   calcCylinderCount,
   generateProfileData,
   expandChamberSteps,
-  CONSTANTS
+  CONSTANTS,
+  CHAMBER_PRESETS,
+  calcChamberGasRequirements
 } from './CalculationLogic';
 
 const GAS_COLORS = { AIR: '#3b82f6', BOTTOM: '#f97316', '5050': '#eab308', O2: '#22c55e' };
@@ -67,6 +69,18 @@ function App() {
   const [decoGasTotals, setDecoGasTotals] = useState({ bottomMix: 0, decoMix: 0, oxygen: 0, air: 0 });
   const [isExporting, setIsExporting] = useState(false);
 
+  // Chamber Mode States
+  const [treatmentTableId, setTreatmentTableId] = useState('Table 6');
+  const [chamberModelId, setChamberModelId] = useState('pcwmi');
+  const [customInnerVol, setCustomInnerVol] = useState(124.5);
+  const [ext60Count, setExt60Count] = useState(0);
+  const [ext30Count, setExt30Count] = useState(0);
+  const [numPatients, setNumPatients] = useState(1);
+  const [numTenders, setNumTenders] = useState(1);
+  const [chamberExposure, setChamberExposure] = useState(false);
+  const [chamberBibsDump, setChamberBibsDump] = useState(true);
+  const [chamberLock, setChamberLock] = useState('inner'); // 'inner', 'outer', 'both'
+
   const currentTheme = THEMES[theme] || THEMES.dark;
   const t = currentTheme; 
   const msg = TRANSLATIONS[lang] || TRANSLATIONS.zh;
@@ -74,6 +88,7 @@ function App() {
   const activeTable = divingMode === 'AIR' ? airDecoTable : decoTable;
 
   useEffect(() => {
+    if (divingMode === 'TREATMENT') return;
     const depths = Object.keys(activeTable).map(Number).sort((a, b) => a - b);
     if (!depths.includes(maxDepth)) {
        const newDepth = depths[0] || 0;
@@ -89,6 +104,7 @@ function App() {
   }, [divingMode, activeTable]);
 
   useEffect(() => {
+    if (divingMode === 'TREATMENT') return;
     try {
       const depthData = activeTable[maxDepth];
       if (depthData && depthData[bottomTime]) {
@@ -116,13 +132,145 @@ function App() {
   }, [maxDepth, bottomTime, divers, decoMode, divingMode, activeTable, inWaterGas]);
 
   useEffect(() => {
+    if (divingMode === 'TREATMENT') return;
     const decoTotals = calcTotalDecoGas(stops, divers, o2Periods, decoMode, divingMode, inWaterGas);
     setDecoGasTotals(decoTotals);
     if (stops && stops.length > 0) setAscentGasSCF(calcAscentGas(maxDepth, stops[0].depth, divers));
     else setAscentGasSCF(calcAscentGas(maxDepth, 0, divers));
   }, [stops, divers, maxDepth, o2Periods, decoMode, divingMode, inWaterGas]);
 
-    const { profileData, totalDuration, chamberSteps, gradStops, originalYTicks, displayTicks, getDisplayDepth } = useMemo(() => {
+  const chamberVolume = useMemo(() => {
+    let baseVol = 124.5;
+    if (chamberModelId === 'custom') {
+      baseVol = customInnerVol;
+    } else {
+      const preset = CHAMBER_PRESETS.find(c => c.id === chamberModelId);
+      baseVol = preset ? preset.inner : 124.5;
+    }
+    const factor = chamberLock === 'inner' ? 0.75 : (chamberLock === 'outer' ? 0.25 : 1.0);
+    return baseVol * factor;
+  }, [chamberModelId, customInnerVol, chamberLock]);
+
+  const chamberResults = useMemo(() => {
+    return calcChamberGasRequirements(
+      treatmentTableId,
+      numPatients,
+      numTenders,
+      chamberVolume,
+      chamberExposure,
+      chamberBibsDump,
+      ext60Count,
+      ext30Count
+    );
+  }, [treatmentTableId, numPatients, numTenders, chamberVolume, chamberExposure, chamberBibsDump, ext60Count, ext30Count]);
+
+  const chamberChartData = useMemo(() => {
+    const data = [];
+    let currentTime = 0;
+    
+    data.push({
+      time: 0,
+      depth: 0,
+      displayDepth: 0,
+      phase: 'Start',
+      gas: 'AIR',
+      timeStr: '00:00',
+      duration: 0,
+      segmentGasSCF: 0
+    });
+
+    const formatTime = (t) => {
+      const mins = Math.floor(t);
+      const secs = Math.round((t % 1) * 60);
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    const maxChamberDepth = treatmentTableId === 'Table 6A' ? 165 : 60;
+    const DECO_ZONE_LIMIT = 130;
+    const DECO_ZONE_HEIGHT_PCT = 80;
+
+    const getDisplayDepth = (d) => {
+      if (d <= DECO_ZONE_LIMIT) return d * (DECO_ZONE_HEIGHT_PCT / DECO_ZONE_LIMIT);
+      const remainingDepth = (maxChamberDepth + 10) - DECO_ZONE_LIMIT;
+      return remainingDepth <= 0 ? d : DECO_ZONE_HEIGHT_PCT + ((d - DECO_ZONE_LIMIT) / remainingDepth) * (100 - DECO_ZONE_HEIGHT_PCT);
+    };
+
+    let patientO2Time = 0;
+    let tenderO2Time = 0;
+    let tenderO2StartTime = null;
+
+    chamberResults.detailedSteps.forEach((step, idx) => {
+      currentTime += step.duration;
+      if (step.pGas === 'O2') {
+        patientO2Time += step.duration;
+      }
+      if (step.tGas === 'O2') {
+        tenderO2Time += step.duration;
+        if (tenderO2StartTime === null && step.duration > 0) {
+          tenderO2StartTime = currentTime - step.duration;
+        }
+      }
+
+      const stepAir = step.airVentScf + (idx === 0 ? (chamberResults?.pressurizeAir || 0) : 0);
+
+      data.push({
+        time: currentTime,
+        depth: step.endDepth,
+        displayDepth: getDisplayDepth(step.endDepth),
+        phase: step.name,
+        gas: step.pGas === 'O2' ? 'O2' : 'AIR',
+        patientGas: step.pGas === 'O2' ? 'O2' : 'AIR',
+        tenderGas: step.tGas === 'O2' ? 'O2' : 'AIR',
+        patientO2Time: patientO2Time,
+        tenderO2Time: tenderO2Time,
+        timeStr: formatTime(currentTime),
+        duration: step.duration,
+        o2Scf: step.o2Scf,
+        airVentScf: stepAir,
+        segmentGasSCF: step.o2Scf + stepAir
+      });
+    });
+
+    const totalDur = currentTime > 0 ? currentTime : 1;
+    const depths = data.map(p => p.depth);
+    const allTicks = Array.from(new Set([0, 30, 60, ...depths])).sort((a, b) => a - b);
+    const displayTicks = allTicks.map(v => getDisplayDepth(v));
+
+    const gStops = [];
+    gStops.push({ offset: '0%', color: '#3b82f6' }); // Start with air
+    for (let i = 1; i < data.length; i++) {
+      const prev = data[i - 1];
+      const curr = data[i];
+      const startOffset = Math.min(100, (prev.time / totalDur) * 100);
+      const endOffset = Math.min(100, (curr.time / totalDur) * 100);
+      
+      const startColor = prev.gas === 'O2' ? '#22c55e' : '#3b82f6';
+      const endColor = curr.gas === 'O2' ? '#22c55e' : '#3b82f6';
+
+      if (startColor !== endColor) {
+        gStops.push({ offset: `${startOffset}%`, color: startColor });
+        gStops.push({ offset: `${startOffset}%`, color: endColor });
+      }
+      gStops.push({ offset: `${endOffset}%`, color: endColor });
+    }
+
+    return {
+      profileData: data,
+      totalDuration: totalDur,
+      originalYTicks: allTicks,
+      displayTicks,
+      gradStops: gStops,
+      getDisplayDepth,
+      tenderO2StartTime,
+      chamberSteps: []
+    };
+  }, [chamberResults, treatmentTableId]);
+
+  const activeProfile = useMemo(() => {
+    if (divingMode === 'TREATMENT') {
+      return chamberChartData;
+    }
+
     const res = generateProfileData(maxDepth, bottomTime, stops, o2Periods, decoMode, divers, divingMode, inWaterGas);
     const steps = decoMode === 'SURD' ? expandChamberSteps(o2Periods) : [];
     const duration = (res && res.data && res.data.length > 0) ? res.data[res.data.length - 1].time : 1;
@@ -148,7 +296,7 @@ function App() {
         gStops.push({ offset: `${endOffset}%`, color: endColor });
       }
     }
-    // 非線性 Y 軸變換邏輯 (0-130ft 佔 80%)
+
     const DECO_ZONE_LIMIT = 130;
     const DECO_ZONE_HEIGHT_PCT = 80;
     const getDisplayDepth = (d) => {
@@ -167,9 +315,12 @@ function App() {
       getDisplayDepth,
       totalDuration: duration, 
       chamberSteps: steps, 
-      gradStops: gStops 
+      gradStops: gStops,
+      tenderO2StartTime: null
     };
-  }, [maxDepth, bottomTime, stops, o2Periods, decoMode, divingMode]);
+  }, [maxDepth, bottomTime, stops, o2Periods, decoMode, divingMode, chamberChartData]);
+
+  const { profileData, totalDuration, chamberSteps, gradStops, originalYTicks, displayTicks, getDisplayDepth, tenderO2StartTime } = activeProfile;
 
   const handleCylChange = (e) => {
      const cyl = CYLINDER_PRESETS.find(c => c.id === e.target.value);
@@ -265,157 +416,363 @@ function App() {
             {lang === 'zh' ? '建議旋轉手機使用橫式瀏覽' : 'Please rotate to landscape for best experience'}
           </p>
         </div>
-        <header id="pdf-header" className="flex flex-col lg:flex-row items-stretch lg:items-center p-6 gap-6 rounded-[2.5rem] border" style={{ backgroundColor: t.panel, borderColor: t.border, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
-          <div className="flex items-center gap-5 shrink-0 border-r pr-8" style={{ borderColor: t.border }}>
-            <img src={dsodLogo} alt="DSOD Logo" className="w-14 h-14 object-contain" />
-            <div>
-              <h1 className="text-[18px] font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
-                <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/Dive%20Manual%20Rev%207%20Change%20A.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors flex items-center">
-                  出處:美海軍潛水教範V7 <ExternalLink size={14} className="ml-1 opacity-70" />
-                </a>
-              </h1>
-              <p className="text-[8px] font-bold tracking-tight mt-1 opacity-70" style={{ color: t.textSecondary }}>
-                Design By R.O.C. Naval U.O.U. DSOD<br/>
-                中華民國海軍水下作業大隊深海組設計
-              </p>
+        <header id="pdf-header" className="flex flex-col p-6 gap-6 rounded-[2.5rem] border" style={{ backgroundColor: t.panel, borderColor: t.border, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}>
+          {/* Top Row: Brand & Global Actions */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b" style={{ borderColor: t.border }}>
+            <div className="flex items-center gap-5 shrink-0">
+              <img src={dsodLogo} alt="DSOD Logo" className="w-14 h-14 object-contain" />
+              <div>
+                <h1 className="text-[18px] font-black uppercase tracking-tighter leading-none" style={{ color: t.textPrimary }}>
+                  <a href="https://www.navsea.navy.mil/Portals/103/Documents/SUPSALV/Diving/Dive%20Manual%20Rev%207%20Change%20A.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-[#f97316] transition-colors flex items-center">
+                    出處:美海軍潛水教範V7 <ExternalLink size={14} className="ml-1 opacity-70" />
+                  </a>
+                </h1>
+                <p className="text-[8px] font-bold tracking-tight mt-1 opacity-70" style={{ color: t.textSecondary }}>
+                  Design By R.O.C. Naval U.O.U. DSOD<br/>
+                  中華民國海軍水下作業大隊深海組設計
+                </p>
+              </div>
+            </div>
+            
+            <div className={`flex items-center gap-2 ${isExporting ? 'invisible h-0 w-0' : ''}`}>
+               <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2" style={{ color: '#f97316' }} />{lang === 'en' ? '中文' : 'EN'}</button>
+               <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-12 h-12 rounded-2xl flex items-center justify-center border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}>{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}</button>
+               <button onClick={handleExportPDF} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#ffffff' : '#0f172a', color: theme === 'dark' ? '#000000' : '#ffffff' }}><Download size={16} />{msg?.export}</button>
             </div>
           </div>
           
-          <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-4">
-             <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+          {/* Bottom Row: Decompression Parameters Dashboard */}
+          <div className="w-full">
+            {divingMode === 'TREATMENT' ? (
+            <div className="flex-1 grid grid-cols-2 lg:grid-cols-12 gap-4">
+            <div className="p-1 rounded-xl border flex flex-col gap-1 relative justify-between lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
+            {msg?.divingMode}
+            <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+            </label>
+            <div className="flex flex-col gap-1">
+            <div className="flex gap-1">
+            <button 
+            onClick={()=>setDivingMode('HELIOX')} 
+            className="flex-1 py-1 rounded-lg text-[9px] font-black transition-all border" 
+            style={{ 
+            backgroundColor: divingMode === 'HELIOX' ? '#3b82f6' : 'transparent', 
+            borderColor: divingMode === 'HELIOX' ? '#93c5fd' : 'transparent',
+            color: divingMode === 'HELIOX' ? '#fff' : '#64748b'
+            }}
+            >
+            HELIOX
+            </button>
+            <button 
+            onClick={()=>setDivingMode('AIR')} 
+            className="flex-1 py-1 rounded-lg text-[9px] font-black transition-all border" 
+            style={{ 
+            backgroundColor: divingMode === 'AIR' ? '#0ea5e9' : 'transparent', 
+            borderColor: divingMode === 'AIR' ? '#7dd3fc' : 'transparent',
+            color: divingMode === 'AIR' ? '#fff' : '#64748b'
+            }}
+            >
+            AIR
+            </button>
+            </div>
+            <button 
+            onClick={()=>setDivingMode('TREATMENT')} 
+            className="w-full py-1 rounded-lg text-[9px] font-black transition-all border" 
+            style={{ 
+            backgroundColor: divingMode === 'TREATMENT' ? '#f59e0b' : 'transparent', 
+            borderColor: divingMode === 'TREATMENT' ? '#fcd34d' : 'transparent',
+            color: divingMode === 'TREATMENT' ? '#fff' : '#64748b'
+            }}
+            >
+            {lang === 'zh' ? '治療表' : 'TREATMENT'}
+            </button>
+            </div>
+            </div>
+
+            <div className="p-3 px-4 rounded-xl border relative opacity-90 flex flex-col justify-between lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+            {lang === 'zh' ? '治療深度' : 'TREATMENT DEPTH'}
+            </label>
+            <div className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>
+            {treatmentTableId === 'Table 6A' ? '165' : (treatmentTableId === 'Table 9' ? '45' : '60')} fsw
+            </div>
+            </div>
+
+            <div className="p-3 px-4 rounded-xl border relative flex flex-col justify-between lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+            {lang === 'zh' ? '總療程時間' : 'TOTAL DURATION'}
+            </label>
+            <div className="font-mono text-lg font-black" style={{ color: '#f59e0b' }}>
+            {chamberResults.detailedSteps.reduce((acc, s)=>acc+s.duration, 0)} min
+            </div>
+            </div>
+
+            <div className="p-2 rounded-xl border flex flex-col gap-1 justify-between lg:col-span-3" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black uppercase tracking-widest px-1 mb-0.5" style={{ color: '#64748b' }}>
+            {lang === 'zh' ? '乘員配置' : 'CREW CONFIG'}
+            </label>
+            <div className="flex gap-2 justify-around">
+            <div className="flex flex-col items-center">
+            <span className="text-[6px] text-[#64748b] font-bold">{lang === 'zh' ? '患者' : 'patient'}</span>
+            <input type="number" min="1" className="w-12 bg-transparent border-b border-white/20 outline-none font-mono text-xs font-black text-center focus:border-[#f59e0b]" style={{ color: t.textPrimary }} value={numPatients} onChange={(e)=>setNumPatients(Math.max(1, Number(e.target.value)))} />
+            </div>
+            <div className="flex flex-col items-center">
+            <span className="text-[6px] text-[#64748b] font-bold">{lang === 'zh' ? '艙內助手' : 'tender'}</span>
+            <input type="number" min="1" className="w-12 bg-transparent border-b border-white/20 outline-none font-mono text-xs font-black text-center focus:border-[#f59e0b]" style={{ color: t.textPrimary }} value={numTenders} onChange={(e)=>setNumTenders(Math.max(1, Number(e.target.value)))} />
+            </div>
+            </div>
+            </div>
+
+            <div className="p-2 rounded-xl border flex flex-col gap-1 justify-between lg:col-span-3" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black uppercase tracking-widest px-1 mb-0.5" style={{ color: '#64748b' }}>
+            {lang === 'zh' ? '系統設定' : 'SYSTEM SETTINGS'}
+            </label>
+            <div className="flex flex-col gap-0.5 text-[8px] font-bold">
+            <label className="flex items-center gap-1 cursor-pointer select-none" style={{ color: t.textPrimary }}>
+            <input type="checkbox" checked={chamberBibsDump} onChange={(e)=>setChamberBibsDump(e.target.checked)} className="rounded bg-transparent border-white/20 text-[#f59e0b] focus:ring-0 w-2.5 h-2.5" />
+            <span>BIBS Overboard</span>
+            </label>
+            <label className="flex items-center gap-1 cursor-pointer select-none" style={{ color: t.textPrimary }}>
+            <input type="checkbox" checked={chamberExposure} onChange={(e)=>setChamberExposure(e.target.checked)} className="rounded bg-transparent border-white/20 text-[#f59e0b] focus:ring-0 w-2.5 h-2.5" />
+            <span>18h Exposure</span>
+            </label>
+            </div>
+            </div>
+
+            <div className="hidden lg:flex p-3 px-4 rounded-xl border items-center justify-center opacity-40 border-dashed lg:col-span-1" style={{ borderColor: t.border }}>
+            <span className="text-[9px] font-black tracking-widest uppercase text-center" style={{ color: t.textSecondary }}>
+            {lang === 'zh' ? '減壓' : 'DECO'}
+            </span>
+            </div>
+
+            <div className="p-3 px-4 rounded-xl border relative border-[#f59e0b]/40 lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#f59e0b' }}>
+            {lang === 'zh' ? '治療表選擇' : 'TREATMENT TABLE'}
+            <ChevronDown size={10} className="opacity-70" />
+            </label>
+            <div className="border-b border-white/20">
+            <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={treatmentTableId} onChange={(e)=>{
+            setTreatmentTableId(e.target.value);
+            setExt60Count(0);
+            setExt30Count(0);
+            }}>
+            <option value="Table 5" style={{backgroundColor: t.panel}}>Table 5 (60′)</option>
+            <option value="Table 6" style={{backgroundColor: t.panel}}>Table 6 (60′)</option>
+            <option value="Table 6A" style={{backgroundColor: t.panel}}>Table 6A (165′)</option>
+            <option value="Table 8" style={{backgroundColor: t.panel}}>Table 8 (60′)</option>
+            <option value="Table 9" style={{backgroundColor: t.panel}}>Table 9 (45′)</option>
+            </select>
+            </div>
+            </div>
+
+            <div className="p-3 px-4 rounded-xl border relative lg:col-span-3" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+            {lang === 'zh' ? '減壓艙型號' : 'CHAMBER SELECT'}
+            <ChevronDown size={10} className="opacity-70" />
+            </label>
+            <div className="border-b border-white/20">
+            <select className="bg-transparent border-none outline-none font-mono text-[9px] font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={chamberModelId} onChange={(e)=>setChamberModelId(e.target.value)}>
+            {CHAMBER_PRESETS.map(c => (
+            <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name} ({c.inner} ft³)</option>
+            ))}
+            <option value="custom" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '自訂客製艙' : 'Custom Chamber'}</option>
+            </select>
+            </div>
+            {chamberModelId === 'custom' && (
+            <div className="absolute bottom-1 right-3 flex items-center gap-1">
+            <input type="number" className="bg-transparent border-b border-white/20 outline-none font-mono text-[9px] font-bold text-right w-10" style={{ color: t.textPrimary }} value={customInnerVol} onChange={(e)=>setCustomInnerVol(Number(e.target.value))} />
+            <span className="text-[7px] text-[#64748b]">ft³</span>
+            </div>
+            )}
+            </div>
+
+            <div className="p-3 px-4 rounded-xl border relative lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+            {lang === 'zh' ? '艙間選擇' : 'LOCK'}
+            <ChevronDown size={10} className="opacity-70" />
+            </label>
+            <div className="border-b border-white/20">
+            <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={chamberLock} onChange={(e)=>setChamberLock(e.target.value)}>
+            <option value="inner" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '內艙' : 'Inner Lock'}</option>
+            <option value="outer" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '外艙' : 'Outer Lock'}</option>
+            <option value="both" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '全艙' : 'Both Locks'}</option>
+            </select>
+            </div>
+            </div>
+
+            <div className="p-3 px-4 rounded-xl border relative lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+            <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+            {lang === 'zh' ? '60呎延長次數' : '60 FT EXTENSION'}
+            <ChevronDown size={10} className="opacity-70" />
+            </label>
+            <div className="border-b border-white/20">
+            <select className="bg-transparent border-none outline-none font-mono text-sm font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={ext60Count} onChange={(e)=>setExt60Count(Number(e.target.value))}>
+            <option value="0" style={{backgroundColor: t.panel}}>0 (No Ext)</option>
+            <option value="1" style={{backgroundColor: t.panel}}>1 Period</option>
+            <option value="2" style={{backgroundColor: t.panel}}>2 Periods</option>
+            </select>
+            </div>
+            </div>
+
+            <div className="p-3 px-4 rounded-xl border relative lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+                <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+                  {lang === 'zh' ? '30呎延長次數' : '30 FT EXTENSION'}
+                  <ChevronDown size={10} className="opacity-70" />
+                </label>
+                <div className="border-b border-white/20">
+                  <select className="bg-transparent border-none outline-none font-mono text-sm font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={ext30Count} onChange={(e)=>setExt30Count(Number(e.target.value))}>
+                    <option value="0" style={{backgroundColor: t.panel}}>0 (No Ext)</option>
+                    <option value="1" style={{backgroundColor: t.panel}}>1 Period</option>
+                    <option value="2" style={{backgroundColor: t.panel}}>2 Periods</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div className="p-1 rounded-xl border flex flex-col gap-1 relative justify-between" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
                 <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
                   {msg?.divingMode}
                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                 </label>
-                <div className="flex gap-1">
-                  <button 
-                    onClick={()=>setDivingMode('HELIOX')} 
-                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
-                    style={{ 
-                      backgroundColor: divingMode === 'HELIOX' ? '#3b82f6' : 'transparent', 
-                      borderColor: divingMode === 'HELIOX' ? '#93c5fd' : 'transparent',
-                      color: divingMode === 'HELIOX' ? '#fff' : '#64748b'
-                    }}
-                  >
-                    HELIOX
-                  </button>
-                  <button 
-                    onClick={()=>setDivingMode('AIR')} 
-                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
-                    style={{ 
-                      backgroundColor: divingMode === 'AIR' ? '#0ea5e9' : 'transparent', 
-                      borderColor: divingMode === 'AIR' ? '#7dd3fc' : 'transparent',
-                      color: divingMode === 'AIR' ? '#fff' : '#64748b'
-                    }}
-                  >
-                    AIR
-                  </button>
-                </div>
-             </div>
-             <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
-                <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
-                  {msg?.maxDepth}
-                  <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
-                </label>
-                <div className="border-b border-white/20">
-                  <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
-                    {Object.keys(activeTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
-                  </select>
-                </div>
-             </div>
-             <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
-                <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
-                  {msg?.bottomTime}
-                  <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
-                </label>
-                <div className="border-b border-white/20">
-                  <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
-                    {activeTable?.[maxDepth] && Object.keys(activeTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
-                  </select>
-                </div>
-             </div>
-             <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
-                <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
-                  {lang === 'zh' ? '減壓模式' : 'DECO MODE'}
-                  <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
-                </label>
-                <div className="flex gap-1">
-                  <button 
-                    onClick={()=>setDecoMode('SURD')} 
-                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
-                    style={{ 
-                      backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', 
-                      borderColor: decoMode === 'SURD' ? '#fdba74' : 'transparent',
-                      color: decoMode === 'SURD' ? '#fff' : '#64748b'
-                    }}
-                  >
-                    SURD
-                  </button>
-                  <button 
-                    onClick={()=>setDecoMode('WATER')} 
-                    className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
-                    style={{ 
-                      backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', 
-                      borderColor: decoMode === 'WATER' ? '#86efac' : 'transparent',
-                      color: decoMode === 'WATER' ? '#fff' : '#64748b'
-                    }}
-                  >
-                    WATER
-                  </button>
-                </div>
-             </div>
-             <div className="p-3 px-4 rounded-xl border flex items-center justify-between" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
-                <div className="w-full">
-                  <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
-                    {msg?.divers}
-                    <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
-                  </label>
-                  <div className="border-b border-white/20">
-                    <input type="number" className="bg-transparent border-none outline-none font-mono text-lg font-black w-full focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
+                <div className="flex flex-col gap-1">
+                  <div className="flex gap-1">
+                    <button 
+                      onClick={()=>setDivingMode('HELIOX')} 
+                      className="flex-1 py-1 rounded-lg text-[9px] font-black transition-all border" 
+                      style={{ 
+                        backgroundColor: divingMode === 'HELIOX' ? '#3b82f6' : 'transparent', 
+                        borderColor: divingMode === 'HELIOX' ? '#93c5fd' : 'transparent',
+                        color: divingMode === 'HELIOX' ? '#fff' : '#64748b'
+                      }}
+                    >
+                      HELIOX
+                    </button>
+                    <button 
+                      onClick={()=>setDivingMode('AIR')} 
+                      className="flex-1 py-1 rounded-lg text-[9px] font-black transition-all border" 
+                      style={{ 
+                        backgroundColor: divingMode === 'AIR' ? '#0ea5e9' : 'transparent', 
+                        borderColor: divingMode === 'AIR' ? '#7dd3fc' : 'transparent',
+                        color: divingMode === 'AIR' ? '#fff' : '#64748b'
+                      }}
+                    >
+                      AIR
+                    </button>
                   </div>
+                  <button 
+                    onClick={()=>setDivingMode('TREATMENT')} 
+                    className="w-full py-1 rounded-lg text-[9px] font-black transition-all border" 
+                    style={{ 
+                      backgroundColor: divingMode === 'TREATMENT' ? '#f59e0b' : 'transparent', 
+                      borderColor: divingMode === 'TREATMENT' ? '#fcd34d' : 'transparent',
+                      color: divingMode === 'TREATMENT' ? '#fff' : '#64748b'
+                    }}
+                  >
+                    {lang === 'zh' ? '治療表' : 'TREATMENT'}
+                  </button>
                 </div>
-                <Users size={20} className="ml-2" style={{ color: '#64748b' }} />
-             </div>
-              {divingMode === 'AIR' && (
-                <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
-                   <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
-                     {msg?.inWaterGas}
+              </div>
+              <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+                   {msg?.maxDepth}
+                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                 </label>
+                 <div className="border-b border-white/20">
+                   <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
+                     {Object.keys(activeTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
+                   </select>
+                 </div>
+              </div>
+              <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+                   {msg?.bottomTime}
+                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                 </label>
+                 <div className="border-b border-white/20">
+                   <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
+                     {activeTable?.[maxDepth] && Object.keys(activeTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
+                   </select>
+                 </div>
+              </div>
+              <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+                 <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
+                   {lang === 'zh' ? '減壓模式' : 'DECO MODE'}
+                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                 </label>
+                 <div className="flex gap-1">
+                   <button 
+                     onClick={()=>setDecoMode('SURD')} 
+                     className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                     style={{ 
+                       backgroundColor: decoMode === 'SURD' ? '#f97316' : 'transparent', 
+                       borderColor: decoMode === 'SURD' ? '#fdba74' : 'transparent',
+                       color: decoMode === 'SURD' ? '#fff' : '#64748b'
+                     }}
+                   >
+                     SURD
+                   </button>
+                   <button 
+                     onClick={()=>setDecoMode('WATER')} 
+                     className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                     style={{ 
+                       backgroundColor: decoMode === 'WATER' ? '#22c55e' : 'transparent', 
+                       borderColor: decoMode === 'WATER' ? '#86efac' : 'transparent',
+                       color: decoMode === 'WATER' ? '#fff' : '#64748b'
+                     }}
+                   >
+                     WATER
+                   </button>
+                 </div>
+              </div>
+              <div className="p-3 px-4 rounded-xl border flex items-center justify-between" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
+                 <div className="w-full">
+                   <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
+                     {msg?.divers}
                      <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
                    </label>
-                   <div className="flex gap-1">
-                     <button 
-                       onClick={()=>setInWaterGas('AIR')} 
-                       className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
-                       style={{ 
-                         backgroundColor: inWaterGas === 'AIR' ? '#3b82f6' : 'transparent', 
-                         borderColor: inWaterGas === 'AIR' ? '#60a5fa' : 'transparent',
-                         color: inWaterGas === 'AIR' ? '#fff' : '#64748b'
-                       }}
-                     >
-                       AIR
-                     </button>
-                     <button 
-                       onClick={()=>setInWaterGas('O2')} 
-                       className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
-                       style={{ 
-                         backgroundColor: inWaterGas === 'O2' ? '#22c55e' : 'transparent', 
-                         borderColor: inWaterGas === 'O2' ? '#86efac' : 'transparent',
-                         color: inWaterGas === 'O2' ? '#fff' : '#64748b'
-                       }}
-                     >
-                       O2
-                     </button>
+                   <div className="border-b border-white/20">
+                     <input type="number" className="bg-transparent border-none outline-none font-mono text-lg font-black w-full focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={divers} onChange={(e)=>setDivers(Number(e.target.value))} />
                    </div>
-                </div>
-              )}
+                 </div>
+                 <Users size={20} className="ml-2" style={{ color: '#64748b' }} />
+              </div>
+               {divingMode === 'AIR' && (
+                 <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
+                    <label className="block text-[7px] font-black uppercase tracking-widest flex justify-between items-center px-2 mb-0.5" style={{ color: '#64748b' }}>
+                      {msg?.inWaterGas}
+                      <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                    </label>
+                    <div className="flex gap-1">
+                      <button 
+                        onClick={()=>setInWaterGas('AIR')} 
+                        className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                        style={{ 
+                          backgroundColor: inWaterGas === 'AIR' ? '#3b82f6' : 'transparent', 
+                          borderColor: inWaterGas === 'AIR' ? '#60a5fa' : 'transparent',
+                          color: inWaterGas === 'AIR' ? '#fff' : '#64748b'
+                        }}
+                      >
+                        AIR
+                      </button>
+                      <button 
+                        onClick={()=>setInWaterGas('O2')} 
+                        className="flex-1 py-2 rounded-lg text-[10px] font-black transition-all border" 
+                        style={{ 
+                          backgroundColor: inWaterGas === 'O2' ? '#22c55e' : 'transparent', 
+                          borderColor: inWaterGas === 'O2' ? '#86efac' : 'transparent',
+                          color: inWaterGas === 'O2' ? '#fff' : '#64748b'
+                        }}
+                      >
+                        O2
+                      </button>
+                    </div>
+                 </div>
+               )}
+            </div>
+            )}
           </div>
-
-          <div className={`flex items-center gap-2 ${isExporting ? 'invisible h-0 w-0' : ''}`}>
-             <button onClick={() => setLang(lang === 'en' ? 'zh' : 'en')} className="px-4 h-12 rounded-2xl flex items-center justify-center border font-black text-xs shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}><Languages size={16} className="mr-2" style={{ color: '#f97316' }} />{lang === 'en' ? '中文' : 'EN'}</button>
-             <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="w-12 h-12 rounded-2xl flex items-center justify-center border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border, color: t.textPrimary }}>{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}</button>
-             <button onClick={handleExportPDF} className="flex items-center gap-2 px-6 py-4 rounded-3xl font-black text-[10px] uppercase shadow-2xl transition-all" style={{ backgroundColor: theme === 'dark' ? '#ffffff' : '#0f172a', color: theme === 'dark' ? '#000000' : '#ffffff' }}><Download size={16} />{msg?.export}</button>
-          </div>
-        </header>
+            </header>
 
         <section id="pdf-chart" className="p-8 rounded-[3rem] border shadow-2xl" style={{ backgroundColor: t.panel, borderColor: t.border }}>
           <div className="flex items-center justify-between mb-8 gap-4">
@@ -440,6 +797,22 @@ function App() {
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={profileData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                 <defs><linearGradient id="gasGradient" x1="0" y1="0" x2="1" y2="0">{gradStops?.map((s, i) => <stop key={i} offset={s.offset} stopColor={s.color} stopOpacity={0.4} />)}</linearGradient></defs>
+                {tenderO2StartTime !== null && tenderO2StartTime !== undefined && (
+                  <ReferenceLine
+                    x={tenderO2StartTime}
+                    stroke="#10b981"
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
+                    label={{
+                      value: lang === 'zh' ? `艙內助手吸氧起點 (${tenderO2StartTime} min)` : `Tender O2 Start (${tenderO2StartTime}m)`,
+                      position: 'insideTopLeft',
+                      fill: '#10b981',
+                      fontSize: 10,
+                      fontWeight: '900',
+                      style: { textShadow: '0 2px 4px rgba(0,0,0,0.8)' }
+                    }}
+                  />
+                )}
                 <CartesianGrid strokeDasharray="3 3" stroke={t.grid} vertical={false} opacity={0.5} />
                 <XAxis dataKey="time" type="number" domain={[0, totalDuration]} tickFormatter={(v)=>`${Math.floor(v)}:${Math.round((v%1)*60).toString().padStart(2,'0')}`} stroke={t.textSecondary} fontSize={11} />
                 <YAxis 
@@ -477,11 +850,46 @@ function App() {
                                 <div className="flex flex-col"><span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{msg?.clock}</span><span className="text-white font-mono font-black text-[10px]">{d.timeStr}</span></div>
                                 <div className="flex flex-col"><span className="text-[#0ea5e9] font-bold text-[6px] leading-tight uppercase">{msg?.segmentTime}</span><span className="text-[#38bdf8] font-mono font-black text-[10px]">{m}m {s}s</span></div>
                                 
-                                {d.segmentGasSCF > 0 ? (
-                                  <div className="flex flex-col"><span className="text-[#f59e0b] font-bold text-[6px] leading-tight uppercase">{lang === 'zh' ? '消耗' : 'Gas'}</span><span className="text-[#fbbf24] font-mono font-black text-[10px]">{Math.ceil(d.segmentGasSCF)} SCF</span></div>
-                                ) : <div />}
+                                {divingMode === 'TREATMENT' ? (
+                                  <div className="flex flex-col col-span-2">
+                                    <span className="text-[#f59e0b] font-bold text-[6px] leading-tight uppercase">{lang === 'zh' ? '消耗估計' : 'GAS CONS.'}</span>
+                                    <span className="text-white font-mono text-[9px] font-black leading-tight">
+                                      <span style={{ color: '#22c55e' }}>O₂: {Math.ceil(d.o2Scf || 0)}</span> | <span style={{ color: '#3b82f6' }}>Air: {Math.ceil(d.airVentScf || 0)}</span> SCF
+                                    </span>
+                                  </div>
+                                ) : (
+                                  d.segmentGasSCF > 0 ? (
+                                    <div className="flex flex-col"><span className="text-[#f59e0b] font-bold text-[6px] leading-tight uppercase">{lang === 'zh' ? '消耗' : 'Gas'}</span><span className="text-[#fbbf24] font-mono font-black text-[10px]">{Math.ceil(d.segmentGasSCF)} SCF</span></div>
+                                  ) : <div />
+                                )}
                                 
-                                <div className="flex flex-col col-span-2"><span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{msg?.gasSource}</span><span style={{ color: GAS_COLORS[d.gas] }} className="font-black text-[9px] truncate">{getGasName(d.gas)}</span></div>
+                                {divingMode === 'TREATMENT' ? (
+                                  <div className="col-span-3 border-t border-[#1e293b]/50 pt-1.5 mt-1 grid grid-cols-2 gap-4">
+                                    <div className="flex flex-col border-r border-[#1e293b]/30 pr-2">
+                                      <span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{lang === 'zh' ? '患者氣源' : 'PATIENT GAS'}</span>
+                                      <span style={{ color: d.patientGas === 'O2' ? '#22c55e' : '#3b82f6' }} className="font-black text-[9px]">
+                                        {d.patientGas === 'O2' ? (lang === 'zh' ? '100% 氧氣' : '100% O2') : (lang === 'zh' ? '空氣' : 'AIR')}
+                                      </span>
+                                      <span className="text-[6px] text-white/40 mt-0.5">
+                                        {lang === 'zh' ? `累計吸氧: ${d.patientO2Time}m` : `O2 Cum: ${d.patientO2Time}m`}
+                                      </span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                      <span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{lang === 'zh' ? '艙內助手氣源' : 'TENDER GAS'}</span>
+                                      <span style={{ color: d.tenderGas === 'O2' ? '#22c55e' : '#3b82f6' }} className="font-black text-[9px]">
+                                        {d.tenderGas === 'O2' ? (lang === 'zh' ? '100% 氧氣' : '100% O2') : (lang === 'zh' ? '空氣' : 'AIR')}
+                                      </span>
+                                      <span className="text-[6px] text-white/40 mt-0.5">
+                                        {lang === 'zh' ? `累計吸氧: ${d.tenderO2Time}m` : `O2 Cum: ${d.tenderO2Time}m`}
+                                      </span>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className="flex flex-col col-span-2">
+                                    <span className="text-[#64748b] font-bold text-[6px] leading-tight uppercase">{msg?.gasSource}</span>
+                                    <span style={{ color: GAS_COLORS[d.gas] }} className="font-black text-[9px] truncate">{getGasName(d.gas)}</span>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -498,37 +906,90 @@ function App() {
         </section>
 
         <div id="pdf-tables" className={`grid ${isExporting ? 'grid-cols-3' : 'grid-cols-1 sm:grid-cols-3'} gap-6 pb-20`}>
-          <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
-             <div className={`space-y-2 pr-2 custom-scroll-container ${isExporting ? '' : 'max-h-[450px] overflow-y-auto'}`}>
-                {stops && stops.length > 0 ? stops.map(stop => {
-                  const gas = getGasType(stop.depth, divingMode, inWaterGas);
+          {divingMode === 'TREATMENT' ? (
+            <section className="p-6 rounded-[2.5rem] border shadow-lg col-span-1 sm:col-span-2 flex flex-col" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}>
+                <Anchor size={14} style={{ color: '#0ea5e9' }} /> 
+                {lang === 'zh' ? '減壓艙治療步驟明細' : 'TREATMENT STEPS'}
+              </h2>
+              <div className={`space-y-2 pr-2 custom-scroll-container flex-1 ${isExporting ? '' : 'max-h-[450px] overflow-y-auto'}`}>
+                {chamberResults?.detailedSteps?.map((step, idx) => {
+                  const pGasDisplay = step.pGas === 'O2' ? 'O2' : 'AIR';
+                  const tGasDisplay = step.tGas === 'O2' ? 'O2' : 'AIR';
+                  const stepAirGas = step.airVentScf + (idx === 0 ? (chamberResults?.pressurizeAir || 0) : 0);
+                  
                   return (
-                    <div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
-                      <span className="font-mono text-sm font-black" style={{ color: (divingMode === 'AIR' ? (inWaterGas === 'O2' && stop.depth <= 30) : stop.depth <= 30) ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span>
-                      <span className="text-[7px] font-black uppercase tracking-widest opacity-60 px-2 py-0.5 rounded-md border" style={{ color: GAS_COLORS[gas], borderColor: `${GAS_COLORS[gas]}44`, backgroundColor: `${GAS_COLORS[gas]}11` }}>{getGasName(gas)}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>{stop.time}</span>
-                        <span className="text-[8px] font-black uppercase opacity-50" style={{ color: t.textSecondary }}>Min</span>
+                    <div key={idx} className="flex flex-col p-3 rounded-xl border gap-2" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black flex items-center gap-2" style={{ color: t.textPrimary }}>
+                          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: pGasDisplay === 'O2' ? '#22c55e' : '#3b82f6' }}></span>
+                          {step.name}
+                        </span>
+                        <span className="text-[7px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md border" style={{ color: GAS_COLORS[pGasDisplay], borderColor: `${GAS_COLORS[pGasDisplay]}44`, backgroundColor: `${GAS_COLORS[pGasDisplay]}11` }}>
+                          {lang === 'zh' ? `患者: ${pGasDisplay}` : `Patient: ${pGasDisplay}`}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-4 gap-2 text-center pt-1.5 border-t border-dashed" style={{ borderColor: t.border }}>
+                        <div className="flex flex-col text-left">
+                          <span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '起訖深度' : 'DEPTH RANGE'}</span>
+                          <span className="text-[10px] font-mono font-black" style={{ color: t.textPrimary }}>{step.startDepth}′ → {step.endDepth}′</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '停留時長' : 'DURATION'}</span>
+                          <span className="text-[10px] font-mono font-black" style={{ color: t.textPrimary }}>{step.duration} Min</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '艙內助手' : 'TENDER GAS'}</span>
+                          <span className="text-[10px] font-black" style={{ color: tGasDisplay === 'O2' ? '#22c55e' : t.textSecondary }}>{tGasDisplay}</span>
+                        </div>
+                        <div className="flex flex-col text-right">
+                          <span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '氣源消耗' : 'GAS CONS.'}</span>
+                          <div className="text-[8px] font-mono font-black flex flex-col items-end leading-tight">
+                            <span style={{ color: '#22c55e' }}>O₂: {Math.ceil(step.o2Scf)}</span>
+                            <span style={{ color: '#3b82f6' }}>Air: {Math.ceil(stepAirGas)}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   );
-                }) : <div className="text-center py-10 opacity-30 text-[10px] uppercase font-black" style={{ color: t.textSecondary }}>{msg?.noDeco}</div>}
-             </div>
-          </section>
-          <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
-             <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Wind size={14} style={{ color: '#22c55e' }} /> {decoMode === 'SURD' ? msg?.chamber : msg?.protocol}</h2>
-             <div className="space-y-2 custom-scroll-container">
-                {decoMode === 'SURD' ? expandChamberSteps(o2Periods).map((step, idx) => {
-                  let pIdxStr = ""; 
-                  if(step.phase === 'O2 Period') {
-                    const originalPIdx = expandChamberSteps(o2Periods).slice(0, idx+1).filter(s=>s.phase === 'O2 Period').length;
-                    pIdxStr = originalPIdx === 1 ? "0.5" : (originalPIdx - 1).toString();
-                  }
-                  return (<div key={idx} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="text-[8px] font-black uppercase" style={{ color: step.gas === 'O2' ? GAS_COLORS.O2 : t.textSecondary }}>{lang === 'zh' ? (step.gas === 'O2' ? `氧氣週期 P${pIdxStr}` : '空氣呼吸期') : `${step.phase} P${pIdxStr}`}</span><span className="font-mono text-sm font-black" style={{ color: t.textPrimary }}>{step.time}m</span></div>);
-                }) : <div className="p-5 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><p className="text-xs leading-relaxed opacity-70" style={{ color: t.textPrimary }}>{msg?.airNote}</p></div>}
-             </div>
-          </section>
+                })}
+              </div>
+            </section>
+          ) : (
+            <>
+              <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+                 <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Anchor size={14} style={{ color: '#0ea5e9' }} /> {msg?.waterDeco}</h2>
+                 <div className={`space-y-2 pr-2 custom-scroll-container ${isExporting ? '' : 'max-h-[450px] overflow-y-auto'}`}>
+                    {stops && stops.length > 0 ? stops.map(stop => {
+                      const gas = getGasType(stop.depth, divingMode, inWaterGas);
+                      return (
+                        <div key={stop.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                          <span className="font-mono text-sm font-black" style={{ color: (divingMode === 'AIR' ? (inWaterGas === 'O2' && stop.depth <= 30) : stop.depth <= 30) ? GAS_COLORS.O2 : t.textSecondary }}>{stop.depth}'</span>
+                          <span className="text-[7px] font-black uppercase tracking-widest opacity-60 px-2 py-0.5 rounded-md border" style={{ color: GAS_COLORS[gas], borderColor: `${GAS_COLORS[gas]}44`, backgroundColor: `${GAS_COLORS[gas]}11` }}>{getGasName(gas)}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-lg font-black" style={{ color: t.textPrimary }}>{stop.time}</span>
+                            <span className="text-[8px] font-black uppercase opacity-50" style={{ color: t.textSecondary }}>Min</span>
+                          </div>
+                        </div>
+                      );
+                    }) : <div className="text-center py-10 opacity-30 text-[10px] uppercase font-black" style={{ color: t.textSecondary }}>{msg?.noDeco}</div>}
+                 </div>
+              </section>
+              <section className="p-6 rounded-[2.5rem] border shadow-lg" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+                 <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><Wind size={14} style={{ color: '#22c55e' }} /> {decoMode === 'SURD' ? msg?.chamber : msg?.protocol}</h2>
+                 <div className="space-y-2 custom-scroll-container">
+                    {decoMode === 'SURD' ? expandChamberSteps(o2Periods).map((step, idx) => {
+                      let pIdxStr = ""; 
+                      if(step.phase === 'O2 Period') {
+                        const originalPIdx = expandChamberSteps(o2Periods).slice(0, idx+1).filter(s=>s.phase === 'O2 Period').length;
+                        pIdxStr = originalPIdx === 1 ? "0.5" : (originalPIdx - 1).toString();
+                      }
+                      return (<div key={idx} className="flex items-center justify-between p-3 rounded-xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><span className="text-[8px] font-black uppercase" style={{ color: step.gas === 'O2' ? GAS_COLORS.O2 : t.textSecondary }}>{lang === 'zh' ? (step.gas === 'O2' ? `氧氣週期 P${pIdxStr}` : '空氣呼吸期') : `${step.phase} P${pIdxStr}`}</span><span className="font-mono text-sm font-black" style={{ color: t.textPrimary }}>{step.time}m</span></div>);
+                    }) : <div className="p-5 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}><p className="text-xs leading-relaxed opacity-70" style={{ color: t.textPrimary }}>{msg?.airNote}</p></div>}
+                 </div>
+              </section>
+            </>
+          )}
           <section className="p-6 rounded-[2.5rem] border shadow-lg flex flex-col" style={{ backgroundColor: t.panel, borderColor: t.border }}>
              <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><FlaskConical size={14} style={{ color: '#f59e0b' }} /> {msg?.logistics}</h2>
              <div className={`p-4 rounded-3xl border ${isExporting ? 'mb-2' : 'mb-4'} flex justify-between items-end`} style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)', borderColor: 'rgba(245, 158, 11, 0.2)' }}>
@@ -578,12 +1039,15 @@ function App() {
                 </div>
              </div>
              <div className="space-y-2 flex-1">
-                {[
+                {(divingMode === 'TREATMENT' ? [
+                { label: lang === 'zh' ? '空氣需求 (Chamber Air)' : 'Chamber Air', val: Math.round(chamberResults?.totalAir || 0), count: calcCylinderCount(chamberResults?.totalAir || 0, availableSCFPerCyl), color: '#3b82f6', price: 0 },
+                { label: lang === 'zh' ? '純氧氣需求 (Chamber Oxygen)' : 'Chamber Oxygen', val: Math.round(chamberResults?.totalO2 || 0), count: calcCylinderCount(chamberResults?.totalO2 || 0, availableSCFPerCyl), color: '#22c55e', price: 1000 }
+                ] : [
                   { label: msg?.bottomMix, val: bottomTotal, count: bottomCylCount, color: '#f97316', price: divingMode === 'AIR' ? 0 : 15000, hidden: bottomTotal === 0 },
                   { label: msg?.decoMix, val: decoTotal, count: decoCylCount, color: '#eab308', price: divingMode === 'AIR' ? 0 : 15000, hidden: decoTotal === 0 && divingMode === 'AIR' },
                   { label: msg?.oxygen, val: oxygenTotal, count: oxygenCylCount, color: '#22c55e', price: 1000, hidden: oxygenTotal === 0 },
                   { label: msg?.airMix, val: airTotal, count: airCylCount, color: '#3b82f6', price: 0, hidden: airTotal === 0 }
-                ].filter(i => !i.hidden).map(item => (
+                ].filter(i => !i.hidden)).map(item => (
                   <div key={item.label} className="p-3 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
                     <div className="flex items-center justify-between mb-1">
                       <div><p className="text-[7px] font-black uppercase opacity-50 tracking-widest" style={{ color: t.textSecondary }}>{item.label}</p><p className="text-sm font-mono font-black" style={{ color: t.textPrimary }}>{item.val} SCF</p></div>
@@ -598,7 +1062,7 @@ function App() {
              </div>
              <div className="mt-4 p-4 rounded-3xl border-2 border-dashed flex justify-between items-center" style={{ backgroundColor: 'rgba(34, 197, 94, 0.05)', borderColor: 'rgba(34, 197, 94, 0.2)' }}>
                 <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: '#22c55e' }}>{msg?.totalBudget}</span>
-                <span className="text-xl font-mono font-black" style={{ color: '#22c55e' }}>NT$ {((bottomCylCount * (divingMode==='AIR'?0:15000)) + (decoCylCount * (divingMode==='AIR'?0:15000)) + oxygenCylCount * 1000).toLocaleString()}</span>
+                <span className="text-xl font-mono font-black" style={{ color: '#22c55e' }}>NT$ {(divingMode === 'TREATMENT' ? (calcCylinderCount(chamberResults?.totalO2 || 0, availableSCFPerCyl) * 1000) : ((bottomCylCount * (divingMode==='AIR'?0:15000)) + (decoCylCount * (divingMode==='AIR'?0:15000)) + oxygenCylCount * 1000)).toLocaleString()}</span>
              </div>
           </section>
         </div>

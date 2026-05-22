@@ -1,7 +1,7 @@
-/**
- * Heliox Mission Calculation Logic
- * Standards: US Navy Diving Manual Rev 7
- */
+const round = (num, decimals = 2) => {
+  const factor = Math.pow(10, decimals);
+  return Math.round(num * factor) / factor;
+};
 
 export const CONSTANTS = {
   ASCENT_RATE: 30,
@@ -429,3 +429,290 @@ export const expandChamberSteps = (o2Periods) => {
   }
   return steps;
 };
+
+export const CHAMBER_PRESETS = [
+  { id: 'farcc', name: 'FARCC', inner: 136.0, outer: 65.0 },
+  { id: 'sndl', name: 'SNDL Chamber', inner: 123.0, outer: 69.0 },
+  { id: 'rcf5000', name: 'RCF 5000', inner: 162.0, outer: 61.0 },
+  { id: 'rcf6500', name: 'RCF 6500', inner: 440.0, outer: 144.0 },
+  { id: 'trcs', name: 'TRCS', inner: 45.0, outer: 45.5 },
+  { id: 'army', name: 'Army Aluminum Chamber', inner: 192.0, outer: 37.0 },
+  { id: 'steel', name: 'Steel Chamber', inner: 285.0, outer: 140.0 },
+  { id: 'steelars50', name: 'Steel Chamber (T-ARS 50)', inner: 134.0, outer: 68.0 },
+  { id: 'pcwmi', name: 'PCWMI Chamber (水下作業大隊艙型 I)', inner: 124.5, outer: 62.0 },
+  { id: 'mara', name: 'MARA Chamber (水下作業大隊艙型 II)', inner: 124.5, outer: 62.0 },
+];
+
+// Generate 30 fsw phases with correct tender O2 assignment per Table 17-7.
+// Tender O2 is applied to the LAST N minutes of O2 breathing at 30 fsw.
+const generateTenderO2Phases = (tableId, hasExposureHistory, ext60Count, ext30Count) => {
+  const totalExt = ext60Count + ext30Count;
+
+  // Table 17-7 base tender O2 time at 30 fsw (sea level)
+  let tenderO2Mins;
+  if (tableId === 'Table 6') {
+    tenderO2Mins = totalExt <= 1 ? 30 : 60;
+  } else { // Table 6A
+    tenderO2Mins = totalExt <= 1 ? 60 : 90;
+  }
+  if (hasExposureHistory) tenderO2Mins += 60;
+
+  // Build all O2 period segments at 30 fsw (each 60 min), all default to tender Air
+  const o2Segs = [
+    { name: '30 fsw Stop - O2 Period 1', dur: 60.0 },
+    { name: '30 fsw Stop - O2 Period 2', dur: 60.0 },
+  ];
+  for (let i = 1; i <= ext30Count; i++) {
+    o2Segs.push({ name: `30 fsw Stop - O2 Period (Ext ${i})`, dur: 60.0 });
+  }
+
+  // Assign tender O2 from the END, walking backwards through O2 segments
+  let rem = tenderO2Mins;
+  const phases = [];
+  const processed = o2Segs.map(seg => {
+    // Placeholder: will be filled after reverse pass
+    return { ...seg, airDur: seg.dur, o2Dur: 0 };
+  });
+  for (let i = processed.length - 1; i >= 0 && rem > 0; i--) {
+    const seg = processed[i];
+    if (rem >= seg.dur) {
+      seg.o2Dur = seg.dur;
+      seg.airDur = 0;
+      rem -= seg.dur;
+    } else {
+      seg.o2Dur = rem;
+      seg.airDur = seg.dur - rem;
+      rem = 0;
+    }
+  }
+
+  // Build final phases array: Air Break → O2 Period (with possible split) for each
+  processed.forEach((seg, idx) => {
+    // Air break before each O2 period
+    const breakName = idx < 2 ? `30 fsw Stop - Air Break ${idx + 1}` : `30 fsw Stop - Air Break (Ext ${idx - 1})`;
+    phases.push({ name: breakName, startDepth: 30, endDepth: 30, duration: 15.0, pGas: 'Air', tGas: 'Air' });
+
+    if (seg.airDur > 0 && seg.o2Dur > 0) {
+      // Split segment
+      phases.push({ name: seg.name + ' (Tender Air)', startDepth: 30, endDepth: 30, duration: seg.airDur, pGas: 'O2', tGas: 'Air' });
+      phases.push({ name: seg.name + ' (Tender O2)', startDepth: 30, endDepth: 30, duration: seg.o2Dur, pGas: 'O2', tGas: 'O2' });
+    } else if (seg.o2Dur > 0) {
+      phases.push({ name: seg.name + ' (Tender O2)', startDepth: 30, endDepth: 30, duration: seg.dur, pGas: 'O2', tGas: 'O2' });
+    } else {
+      phases.push({ name: seg.name, startDepth: 30, endDepth: 30, duration: seg.dur, pGas: 'O2', tGas: 'Air' });
+    }
+  });
+
+  return phases;
+};
+
+export const calcChamberGasRequirements = (tableId, numPatients, numTenders, chamberVol, hasExposureHistory, hasBibsDump, ext60Count = 0, ext30Count = 0) => {
+  let rawPhases = [];
+  let pressurizeDepth = 60;
+  
+  if (tableId === 'Table 5') {
+    pressurizeDepth = 60;
+    rawPhases = [
+      { name: 'Descent to 60 fsw', startDepth: 0, endDepth: 60, duration: 3.0, pGas: 'Air', tGas: 'Air' },
+      { name: '60 fsw Stop - O2 Period 1', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      { name: '60 fsw Stop - Air Break', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+      { name: '60 fsw Stop - O2 Period 2', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      
+      // 60 fsw Extension for Table 5 (generic calculation if selected)
+      ...(ext60Count > 0 ? [
+        { name: '60 fsw Stop - Air Break (Ext 1)', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+        { name: '60 fsw Stop - O2 Period (Ext 1)', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' }
+      ] : []),
+      ...(ext60Count > 1 ? [
+        { name: '60 fsw Stop - Air Break (Ext 2)', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+        { name: '60 fsw Stop - O2 Period (Ext 2)', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' }
+      ] : []),
+      
+      { name: 'Ascent 60 to 30 fsw', startDepth: 60, endDepth: 30, duration: 30.0, pGas: 'O2', tGas: 'Air' },
+      
+      // 30 fsw Stop: 30 mins
+      ...(hasExposureHistory ? [
+        { name: '30 fsw Stop - O2 (Tender Air)', startDepth: 30, endDepth: 30, duration: 10.0, pGas: 'O2', tGas: 'Air' },
+        { name: '30 fsw Stop - O2 (Tender O2)', startDepth: 30, endDepth: 30, duration: 20.0, pGas: 'O2', tGas: 'O2' }
+      ] : [
+        { name: '30 fsw Stop - O2 (Tender Air)', startDepth: 30, endDepth: 30, duration: 30.0, pGas: 'O2', tGas: 'Air' }
+      ]),
+      
+      // 30 fsw Extension for Table 5 - NO air break required (Manual Rule 5)
+      ...(ext30Count > 0 ? [
+        { name: '30 fsw Stop - O2 (Ext 1)', startDepth: 30, endDepth: 30, duration: 30.0, pGas: 'O2', tGas: 'O2' }
+      ] : []),
+      ...(ext30Count > 1 ? [
+        { name: '30 fsw Stop - O2 (Ext 2)', startDepth: 30, endDepth: 30, duration: 30.0, pGas: 'O2', tGas: 'O2' }
+      ] : []),
+      
+      { name: 'Ascent 30 fsw to Surface', startDepth: 30, endDepth: 0, duration: 30.0, pGas: 'O2', tGas: 'O2' }
+    ];
+  } else if (tableId === 'Table 6') {
+    pressurizeDepth = 60;
+    rawPhases = [
+      { name: 'Descent to 60 fsw', startDepth: 0, endDepth: 60, duration: 3.0, pGas: 'Air', tGas: 'Air' },
+      { name: '60 fsw Stop - O2 Period 1', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      { name: '60 fsw Stop - Air Break 1', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+      { name: '60 fsw Stop - O2 Period 2', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      { name: '60 fsw Stop - Air Break 2', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+      { name: '60 fsw Stop - O2 Period 3', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      
+      // 60 fsw Extension
+      ...(ext60Count > 0 ? [
+        { name: '60 fsw Stop - Air Break (Ext 1)', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+        { name: '60 fsw Stop - O2 Period (Ext 1)', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' }
+      ] : []),
+      ...(ext60Count > 1 ? [
+        { name: '60 fsw Stop - Air Break (Ext 2)', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+        { name: '60 fsw Stop - O2 Period (Ext 2)', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' }
+      ] : []),
+      
+      { name: 'Ascent 60 to 30 fsw', startDepth: 60, endDepth: 30, duration: 30.0, pGas: 'O2', tGas: 'Air' },
+      
+      // 30 fsw Stop: Total 150 mins
+      // Tender O2 per Table 17-7: <=1 ext → 30 min, >1 ext → 60 min, +60 min if prior exposure
+      ...generateTenderO2Phases('Table 6', hasExposureHistory, ext60Count, ext30Count),
+      
+      { name: 'Ascent 30 fsw to Surface', startDepth: 30, endDepth: 0, duration: 30.0, pGas: 'O2', tGas: 'O2' }
+    ];
+  } else if (tableId === 'Table 6A') {
+    pressurizeDepth = 165;
+    rawPhases = [
+      { name: 'Descent to 165 fsw', startDepth: 0, endDepth: 165, duration: 8.25, pGas: 'Air', tGas: 'Air' },
+      { name: '165 fsw Stop', startDepth: 165, endDepth: 165, duration: 30.0, pGas: 'Air', tGas: 'Air' },
+      { name: 'Ascent 165 to 60 fsw', startDepth: 165, endDepth: 60, duration: 35.0, pGas: 'Air', tGas: 'Air' },
+      
+      { name: '60 fsw Stop - O2 Period 1', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      { name: '60 fsw Stop - Air Break 1', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+      { name: '60 fsw Stop - O2 Period 2', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      { name: '60 fsw Stop - Air Break 2', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+      { name: '60 fsw Stop - O2 Period 3', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' },
+      
+      // 60 fsw Extension
+      ...(ext60Count > 0 ? [
+        { name: '60 fsw Stop - Air Break (Ext 1)', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+        { name: '60 fsw Stop - O2 Period (Ext 1)', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' }
+      ] : []),
+      ...(ext60Count > 1 ? [
+        { name: '60 fsw Stop - Air Break (Ext 2)', startDepth: 60, endDepth: 60, duration: 5.0, pGas: 'Air', tGas: 'Air' },
+        { name: '60 fsw Stop - O2 Period (Ext 2)', startDepth: 60, endDepth: 60, duration: 20.0, pGas: 'O2', tGas: 'Air' }
+      ] : []),
+      
+      { name: 'Ascent 60 to 30 fsw', startDepth: 60, endDepth: 30, duration: 30.0, pGas: 'O2', tGas: 'Air' },
+      
+      // 30 fsw Stop: Total 150 mins
+      // Tender O2 per Table 17-7: <=1 ext → 60 min, >1 ext → 90 min, +60 min if prior exposure
+      ...generateTenderO2Phases('Table 6A', hasExposureHistory, ext60Count, ext30Count),
+      
+      { name: 'Ascent 30 fsw to Surface', startDepth: 30, endDepth: 0, duration: 30.0, pGas: 'O2', tGas: 'O2' }
+    ];
+  } else if (tableId === 'Table 9') {
+    pressurizeDepth = 45;
+    rawPhases = [
+      { name: 'Descent to 45 fsw', startDepth: 0, endDepth: 45, duration: 2.25, pGas: 'Air', tGas: 'Air' },
+      { name: '45 fsw Stop - O2 Period 1', startDepth: 45, endDepth: 45, duration: 45.0, pGas: 'O2', tGas: 'Air' },
+      { name: '45 fsw Stop - Air Break', startDepth: 45, endDepth: 45, duration: 10.0, pGas: 'Air', tGas: 'Air' },
+      { name: '45 fsw Stop - O2 Period 2', startDepth: 45, endDepth: 45, duration: 30.0, pGas: 'O2', tGas: 'Air' },
+      { name: '45 fsw Stop - O2 Period 2 (Tender O2)', startDepth: 45, endDepth: 45, duration: 15.0, pGas: 'O2', tGas: 'O2' },
+      { name: 'Ascent 45 fsw to Surface', startDepth: 45, endDepth: 0, duration: 2.25, pGas: 'O2', tGas: 'O2' }
+    ];
+  } else { // Table 8
+    pressurizeDepth = 60;
+    rawPhases = [
+      { name: 'Descent to 60 fsw', startDepth: 0, endDepth: 60, duration: 3.0, pGas: 'Air', tGas: 'Air' }
+    ];
+    for (let d = 60; d >= 2; d -= 2) {
+      let stopTime = 40.0;
+      if (d <= 20) {
+        stopTime = 120.0;
+      } else if (d <= 40) {
+        stopTime = 60.0;
+      }
+      rawPhases.push({
+        name: `${d} fsw Stop (Table 8)`,
+        startDepth: d,
+        endDepth: d,
+        duration: stopTime,
+        pGas: 'O2',
+        tGas: 'Air'
+      });
+    }
+    rawPhases.push({ name: 'Ascent 2 fsw to Surface', startDepth: 2, endDepth: 0, duration: 2.0, pGas: 'O2', tGas: 'O2' });
+  }
+
+  // 1. Pressurization Air
+  const pressurizeAir = round((pressurizeDepth / 33.0) * chamberVol, 2);
+  
+  let totalO2 = 0.0;
+  let totalAirVent = 0.0;
+  let elapsed = 0.0;
+  const detailedSteps = [];
+
+  rawPhases.forEach((phase, idx) => {
+    const avgDepth = (phase.startDepth + phase.endDepth) / 2.0;
+    const ata = round((avgDepth + 33.0) / 33.0, 2);
+    
+    // O2 Consumption calculation
+    let o2People = 0;
+    if (phase.pGas === 'O2') o2People += numPatients;
+    if (phase.tGas === 'O2') o2People += numTenders;
+    
+    const o2Scf = round(ata * 0.3 * o2People * phase.duration, 2);
+    
+    // Air Ventilation calculation
+    let airVentScf = 0.0;
+    if (idx === 0) {
+      // During initial pressurization descent, only consider pressurizeAir.
+      // Skip patient/tender ventilation & breathing calculation as it is far exceeded by the incoming pressurization air.
+      airVentScf = 0.0;
+    } else if (hasBibsDump) {
+      // With O2 Overboard Dump: Only people breathing AIR need ventilation (2.0 acfm each)
+      let airPeople = 0;
+      if (phase.pGas === 'Air') airPeople += numPatients;
+      if (phase.tGas === 'Air') airPeople += numTenders;
+      
+      airVentScf = round(ata * 2.0 * airPeople * phase.duration, 2);
+    } else {
+      // No BIBS Dump: O2 breathers require 12.5 acfm, Air breathers require 2.0 acfm
+      let o2PeopleForVent = 0;
+      let airPeopleForVent = 0;
+      
+      if (phase.pGas === 'O2') o2PeopleForVent += numPatients;
+      else airPeopleForVent += numPatients;
+      
+      if (phase.tGas === 'O2') o2PeopleForVent += numTenders;
+      else airPeopleForVent += numTenders;
+      
+      airVentScf = round(ata * (12.5 * o2PeopleForVent + 2.0 * airPeopleForVent) * phase.duration, 2);
+    }
+    
+    totalO2 += o2Scf;
+    totalAirVent += airVentScf;
+    
+    elapsed += phase.duration;
+    
+    detailedSteps.push({
+      name: phase.name,
+      depth: avgDepth,
+      startDepth: phase.startDepth,
+      endDepth: phase.endDepth,
+      ata,
+      duration: phase.duration,
+      time: elapsed,
+      pGas: phase.pGas,
+      tGas: phase.tGas,
+      o2Scf,
+      airVentScf
+    });
+  });
+
+  return {
+    pressurizeAir: round(pressurizeAir, 2),
+    totalO2: round(totalO2, 2),
+    totalAirVent: round(totalAirVent, 2),
+    totalAir: round(pressurizeAir + totalAirVent, 2),
+    detailedSteps
+  };
+};
+
