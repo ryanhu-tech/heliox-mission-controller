@@ -349,7 +349,17 @@ function App() {
       const margin = 12;
       let currentY = 15;
 
-      const sections = ['pdf-header', 'pdf-chart', 'pdf-tables', 'pdf-footer'];
+      const sections = ['pdf-header', 'pdf-chart'];
+      if (divingMode === 'TREATMENT') {
+        const stepGroupsCount = Math.ceil((chamberResults?.detailedSteps?.length || 0) / 8);
+        for (let i = 0; i < stepGroupsCount; i++) {
+          sections.push(`pdf-treatment-step-group-${i}`);
+        }
+        sections.push('pdf-treatment-logistics');
+      } else {
+        sections.push('pdf-tables');
+      }
+      sections.push('pdf-footer');
       
       for (const id of sections) {
         const el = document.getElementById(id);
@@ -392,6 +402,14 @@ function App() {
 
   const getGasName = (k) => lang === 'zh' ? {BOTTOM:'海底混合氣','5050':'50/50 混合氣',O2:'100% 純氧',AIR:'空氣'}[k] || k : k;
   const getPhaseName = (k) => lang === 'zh' ? {Bottom:'海底時間','Ascent to 1st Stop':'海底上升過程','Deco Stop':'減壓停留',Ventilation:'通風切換',Descent:'下潛過程','Chamber Descent':'減壓艙加壓','O2 Period':'氧氣週期','Air Break':'空氣呼吸期','Surface Interval':'水面間隔',Surfacing:'正在出水',Surface:'完成作業',Travel:'上升移動'}[k] || k : k;
+
+  // Helper: get printable labels for PDF export
+  const getTreatmentTableLabel = (id) => ({ 'Table 5':'Table 5 (60′)','Table 6':'Table 6 (60′)','Table 6A':'Table 6A (165′)','Table 8':'Table 8 (60′)','Table 9':'Table 9 (45′)' }[id] || id);
+  const getChamberModelLabel = (id) => { if (id === 'custom') return lang === 'zh' ? `自訂客製艙 (${customInnerVol} ft³)` : `Custom (${customInnerVol} ft³)`; const c = CHAMBER_PRESETS.find(x => x.id === id); return c ? `${c.name} (${c.inner} ft³)` : id; };
+  const getChamberLockLabel = (lock) => ({ 'inner': lang === 'zh' ? '內艙' : 'Inner Lock', 'outer': lang === 'zh' ? '外艙' : 'Outer Lock', 'both': lang === 'zh' ? '全艙' : 'Both Locks' }[lock] || lock);
+  const getExtLabel = (count) => ({ 0:'0 (No Ext)', 1:'1 Period', 2:'2 Periods' }[count] || `${count} Periods`);
+  // Helper: chunk steps array for PDF pagination
+  const chunkSteps = (steps, size = 8) => { const chunks = []; if (!steps) return chunks; for (let i = 0; i < steps.length; i += size) chunks.push(steps.slice(i, i + size)); return chunks; };
 
   const availableSCFPerCyl = getCylinderAvailableSCF(cylinderPSI, cylinderCF, reservePSI);
   
@@ -548,39 +566,47 @@ function App() {
             <div className="p-3 px-4 rounded-xl border relative border-[#f59e0b]/40 lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
             <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#f59e0b' }}>
             {lang === 'zh' ? '治療表選擇' : 'TREATMENT TABLE'}
-            <ChevronDown size={10} className="opacity-70" />
+            {!isExporting && <ChevronDown size={10} className="opacity-70" />}
             </label>
             <div className="border-b border-white/20">
-            <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={treatmentTableId} onChange={(e)=>{
-            setTreatmentTableId(e.target.value);
-            setExt60Count(0);
-            setExt30Count(0);
-            }}>
-            <option value="Table 5" style={{backgroundColor: t.panel}}>Table 5 (60′)</option>
-            <option value="Table 6" style={{backgroundColor: t.panel}}>Table 6 (60′)</option>
-            <option value="Table 6A" style={{backgroundColor: t.panel}}>Table 6A (165′)</option>
-            <option value="Table 8" style={{backgroundColor: t.panel}}>Table 8 (60′)</option>
-            <option value="Table 9" style={{backgroundColor: t.panel}}>Table 9 (45′)</option>
-            </select>
+            {isExporting ? (
+              <div className="font-mono text-xs font-black py-1" style={{ color: t.textPrimary }}>{getTreatmentTableLabel(treatmentTableId)}</div>
+            ) : (
+              <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={treatmentTableId} onChange={(e)=>{setTreatmentTableId(e.target.value);setExt60Count(0);setExt30Count(0);}}>
+              <option value="Table 5" style={{backgroundColor: t.panel}}>Table 5 (60′)</option>
+              <option value="Table 6" style={{backgroundColor: t.panel}}>Table 6 (60′)</option>
+              <option value="Table 6A" style={{backgroundColor: t.panel}}>Table 6A (165′)</option>
+              <option value="Table 8" style={{backgroundColor: t.panel}}>Table 8 (60′)</option>
+              <option value="Table 9" style={{backgroundColor: t.panel}}>Table 9 (45′)</option>
+              </select>
+            )}
             </div>
             </div>
 
             <div className="p-3 px-4 rounded-xl border relative lg:col-span-3" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
             <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
             {lang === 'zh' ? '減壓艙型號' : 'CHAMBER SELECT'}
-            <ChevronDown size={10} className="opacity-70" />
+            {!isExporting && <ChevronDown size={10} className="opacity-70" />}
             </label>
             <div className="border-b border-white/20">
-            <select className="bg-transparent border-none outline-none font-mono text-[9px] font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={chamberModelId} onChange={(e)=>setChamberModelId(e.target.value)}>
-            {CHAMBER_PRESETS.map(c => (
-            <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name} ({c.inner} ft³)</option>
-            ))}
-            <option value="custom" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '自訂客製艙' : 'Custom Chamber'}</option>
-            </select>
+            {isExporting ? (
+              <div className="font-mono text-[9px] font-black py-1" style={{ color: t.textPrimary }}>{getChamberModelLabel(chamberModelId)}</div>
+            ) : (
+              <select className="bg-transparent border-none outline-none font-mono text-[9px] font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={chamberModelId} onChange={(e)=>setChamberModelId(e.target.value)}>
+              {CHAMBER_PRESETS.map(c => (
+              <option key={c.id} value={c.id} style={{backgroundColor: t.panel}}>{c.name} ({c.inner} ft³)</option>
+              ))}
+              <option value="custom" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '自訂客製艙' : 'Custom Chamber'}</option>
+              </select>
+            )}
             </div>
             {chamberModelId === 'custom' && (
             <div className="absolute bottom-1 right-3 flex items-center gap-1">
-            <input type="number" className="bg-transparent border-b border-white/20 outline-none font-mono text-[9px] font-bold text-right w-10" style={{ color: t.textPrimary }} value={customInnerVol} onChange={(e)=>setCustomInnerVol(Number(e.target.value))} />
+            {isExporting ? (
+              <span className="font-mono text-[9px] font-bold" style={{ color: t.textPrimary }}>{customInnerVol}</span>
+            ) : (
+              <input type="number" className="bg-transparent border-b border-white/20 outline-none font-mono text-[9px] font-bold text-right w-10" style={{ color: t.textPrimary }} value={customInnerVol} onChange={(e)=>setCustomInnerVol(Number(e.target.value))} />
+            )}
             <span className="text-[7px] text-[#64748b]">ft³</span>
             </div>
             )}
@@ -589,42 +615,54 @@ function App() {
             <div className="p-3 px-4 rounded-xl border relative lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
             <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
             {lang === 'zh' ? '艙間選擇' : 'LOCK'}
-            <ChevronDown size={10} className="opacity-70" />
+            {!isExporting && <ChevronDown size={10} className="opacity-70" />}
             </label>
             <div className="border-b border-white/20">
-            <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={chamberLock} onChange={(e)=>setChamberLock(e.target.value)}>
-            <option value="inner" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '內艙' : 'Inner Lock'}</option>
-            <option value="outer" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '外艙' : 'Outer Lock'}</option>
-            <option value="both" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '全艙' : 'Both Locks'}</option>
-            </select>
+            {isExporting ? (
+              <div className="font-mono text-xs font-black py-1" style={{ color: t.textPrimary }}>{getChamberLockLabel(chamberLock)}</div>
+            ) : (
+              <select className="bg-transparent border-none outline-none font-mono text-xs font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={chamberLock} onChange={(e)=>setChamberLock(e.target.value)}>
+              <option value="inner" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '內艙' : 'Inner Lock'}</option>
+              <option value="outer" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '外艙' : 'Outer Lock'}</option>
+              <option value="both" style={{backgroundColor: t.panel}}>{lang === 'zh' ? '全艙' : 'Both Locks'}</option>
+              </select>
+            )}
             </div>
             </div>
 
             <div className="p-3 px-4 rounded-xl border relative lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
             <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
             {lang === 'zh' ? '60呎延長次數' : '60 FT EXTENSION'}
-            <ChevronDown size={10} className="opacity-70" />
+            {!isExporting && <ChevronDown size={10} className="opacity-70" />}
             </label>
             <div className="border-b border-white/20">
-            <select className="bg-transparent border-none outline-none font-mono text-sm font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={ext60Count} onChange={(e)=>setExt60Count(Number(e.target.value))}>
-            <option value="0" style={{backgroundColor: t.panel}}>0 (No Ext)</option>
-            <option value="1" style={{backgroundColor: t.panel}}>1 Period</option>
-            <option value="2" style={{backgroundColor: t.panel}}>2 Periods</option>
-            </select>
+            {isExporting ? (
+              <div className="font-mono text-sm font-black py-1" style={{ color: t.textPrimary }}>{getExtLabel(ext60Count)}</div>
+            ) : (
+              <select className="bg-transparent border-none outline-none font-mono text-sm font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={ext60Count} onChange={(e)=>setExt60Count(Number(e.target.value))}>
+              <option value="0" style={{backgroundColor: t.panel}}>0 (No Ext)</option>
+              <option value="1" style={{backgroundColor: t.panel}}>1 Period</option>
+              <option value="2" style={{backgroundColor: t.panel}}>2 Periods</option>
+              </select>
+            )}
             </div>
             </div>
 
             <div className="p-3 px-4 rounded-xl border relative lg:col-span-2" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                 <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                   {lang === 'zh' ? '30呎延長次數' : '30 FT EXTENSION'}
-                  <ChevronDown size={10} className="opacity-70" />
+                  {!isExporting && <ChevronDown size={10} className="opacity-70" />}
                 </label>
                 <div className="border-b border-white/20">
-                  <select className="bg-transparent border-none outline-none font-mono text-sm font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={ext30Count} onChange={(e)=>setExt30Count(Number(e.target.value))}>
-                    <option value="0" style={{backgroundColor: t.panel}}>0 (No Ext)</option>
-                    <option value="1" style={{backgroundColor: t.panel}}>1 Period</option>
-                    <option value="2" style={{backgroundColor: t.panel}}>2 Periods</option>
-                  </select>
+                  {isExporting ? (
+                    <div className="font-mono text-sm font-black py-1" style={{ color: t.textPrimary }}>{getExtLabel(ext30Count)}</div>
+                  ) : (
+                    <select className="bg-transparent border-none outline-none font-mono text-sm font-black w-full appearance-none cursor-pointer focus:text-[#f59e0b] transition-colors" style={{ color: t.textPrimary }} value={ext30Count} onChange={(e)=>setExt30Count(Number(e.target.value))}>
+                      <option value="0" style={{backgroundColor: t.panel}}>0 (No Ext)</option>
+                      <option value="1" style={{backgroundColor: t.panel}}>1 Period</option>
+                      <option value="2" style={{backgroundColor: t.panel}}>2 Periods</option>
+                    </select>
+                  )}
                 </div>
               </div>
             </div>
@@ -676,23 +714,31 @@ function App() {
               <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                  <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                    {msg?.maxDepth}
-                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                   {!isExporting && <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />}
                  </label>
                  <div className="border-b border-white/20">
-                   <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
-                     {Object.keys(activeTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
-                   </select>
+                   {isExporting ? (
+                     <div className="font-mono text-lg font-black py-1" style={{ color: t.textPrimary }}>{maxDepth} fsw</div>
+                   ) : (
+                     <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={maxDepth} onChange={(e)=>setMaxDepth(Number(e.target.value))}>
+                       {Object.keys(activeTable || {}).sort((a,b)=>a-b).map(d => <option key={d} value={d} style={{backgroundColor: t.panel}}>{d} fsw</option>)}
+                     </select>
+                   )}
                  </div>
               </div>
               <div className="p-3 px-4 rounded-xl border relative" style={{ backgroundColor: 'rgba(0,0,0,0.2)', borderColor: t.border }}>
                  <label className="block text-[7px] font-black mb-0.5 uppercase tracking-widest flex justify-between items-center" style={{ color: '#64748b' }}>
                    {msg?.bottomTime}
-                   <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />
+                   {!isExporting && <Edit2 size={10} className="opacity-60" style={{ color: '#f97316' }} />}
                  </label>
                  <div className="border-b border-white/20">
-                   <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
-                     {activeTable?.[maxDepth] && Object.keys(activeTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
-                   </select>
+                   {isExporting ? (
+                     <div className="font-mono text-lg font-black py-1" style={{ color: t.textPrimary }}>{bottomTime} min</div>
+                   ) : (
+                     <select className="bg-transparent border-none outline-none font-mono text-lg font-black w-full appearance-none cursor-pointer focus:text-[#f97316] transition-colors" style={{ color: t.textPrimary }} value={bottomTime} onChange={(e)=>setBottomTime(Number(e.target.value))}>
+                       {activeTable?.[maxDepth] && Object.keys(activeTable[maxDepth]).sort((a,b)=>a-b).map(tm => <option key={tm} value={tm} style={{backgroundColor: t.panel}}>{tm} min</option>)}
+                     </select>
+                   )}
                  </div>
               </div>
               <div className="p-1 rounded-xl border flex flex-col gap-1 relative" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}>
@@ -905,7 +951,7 @@ function App() {
           </div>
         </section>
 
-        <div id="pdf-tables" className={`grid ${isExporting ? 'grid-cols-3' : 'grid-cols-1 sm:grid-cols-3'} gap-6 pb-20`}>
+        <div id="pdf-tables" className={`grid ${isExporting ? 'grid-cols-3' : 'grid-cols-1 sm:grid-cols-3'} gap-6 pb-20 ${isExporting && divingMode === 'TREATMENT' ? 'hidden w-0 h-0 overflow-hidden' : ''}`}>
           {divingMode === 'TREATMENT' ? (
             <section className="p-6 rounded-[2.5rem] border shadow-lg col-span-1 sm:col-span-2 flex flex-col" style={{ backgroundColor: t.panel, borderColor: t.border }}>
               <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}>
@@ -1066,6 +1112,75 @@ function App() {
              </div>
           </section>
         </div>
+
+        {/* Paginated treatment step chunks for PDF export */}
+        {isExporting && divingMode === 'TREATMENT' && (() => {
+          const stepChunks = chunkSteps(chamberResults?.detailedSteps || [], 8);
+          return (
+            <>
+              {stepChunks.map((chunk, chunkIdx) => (
+                <div key={chunkIdx} id={`pdf-treatment-step-group-${chunkIdx}`} className="p-6 rounded-[2.5rem] border shadow-lg flex flex-col mb-6" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+                  <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}>
+                    <Anchor size={14} style={{ color: '#0ea5e9' }} />
+                    {lang === 'zh' ? `減壓艙治療步驟明細 (${chunkIdx + 1}/${stepChunks.length})` : `TREATMENT STEPS (${chunkIdx + 1}/${stepChunks.length})`}
+                  </h2>
+                  <div className="grid grid-cols-2 gap-4">
+                    {chunk.map((step, idx) => {
+                      const absIdx = chunkIdx * 8 + idx;
+                      const pG = step.pGas === 'O2' ? 'O2' : 'AIR';
+                      const tG = step.tGas === 'O2' ? 'O2' : 'AIR';
+                      const sAir = step.airVentScf + (absIdx === 0 ? (chamberResults?.pressurizeAir || 0) : 0);
+                      return (
+                        <div key={idx} className="flex flex-col p-4 rounded-xl border gap-2" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-black flex items-center gap-2" style={{ color: t.textPrimary }}>
+                              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: pG === 'O2' ? '#22c55e' : '#3b82f6' }}></span>
+                              {step.name}
+                            </span>
+                            <span className="text-[7px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md border" style={{ color: GAS_COLORS[pG], borderColor: `${GAS_COLORS[pG]}44`, backgroundColor: `${GAS_COLORS[pG]}11` }}>
+                              {lang === 'zh' ? `患者: ${pG}` : `Patient: ${pG}`}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-4 gap-2 text-center pt-1.5 border-t border-dashed" style={{ borderColor: t.border }}>
+                            <div className="flex flex-col text-left"><span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '起訖深度' : 'DEPTH'}</span><span className="text-[10px] font-mono font-black" style={{ color: t.textPrimary }}>{step.startDepth}′→{step.endDepth}′</span></div>
+                            <div className="flex flex-col"><span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '停留時長' : 'DURATION'}</span><span className="text-[10px] font-mono font-black" style={{ color: t.textPrimary }}>{step.duration} Min</span></div>
+                            <div className="flex flex-col"><span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '艙內助手' : 'TENDER'}</span><span className="text-[10px] font-black" style={{ color: tG === 'O2' ? '#22c55e' : t.textSecondary }}>{tG}</span></div>
+                            <div className="flex flex-col text-right"><span className="text-[6px] font-bold text-[#64748b] uppercase leading-tight">{lang === 'zh' ? '氣源消耗' : 'GAS'}</span><div className="text-[8px] font-mono font-black flex flex-col items-end leading-tight"><span style={{ color: '#22c55e' }}>O₂: {Math.ceil(step.o2Scf)}</span><span style={{ color: '#3b82f6' }}>Air: {Math.ceil(sAir)}</span></div></div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+              <section id="pdf-treatment-logistics" className="p-6 rounded-[2.5rem] border shadow-lg flex flex-col mb-6" style={{ backgroundColor: t.panel, borderColor: t.border }}>
+                <h2 className="text-[9px] font-black uppercase tracking-[0.4em] flex items-center gap-2 mb-6" style={{ color: '#64748b' }}><FlaskConical size={14} style={{ color: '#f59e0b' }} /> {msg?.logistics}</h2>
+                <div className="grid grid-cols-3 gap-6">
+                  <div className="p-4 rounded-3xl border flex justify-between items-end" style={{ backgroundColor: 'rgba(245,158,11,0.1)', borderColor: 'rgba(245,158,11,0.2)' }}>
+                    <div><p className="text-lg font-black" style={{ color: t.textPrimary }}>{selectedCyl?.name}</p><p className="text-[8px] font-bold opacity-50 uppercase" style={{ color: t.textSecondary }}>{msg?.model}</p></div>
+                    <div className="text-right"><span className="font-mono text-base font-black" style={{ color: '#d97706' }}>{cylinderPSI}</span><span className="text-[10px] font-bold ml-1" style={{ color: '#d97706' }}>PSI</span></div>
+                  </div>
+                  <div className="p-4 rounded-2xl border" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5" style={{ color: t.textSecondary }}>{msg?.runs}</label><div className="font-mono text-sm font-black" style={{ color: t.textPrimary }}>{runs}</div></div>
+                  <div className="p-4 rounded-2xl border" style={{ backgroundColor: 'rgba(0,0,0,0.1)', borderColor: t.border }}><label className="text-[7px] font-black uppercase tracking-widest opacity-50 block mb-0.5" style={{ color: t.textSecondary }}>{msg?.cylinder}</label><div className="font-mono text-[10px] font-black" style={{ color: '#f97316' }}>{selectedCyl?.name}</div></div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 mt-6">
+                  {[{ label: lang === 'zh' ? '空氣需求' : 'Chamber Air', val: Math.round(chamberResults?.totalAir || 0), count: calcCylinderCount(chamberResults?.totalAir || 0, availableSCFPerCyl), color: '#3b82f6', price: 0 },
+                    { label: lang === 'zh' ? '純氧需求' : 'Chamber O₂', val: Math.round(chamberResults?.totalO2 || 0), count: calcCylinderCount(chamberResults?.totalO2 || 0, availableSCFPerCyl), color: '#22c55e', price: 1000 }
+                  ].map(item => (
+                    <div key={item.label} className="p-3 rounded-2xl border" style={{ backgroundColor: t.inputBg, borderColor: t.border }}>
+                      <div className="flex items-center justify-between mb-1"><div><p className="text-[7px] font-black uppercase opacity-50 tracking-widest" style={{ color: t.textSecondary }}>{item.label}</p><p className="text-sm font-mono font-black" style={{ color: t.textPrimary }}>{item.val} SCF</p></div><div className="text-right"><span className="text-2xl font-mono font-black" style={{ color: item.color }}>{item.count}</span><span className="text-[8px] font-black uppercase opacity-50 ml-1" style={{ color: t.textSecondary }}>{msg?.cyls}</span></div></div>
+                      <div className="flex justify-between items-center pt-1 border-t border-dashed" style={{ borderColor: t.border }}><span className="text-[7px] font-bold opacity-40 uppercase" style={{ color: t.textSecondary }}>{msg?.budget}</span><span className="text-[10px] font-mono font-bold" style={{ color: t.textSecondary }}>NT$ {(item.count * item.price).toLocaleString()}</span></div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 p-4 rounded-3xl border-2 border-dashed flex justify-between items-center" style={{ backgroundColor: 'rgba(34,197,94,0.05)', borderColor: 'rgba(34,197,94,0.2)' }}>
+                  <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: '#22c55e' }}>{msg?.totalBudget}</span>
+                  <span className="text-xl font-mono font-black" style={{ color: '#22c55e' }}>NT$ {(calcCylinderCount(chamberResults?.totalO2 || 0, availableSCFPerCyl) * 1000).toLocaleString()}</span>
+                </div>
+              </section>
+            </>
+          );
+        })()}
 
         <footer id="pdf-footer" className={`mt-12 pt-8 border-t leading-relaxed ${isExporting ? 'opacity-80' : 'opacity-40'} text-[9px]`} style={{ borderColor: t.border, color: t.textSecondary }}>
           <div className="grid grid-cols-2 gap-12">
