@@ -106,7 +106,7 @@ export const generateProfileData = (maxDepth, bottomTime, stops, o2Periods, mode
   
   const getSegmentGas = (duration, depth, phase, gas) => {
     if (duration <= 0) return 0;
-    const rate = (phase === 'Descent' || phase === 'Bottom' || gas === 'BOTTOM') ? 
+    const rate = (phase === 'Descent' || phase === 'Bottom') ? 
                  CONSTANTS.BOTTOM_CONSUMPTION_ACFM : 
                  (phase === 'Ventilation' ? CONSTANTS.VENT_CONSUMPTION_ACFM : CONSTANTS.DECO_CONSUMPTION_ACFM);
     return divers * duration * rate * getATA(depth);
